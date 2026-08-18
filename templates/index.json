@@ -181,7 +181,7 @@
           "name": "t:names.slide",
           "settings": {
             "media_type_1": "image",
-            "image_1": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.16_AM.jpg",
+            "image_1": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.15_AM_1.jpg",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
@@ -235,7 +235,6 @@
         "category_VNiMBf": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.16_AM.jpg",
             "title": "COLLECTION",
             "link": ""
           }
@@ -410,7 +409,6 @@
         "banner_card_nJDJXm": {
           "type": "banner_card",
           "settings": {
-            "image": "shopify://shop_images/DOC-20260616-WA0003.png",
             "title": "",
             "subtitle": "",
             "badge": "",
@@ -421,7 +419,6 @@
         "banner_card_bbQ8A8": {
           "type": "banner_card",
           "settings": {
-            "image": "shopify://shop_images/DOC-20260616-WA0005.png",
             "title": "",
             "subtitle": "",
             "badge": "",
@@ -432,7 +429,6 @@
         "banner_card_n3Dtkp": {
           "type": "banner_card",
           "settings": {
-            "image": "shopify://shop_images/DOC-20260616-WA0007.png",
             "title": "",
             "subtitle": "",
             "badge": "",
@@ -443,7 +439,6 @@
         "banner_card_BiWiPp": {
           "type": "banner_card",
           "settings": {
-            "image": "shopify://shop_images/DOC-20260616-WA0009__jpeg.png",
             "title": "",
             "subtitle": "",
             "badge": "",
@@ -454,7 +449,6 @@
         "banner_card_xyLHwy": {
           "type": "banner_card",
           "settings": {
-            "image": "shopify://shop_images/DOC-20260616-WA0011__jpeg.png",
             "title": "",
             "subtitle": "",
             "badge": "",
