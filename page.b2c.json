@@ -9,27 +9,6 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "blocks": {
-        "page-content": {
-          "type": "page-content",
-          "settings": {},
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "page-content"
-      ],
-      "disabled": true,
-      "settings": {
-        "content_direction": "column",
-        "gap": 32,
-        "color_scheme": "",
-        "padding-block-start": 40,
-        "padding-block-end": 80
-      }
-    },
     "slideshow_bb7Qbb": {
       "type": "slideshow",
       "blocks": {
@@ -202,7 +181,7 @@
           "name": "t:names.slide",
           "settings": {
             "media_type_1": "image",
-            "image_1": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.16_AM.jpg",
+            "image_1": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.15_AM_1.jpg",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
@@ -256,7 +235,6 @@
         "category_VNiMBf": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.16_AM.jpg",
             "title": "COLLECTION",
             "link": ""
           }
@@ -431,7 +409,6 @@
         "banner_card_nJDJXm": {
           "type": "banner_card",
           "settings": {
-            "image": "shopify://shop_images/DOC-20260616-WA0003.png",
             "title": "",
             "subtitle": "",
             "badge": "",
@@ -442,7 +419,6 @@
         "banner_card_bbQ8A8": {
           "type": "banner_card",
           "settings": {
-            "image": "shopify://shop_images/DOC-20260616-WA0005.png",
             "title": "",
             "subtitle": "",
             "badge": "",
@@ -453,7 +429,6 @@
         "banner_card_n3Dtkp": {
           "type": "banner_card",
           "settings": {
-            "image": "shopify://shop_images/DOC-20260616-WA0007.png",
             "title": "",
             "subtitle": "",
             "badge": "",
@@ -464,7 +439,6 @@
         "banner_card_BiWiPp": {
           "type": "banner_card",
           "settings": {
-            "image": "shopify://shop_images/DOC-20260616-WA0009__jpeg.png",
             "title": "",
             "subtitle": "",
             "badge": "",
@@ -475,7 +449,6 @@
         "banner_card_xyLHwy": {
           "type": "banner_card",
           "settings": {
-            "image": "shopify://shop_images/DOC-20260616-WA0011__jpeg.png",
             "title": "",
             "subtitle": "",
             "badge": "",
@@ -526,11 +499,36 @@
         "autoplay_speed": 1,
         "accessibility_info": "Promotional banners carousel"
       }
+    },
+    "buy_now_product_info": {
+      "type": "product-information",
+      "settings": {
+        "product": "vidhyut-saathi-electric-power-saver-card",
+        "bg_color": "#FFFFFF",
+        "text_color": "#111111",
+        "border_color": "#EAEAEA",
+        "primary_button_color": "#D4A373",
+        "primary_button_text": "#FFFFFF",
+        "enable_offers_section": true,
+        "offer_card_height": 110,
+        "offer_section_bg": "#E8F5E9",
+        "offer_icon_bg": "#D4A373",
+        "offer_link_color": "#A67B5B",
+        "offer_copy_color": "#4C7B8B",
+        "offer_badge_bg": "#F27A33",
+        "offer_link_text": "View all Offers",
+        "offer_link_url": "",
+        "heading_font": "work_sans_n7",
+        "body_font": "work_sans_n4",
+        "install_guide_text": "Installation Guide",
+        "install_guide_link": "",
+        "enable_delivery_check": true
+      }
     }
   },
   "order": [
-    "main",
     "slideshow_bb7Qbb",
+    "buy_now_product_info",
     "vidhyut_tech_usage_pGXxky",
     "marquee_ticker_CjTmQC",
     "vidhyut_expert_video_ppwEB7",
