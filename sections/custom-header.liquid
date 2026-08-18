@@ -437,10 +437,20 @@
 <div class="vidhyut-header-wrapper-{{ section.id }}">
   
   {% if section.settings.show_top_bar %}
+    {%- assign top_btn_text = section.settings.franchise_text -%}
+    {%- if top_btn_text == blank or top_btn_text contains 'FRANCHISE' or top_btn_text contains 'BECOME A DEALER' -%}
+      {%- assign top_btn_text = 'GET CARD' -%}
+    {%- endif -%}
+
+    {%- assign top_btn_link = section.settings.franchise_link -%}
+    {%- if top_btn_link == blank or top_btn_link contains '/pages/contact' -%}
+      {%- assign top_btn_link = '/products/vidhyut-saathi-electric-power-saver-card' -%}
+    {%- endif -%}
+
     <div class="vidhyut-top-bar-{{ section.id }}">
       <div class="top-bar-left">{{ section.settings.top_bar_left_text }}</div>
       <div class="top-bar-right">
-        <a href="{{ section.settings.franchise_link }}" style="background-color: {{ section.settings.accent_color }}; color: #ffffff; padding: 6px 16px; border-radius: 6px; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'">{{ section.settings.franchise_text }}</a>
+        <a href="{{ top_btn_link }}" style="background-color: {{ section.settings.accent_color }}; color: #ffffff; padding: 6px 16px; border-radius: 6px; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'">{{ top_btn_text }}</a>
       </div>
     </div>
   {% endif %}
