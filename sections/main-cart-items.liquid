@@ -1357,21 +1357,26 @@ function lxOpenVariantModal(productId) {
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    var urlParams = new URLSearchParams(window.location.search);
-    var discountParam = urlParams.get('discount');
-    var saved = discountParam || localStorage.getItem(STORAGE_KEY);
-    if (saved && saved.trim()) {
-      var code = saved.trim().toUpperCase();
-      localStorage.setItem(STORAGE_KEY, code);
-      showAppliedState(code);
-      if (!window._lxCouponApplied) {
-        window._lxCouponApplied = true;
-        fetch((window.Shopify.routes.root || '/') + 'cart/update.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ discount_code: code, discount: code })
-        }).catch(function(e){ console.error(e); });
+    var isRemoved = sessionStorage.getItem('lx_coupon_removed') === 'true';
+    if (!isRemoved) {
+      var urlParams = new URLSearchParams(window.location.search);
+      var discountParam = urlParams.get('discount');
+      var saved = discountParam || localStorage.getItem(STORAGE_KEY);
+      if (saved && saved.trim()) {
+        var code = saved.trim().toUpperCase();
+        localStorage.setItem(STORAGE_KEY, code);
+        showAppliedState(code);
+        if (!window._lxCouponApplied) {
+          window._lxCouponApplied = true;
+          fetch((window.Shopify.routes.root || '/') + 'cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ discount_code: code, discount: code })
+          }).catch(function(e){ console.error(e); });
+        }
       }
+    } else {
+      hideAppliedState();
     }
     lxRecalculateCartSummary();
   });
@@ -1381,14 +1386,13 @@ function lxOpenVariantModal(productId) {
     const picker  = document.getElementById('lx-coupon-picker');
     const codeLbl = document.getElementById('lx-applied-code-label');
     const timeLbl = document.getElementById('lx-applied-time');
-    if (!banner || !picker) return;
     if (codeLbl) codeLbl.innerText = code;
     if (timeLbl) {
       const t = localStorage.getItem(STORAGE_TIME);
       timeLbl.innerText = t ? 'Applied at ' + t : '';
     }
-    banner.classList.add('show');
-    picker.style.display = 'none';
+    if (banner) banner.classList.add('show');
+    if (picker) picker.style.display = 'none';
     lxRecalculateCartSummary();
   }
 
@@ -1412,6 +1416,7 @@ function lxOpenVariantModal(productId) {
   window.lxApplyCoupon = async function (code) {
     if (!code || !code.trim()) { setMsg('Please enter a coupon code.', 'error'); return; }
     code = code.trim().toUpperCase();
+    sessionStorage.removeItem('lx_coupon_removed');
 
     var vipCode = {{ section.settings.vip_discount_code | json }};
     var cartTotal = {{ cart.total_price | default: 0 }};
@@ -1425,10 +1430,10 @@ function lxOpenVariantModal(productId) {
     setMsg('Applying ' + code + '\u2026', null);
 
     try {
-      const res = await fetch(window.Shopify.routes.root + 'cart/update.js', {
+      const res = await fetch((window.Shopify.routes.root || '/') + 'cart/update.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ discount_code: finalCode })
+        body: JSON.stringify({ discount_code: finalCode, discount: finalCode })
       });
 
       if (res.ok) {
@@ -1436,10 +1441,10 @@ function lxOpenVariantModal(productId) {
         const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         localStorage.setItem(STORAGE_KEY, code);
         localStorage.setItem(STORAGE_TIME, timeStr);
+        showAppliedState(code);
         setMsg('Coupon applied successfully!', 'success');
         var card = document.querySelector('.lx-summary-card');
         if (card) card.classList.add('lx-coupon-success-anim');
-        setTimeout(function() { location.reload(); }, 500);
       } else {
         setMsg('Unable to apply coupon. Check the code and try again.', 'error');
       }
@@ -1449,30 +1454,27 @@ function lxOpenVariantModal(productId) {
   };
 
   window.lxRemoveCoupon = async function () {
-    var vipCode = {{ section.settings.vip_discount_code | json }};
-    var cartTotal = {{ cart.total_price | default: 0 }};
-    var vipThreshold = {{ section.settings.vip_threshold | times: 100 | json }} || 999999999;
-    
-    var finalCode = '';
-    if (cartTotal >= vipThreshold && vipCode) {
-       finalCode = vipCode; 
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_TIME);
+    sessionStorage.removeItem('lx_applied_coupon');
+    sessionStorage.setItem('lx_coupon_removed', 'true');
+
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState({}, document.title, window.location.pathname);
     }
 
     try {
-      const res = await fetch(window.Shopify.routes.root + 'cart/update.js', {
+      await fetch((window.Shopify.routes.root || '/') + 'cart/update.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ discount_code: finalCode })
+        body: JSON.stringify({ discount_code: '', discount: '' })
       });
-      if (res.ok) {
-        localStorage.removeItem(STORAGE_KEY);
-        localStorage.removeItem(STORAGE_TIME);
-        hideAppliedState();
-        setTimeout(function() { location.reload(); }, 200);
-      }
     } catch (e) {
       console.error('Remove coupon error:', e);
     }
+
+    hideAppliedState();
+    setMsg('Coupon removed.', 'warn');
   };
 
   document.addEventListener('DOMContentLoaded', function () {
