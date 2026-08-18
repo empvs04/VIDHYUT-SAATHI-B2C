@@ -1,0 +1,48 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "whatsapp_button_9GBLUn": {
+      "type": "whatsapp-button",
+      "name": "WhatsApp Button",
+      "settings": {
+        "phone_number": "918199036060",
+        "prefilled_text": "Hello! I have a question about Vidhyut Saathi.",
+        "bg_color": "#47962c",
+        "icon_color": "#ffffff",
+        "horizontal_placement": "right",
+        "offset_x": 30,
+        "offset_y": 30,
+        "offset_x_mobile": 16,
+        "offset_y_mobile": 100
+      }
+    },
+    "vidyut_footer_z7CTmr": {
+      "type": "vidyut_footer",
+      "name": "Vidhyut Footer",
+      "settings": {
+        "bg_color": "#0f172a",
+        "text_color": "#94a3b8",
+        "footer_logo": "shopify://shop_images/Vidhyut_Saathi_Logo224x224.png",
+        "address": "SCO-77A, 3rd Floor, Ashoka Complex, Delhi Road Rohtak - 124001, Haryana.",
+        "email": "info@vidhyutsaathi.com",
+        "social_fb": "",
+        "social_insta": "",
+        "social_yt": ""
+      }
+    }
+  },
+  "order": [
+    "whatsapp_button_9GBLUn",
+    "vidyut_footer_z7CTmr"
+  ]
+}

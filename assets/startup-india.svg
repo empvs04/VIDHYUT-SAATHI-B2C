@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" width="240" height="80">
+  <rect width="240" height="80" rx="8" fill="#ffffff"/>
+  <!-- Tricolor Accent Bar -->
+  <rect x="12" y="12" width="6" height="56" rx="3" fill="#FF9933"/>
+  <rect x="20" y="12" width="6" height="56" rx="3" fill="#138808"/>
+  
+  <!-- Text: #startupindia -->
+  <text x="36" y="44" font-family="'Inter', 'Montserrat', sans-serif" font-weight="800" font-size="22" fill="#0F172A">#startup<tspan fill="#D97706">india</tspan></text>
+  <text x="36" y="60" font-family="'Inter', sans-serif" font-weight="600" font-size="9" fill="#64748B" letter-spacing="1">GOVERNMENT OF INDIA INITIATIVE</text>
+  
+  <!-- Ashoka Chakra Icon motif -->
+  <circle cx="215" cy="40" r="14" fill="none" stroke="#000080" stroke-width="2"/>
+  <circle cx="215" cy="40" r="3" fill="#000080"/>
+  <path d="M215 26 L215 54 M201 40 L229 40 M205 30 L225 50 M205 50 L225 30" stroke="#000080" stroke-width="1.2"/>
+</svg>

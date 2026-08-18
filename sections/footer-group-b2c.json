@@ -1,0 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "vidyut_footer_z7CTmr": {
+      "type": "vidyut_footer",
+      "name": "Vidhyut Footer",
+      "settings": {
+        "bg_color": "#0f172a",
+        "text_color": "#94a3b8",
+        "address": "SCO-77A, 3rd Floor, Ashoka Complex, Delhi Road Rohtak - 124001, Haryana.",
+        "email": "info@vidhyutsaathi.com",
+        "social_fb": "",
+        "social_insta": "",
+        "social_yt": ""
+      }
+    }
+  },
+  "order": [
+    "vidyut_footer_z7CTmr"
+  ]
+}

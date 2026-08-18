@@ -1,0 +1,300 @@
+{{ 'franchise-models.css' | asset_url | stylesheet_tag }}
+
+<div class="franchise-section">
+  <div class="franchise-header">
+    <h2>{{ section.settings.heading }}</h2>
+    {% if section.settings.subheading != blank %}
+      <p>{{ section.settings.subheading }}</p>
+    {% endif %}
+  </div>
+
+  <div class="franchise-container">
+    {% for block in section.blocks %}
+      <div class="franchise-card {% if block.settings.is_premium %}franchise-premium{% endif %}" {{ block.shopify_attributes }}>
+        
+        {% if block.settings.badge_text != blank %}
+          <div class="franchise-badge">{{ block.settings.badge_text }}</div>
+        {% endif %}
+
+        <h3 class="franchise-title">{{ block.settings.title }}</h3>
+        
+        <div class="franchise-price">
+          {{ block.settings.price }}
+          <span>{{ block.settings.price_suffix }}</span>
+        </div>
+
+        <ul class="franchise-features">
+          {% assign features = block.settings.features | split: ',' %}
+          {% for feature in features %}
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              {{ feature | strip }}
+            </li>
+          {% endfor %}
+        </ul>
+
+        {% if block.settings.button_link != blank and block.settings.button_text != blank %}
+          <a href="{{ block.settings.button_link }}" class="franchise-btn {% if block.settings.is_premium %}btn-premium{% endif %}">
+            {{ block.settings.button_text }}
+          </a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .franchise-section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: inherit;
+  }
+  .franchise-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .franchise-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  .franchise-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .franchise-card {
+    flex: 1 1 300px;
+    max-width: 350px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 40px 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .franchise-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+  }
+  .franchise-premium {
+    border: 2px solid #000000;
+    transform: scale(1.05);
+    z-index: 2;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  .franchise-premium:hover {
+    transform: scale(1.05) translateY(-5px);
+  }
+  .franchise-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .franchise-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .franchise-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .franchise-price span {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #666;
+    margin-top: 5px;
+  }
+  .franchise-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+    flex-grow: 1;
+  }
+  .franchise-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #4a5568;
+  }
+  .franchise-features svg {
+    width: 20px;
+    height: 20px;
+    color: #10b981; /* Green checkmark */
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .franchise-btn {
+    display: block;
+    text-align: center;
+    padding: 12px 20px;
+    background: #f1f5f9;
+    color: #0f172a;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: background 0.2s;
+    margin-top: auto;
+  }
+  .franchise-btn:hover {
+    background: #e2e8f0;
+  }
+  .btn-premium {
+    background: #000;
+    color: #fff;
+  }
+  .btn-premium:hover {
+    background: #333;
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 990px) {
+    .franchise-premium {
+      transform: scale(1);
+    }
+    .franchise-premium:hover {
+      transform: translateY(-5px);
+    }
+  }
+  @media (max-width: 768px) {
+    .franchise-header h2 {
+      font-size: 2rem;
+    }
+    .franchise-card {
+      max-width: 100%;
+      padding: 30px 20px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Franchise Models",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Choose Your Franchise Model"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Select the partnership tier that best fits your business goals."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Franchise Tier",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tier Name"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text (Optional)",
+          "info": "e.g., 'Most Popular'"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Investment Amount",
+          "default": "$10,000"
+        },
+        {
+          "type": "text",
+          "id": "price_suffix",
+          "label": "Price Suffix",
+          "default": "one-time fee"
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features List",
+          "info": "Separate each feature with a comma (,)",
+          "default": "Standard Support, Basic Marketing Kit, Local Directory Listing"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Apply Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_premium",
+          "label": "Highlight as Premium",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Franchise Models",
+      "blocks": [
+        {
+          "type": "tier",
+          "settings": {
+            "title": "Non-Exclusive District",
+            "price": "$5,000",
+            "features": "Shared territory, Standard support, Basic onboarding, Starter marketing kit"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "title": "Standard Exclusive District",
+            "price": "$15,000",
+            "is_premium": true,
+            "badge_text": "Most Popular",
+            "features": "Exclusive district rights, Priority support, 1-on-1 onboarding, Full marketing suite, Lead generation assistance"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "title": "Premium Exclusive District",
+            "price": "$30,000",
+            "features": "Exclusive regional rights, 24/7 dedicated account manager, In-person training, Custom marketing campaigns, Guaranteed lead quota, Early access to new products"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

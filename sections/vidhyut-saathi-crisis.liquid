@@ -1,0 +1,791 @@
+{% comment %}
+  Vidhyut Saathi – India's Electricity Crisis Section
+  Shopify Theme Section
+{% endcomment %}
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --vs-orange:  #F7941D;
+    --vs-orange-light: #FFF4E5;
+    --vs-orange2: #E07810;
+    --vs-orange3: #FDB44B;
+    --vs-green:   #3EAD47;
+    --vs-green-light: #EBF7EC;
+    --vs-green2:  #2E7D32;
+    --vs-dark:    #111111;
+    --vs-text:    #333333;
+    --vs-muted:   #666666;
+    --vs-bg:      #FCFDFD;
+    --vs-card:    #FFFFFF;
+  }
+
+  /* ─── SECTION WRAPPER ─── */
+  .vs-crisis {
+    background: var(--vs-bg);
+    font-family: 'Nunito', sans-serif;
+    position: relative;
+    overflow: hidden;
+    padding: 0 0 40px 0;
+  }
+
+  /* Ambient glows */
+  .vs-crisis__glow-1,
+  .vs-crisis__glow-2 {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(80px);
+  }
+  .vs-crisis__glow-1 {
+    top: 0; right: 0;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(247,148,29,0.15) 0%, transparent 70%);
+  }
+  .vs-crisis__glow-2 {
+    bottom: 100px; left: -100px;
+    width: 450px; height: 450px;
+    background: radial-gradient(circle, rgba(62,173,71,0.12) 0%, transparent 70%);
+  }
+
+  /* ─── HERO ─── */
+  .vs-crisis__hero {
+    padding: 60px 5% 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    text-align: left;
+  }
+
+  .vs-crisis__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--vs-orange-light);
+    border-radius: 50px;
+    padding: 6px 16px;
+    margin-bottom: 20px;
+  }
+  .vs-crisis__badge-dot {
+    width: 8px; height: 8px;
+    background: var(--vs-orange);
+    border-radius: 50%;
+  }
+  .vs-crisis__badge-text {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 13px; font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--vs-orange);
+  }
+
+  .vs-crisis__title {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: clamp(38px, 5vw, 64px); 
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--vs-dark);
+    margin: 0 0 15px;
+  }
+  .vs-crisis__title-accent {
+    color: var(--vs-orange);
+    position: relative;
+    display: inline-block;
+  }
+  .vs-crisis__title-accent::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 4px;
+    width: 100%; height: 4px;
+    background: var(--vs-orange);
+    border-radius: 2px;
+    opacity: 0.4;
+  }
+
+  .vs-crisis__divider {
+    width: 60px; height: 4px;
+    background: linear-gradient(90deg, var(--vs-orange), var(--vs-green));
+    border-radius: 2px;
+  }
+
+  /* Background tower */
+  .vs-crisis__tower {
+    position: absolute;
+    top: 20px; right: 10%;
+    width: 250px;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* ─── STATS GRID ─── */
+  .vs-crisis__stats-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .vs-crisis__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .vs-crisis__stat {
+    background: var(--vs-card);
+    border-radius: 24px;
+    padding: 35px 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.03);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .vs-crisis__stat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.08);
+  }
+
+  /* Top & bottom accent lines */
+  .vs-crisis__stat::before,
+  .vs-crisis__stat::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 4px;
+  }
+  .vs-crisis__stat::before { top: 0; border-radius: 24px 24px 0 0; }
+  .vs-crisis__stat::after  { bottom: 0; border-radius: 0 0 24px 24px; }
+
+  /* Accent Colors per Card */
+  .vs-crisis__stat.type-orange::before,
+  .vs-crisis__stat.type-orange::after { background: var(--vs-orange); }
+  .vs-crisis__stat.type-green::before,
+  .vs-crisis__stat.type-green::after { background: var(--vs-green); }
+
+  /* Inner glows */
+  .vs-crisis__stat-glow {
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.4;
+    z-index: 0;
+  }
+  .vs-crisis__stat.type-orange .vs-crisis__stat-glow { background: var(--vs-orange); }
+  .vs-crisis__stat.type-green .vs-crisis__stat-glow { background: var(--vs-green); }
+
+  /* Icons */
+  .vs-crisis__stat-icon {
+    width: 50px; height: 50px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    position: relative; z-index: 1;
+  }
+  .vs-crisis__stat.type-orange .vs-crisis__stat-icon { background: var(--vs-orange-light); }
+  .vs-crisis__stat.type-green .vs-crisis__stat-icon { background: var(--vs-green-light); }
+  .vs-crisis__stat-icon svg { width: 24px; height: 24px; }
+
+  .vs-crisis__stat-number {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: clamp(32px, 4vw, 42px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    position: relative; z-index: 1;
+  }
+  .vs-crisis__stat.type-orange .vs-crisis__stat-number { color: var(--vs-orange); }
+  .vs-crisis__stat.type-green .vs-crisis__stat-number { color: var(--vs-green); }
+
+  .vs-crisis__stat-desc {
+    font-size: 15px; font-weight: 700;
+    color: var(--vs-text);
+    line-height: 1.5;
+    position: relative; z-index: 1;
+  }
+
+  /* ─── NEED BANNER ─── */
+  .vs-crisis__need {
+    max-width: 1100px;
+    margin: 40px auto 0;
+    background: linear-gradient(90deg, #FFF9F0, #FFFFFF);
+    border: 1px solid rgba(247,148,29,0.15);
+    border-radius: 16px;
+    padding: 24px 30px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: relative; z-index: 2;
+    box-shadow: 0 4px 20px rgba(247,148,29,0.05);
+  }
+  
+  .vs-crisis__need-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .vs-crisis__need-icon {
+    width: 48px; height: 48px;
+    background: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 15px rgba(247,148,29,0.15);
+  }
+
+  .vs-crisis__need-sep {
+    width: 2px; height: 40px;
+    background: var(--vs-orange);
+    opacity: 0.3;
+  }
+
+  .vs-crisis__need-label {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: var(--vs-orange);
+    white-space: nowrap;
+  }
+
+  .vs-crisis__need-body {
+    font-size: 15px; font-weight: 600;
+    color: var(--vs-text);
+    line-height: 1.5;
+  }
+
+  /* ─── SECTION BREAK ─── */
+  .vs-crisis__break {
+    max-width: 1200px;
+    margin: 60px auto 40px;
+    display: flex; align-items: center; gap: 20px;
+    position: relative; z-index: 2;
+    padding: 0 5%;
+  }
+  .vs-crisis__break-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(247,148,29,0.3), transparent);
+  }
+  .vs-crisis__break-pill {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 12px; font-weight: 800;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--vs-orange2);
+    background: var(--vs-orange-light);
+    padding: 6px 20px; border-radius: 50px;
+    white-space: nowrap;
+  }
+
+  /* ─── SOLUTION HEADER ─── */
+  .vs-crisis__solution {
+    padding: 0 5%;
+    position: relative; z-index: 2;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .vs-crisis__solution h2 {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 900;
+    color: var(--vs-dark);
+    line-height: 1.2;
+    margin: 0 0 10px;
+  }
+  .vs-crisis__solution h2 span { color: var(--vs-orange); }
+  .vs-crisis__solution p {
+    font-size: clamp(16px, 2vw, 18px); 
+    font-weight: 700;
+    color: var(--vs-muted);
+    margin: 0;
+  }
+  .vs-crisis__solution-underline {
+    display: inline-block;
+    margin-top: 15px;
+    width: 60px; height: 4px;
+    background: linear-gradient(90deg, var(--vs-green), var(--vs-orange));
+    border-radius: 2px;
+  }
+
+  /* ─── CTA CARD ─── */
+  .vs-crisis__cta {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #FFFDF8, #FFF5E5);
+    border-radius: 24px;
+    padding: 40px 50px;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 30px;
+    box-shadow: 0 10px 40px rgba(247,148,29,0.1);
+    position: relative; z-index: 2;
+    width: 90%;
+  }
+
+  .vs-crisis__cta-left h3 {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 900;
+    color: var(--vs-dark);
+    line-height: 1.2;
+    margin: 0 0 10px;
+  }
+  .vs-crisis__cta-left h3 span { color: var(--vs-orange); }
+  .vs-crisis__cta-left p {
+    font-size: 16px; font-weight: 600;
+    color: var(--vs-muted);
+    margin: 0 0 20px;
+  }
+
+  /* Social proof */
+  .vs-crisis__proof {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .vs-crisis__proof-avatars { display: flex; }
+  .vs-crisis__proof-avatars span {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800;
+    margin-left: -10px;
+    color: white;
+  }
+  .vs-crisis__proof-avatars span:first-child { margin-left: 0; background: var(--vs-orange); }
+  .vs-crisis__proof-avatars span:nth-child(2) { background: var(--vs-green); }
+  .vs-crisis__proof-avatars span:nth-child(3) { background: var(--vs-orange2); }
+  .vs-crisis__proof-text {
+    font-size: 13px; font-weight: 700;
+    color: var(--vs-muted);
+  }
+  .vs-crisis__proof-text strong { color: var(--vs-orange); }
+
+  .vs-crisis__cta-right {
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .vs-crisis__btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--vs-orange);
+    color: white;
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 18px; font-weight: 800;
+    padding: 16px 36px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(247,148,29,0.3);
+    transition: all 0.3s ease;
+  }
+  .vs-crisis__btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(247,148,29,0.4);
+    background: var(--vs-orange2);
+  }
+  .vs-crisis__btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+  .vs-crisis__btn-note {
+    margin-top: 12px;
+    font-size: 12px; font-weight: 800;
+    color: var(--vs-green);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+
+  /* ─── MOBILE RESPONSIVENESS ─── */
+  @media (max-width: 900px) {
+    .vs-crisis__cta {
+      flex-direction: column;
+      text-align: center;
+      padding: 30px 24px;
+    }
+    .vs-crisis__proof {
+      justify-content: center;
+    }
+    .vs-crisis__need {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      margin: 30px 5% 0;
+    }
+    .vs-crisis__need-sep { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    .vs-crisis__hero { padding: 40px 5% 20px; }
+    
+    /* App-like Horizontal Scroll for Mobile Cards */
+    .vs-crisis__stats-wrapper {
+      padding: 0; /* Remove padding to let cards bleed off edge */
+    }
+    .vs-crisis__stats {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 10px 5% 20px;
+      gap: 16px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+    }
+    .vs-crisis__stats::-webkit-scrollbar {
+      display: none; /* Safari/Chrome */
+    }
+    .vs-crisis__stat {
+      flex: 0 0 85%; /* Cards take up 85% of screen width */
+      scroll-snap-align: center;
+      padding: 24px;
+    }
+
+    .vs-crisis__stat-icon { width: 44px; height: 44px; margin-bottom: 16px; }
+    .vs-crisis__stat-icon svg { width: 20px; height: 20px; }
+    
+    .vs-crisis__need-left {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+    .vs-crisis__need-icon { width: 40px; height: 40px; }
+    .vs-crisis__need-icon svg { width: 20px; height: 20px; }
+
+    .vs-crisis__btn { width: 100%; justify-content: center; }
+  }
+</style>
+
+<section class="vs-crisis" id="vs-crisis-{{ section.id }}">
+
+  <div class="vs-crisis__glow-1" aria-hidden="true"></div>
+  <div class="vs-crisis__glow-2" aria-hidden="true"></div>
+
+  <!-- ── HERO ── -->
+  <div class="vs-crisis__hero">
+    <div class="vs-crisis__badge">
+      <div class="vs-crisis__badge-dot"></div>
+      <span class="vs-crisis__badge-text">{{ section.settings.badge_label | default: 'The Problem' }}</span>
+    </div>
+    <h1 class="vs-crisis__title">
+      {{ section.settings.hero_title_prefix | default: "India's" }}
+      <span class="vs-crisis__title-accent">{{ section.settings.hero_title_accent | default: 'Electricity' }}</span>
+      <br>{{ section.settings.hero_title_suffix | default: 'Crisis' }}
+    </h1>
+    <div class="vs-crisis__divider"></div>
+
+    <!-- Tower SVG -->
+    <svg class="vs-crisis__tower" viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="100" y1="0"   x2="100" y2="280" stroke="#F7941D" stroke-width="4"/>
+      <line x1="100" y1="40"  x2="20"  y2="100" stroke="#F7941D" stroke-width="3"/>
+      <line x1="100" y1="40"  x2="180" y2="100" stroke="#F7941D" stroke-width="3"/>
+      <line x1="100" y1="100" x2="30"  y2="150" stroke="#F7941D" stroke-width="2.5"/>
+      <line x1="100" y1="100" x2="170" y2="150" stroke="#F7941D" stroke-width="2.5"/>
+    </svg>
+  </div>
+
+  <!-- ── STAT CARDS ── -->
+  <div class="vs-crisis__stats-wrapper">
+    <div class="vs-crisis__stats">
+      {% for block in section.blocks %}
+        {% if block.type == 'stat_card' %}
+          <!-- Determine Card Styling based on index -->
+          {% assign card_type = 'type-orange' %}
+          {% if forloop.index == 2 %}{% assign card_type = 'type-green' %}{% endif %}
+
+          <div class="vs-crisis__stat {{ card_type }}" {{ block.shopify_attributes }}>
+            <div class="vs-crisis__stat-glow"></div>
+            <div class="vs-crisis__stat-icon">
+              {% if forloop.index == 1 %}
+                <!-- Rupee Icon -->
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 4H18M6 8H18M14 12C14 15.3137 11.3137 18 8 18L15 24M6 12H9C11.2091 12 13 10.2091 13 8C13 5.79086 11.2091 4 9 4H6V12Z" stroke="#F7941D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {% elsif forloop.index == 2 %}
+                <!-- Lightning Icon -->
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#3EAD47"/>
+                </svg>
+              {% else %}
+                <!-- People/House Icon -->
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9984 18.1158 22.7093 17.2573 22.1804 16.5658C21.6515 15.8743 20.9142 15.3912 20.09 15.21M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="#F7941D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {% endif %}
+            </div>
+            <div class="vs-crisis__stat-number">{{ block.settings.stat_value }}</div>
+            <div class="vs-crisis__stat-desc">{{ block.settings.stat_desc }}</div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- ── NEED BANNER ── -->
+  <div class="vs-crisis__need">
+    <div class="vs-crisis__need-left">
+      <div class="vs-crisis__need-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18H15M12 22V18M12 14C14.7614 14 17 11.7614 17 9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9C7 11.7614 9.23858 14 12 14Z" stroke="#F7941D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="vs-crisis__need-label" {% if section.settings.need_label_size != blank %}style="font-size: {{ section.settings.need_label_size }}px;"{% endif %}>{{ section.settings.need_label }}</div>
+    </div>
+    {% if section.settings.need_text != blank %}
+    <div class="vs-crisis__need-sep"></div>
+    <div class="vs-crisis__need-body" {% if section.settings.need_text_size != blank %}style="font-size: {{ section.settings.need_text_size }}px;"{% endif %}>{{ section.settings.need_text }}</div>
+    {% endif %}
+  </div>
+
+  <!-- ── SECTION BREAK ── -->
+  <div class="vs-crisis__break">
+    <div class="vs-crisis__break-line"></div>
+    <div class="vs-crisis__break-pill">{{ section.settings.break_text | default: 'Introducing the Solution' }}</div>
+    <div class="vs-crisis__break-line"></div>
+  </div>
+
+  <!-- ── SOLUTION HEADER ── -->
+  <div class="vs-crisis__solution">
+    <h2>{{ section.settings.solution_title_prefix | default: 'Meet' }} <span>{{ section.settings.solution_title_accent | default: 'Vidhyut Saathi Card' }}</span></h2>
+    <p>{{ section.settings.solution_subtitle | default: "India's #1 Smart Electricity Saver — Engineered for Every Home" }}</p>
+    <div class="vs-crisis__solution-underline"></div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="vs-crisis__cta">
+    <div class="vs-crisis__cta-left">
+      <h3>{{ section.settings.cta_title_prefix | default: 'Start Saving on Your' }} <br><span>{{ section.settings.cta_title_accent | default: 'Electricity Bill' }}</span> {{ section.settings.cta_title_suffix | default: 'Today' }}</h3>
+      <p>{{ section.settings.cta_subtitle | default: 'Join 20 Lakh+ Indian families already saving with Vidhyut Saathi Card' }}</p>
+      <div class="vs-crisis__proof">
+        <div class="vs-crisis__proof-avatars">
+          <span>R</span><span>S</span><span>A</span>
+        </div>
+        <div class="vs-crisis__proof-text"><strong>{{ section.settings.proof_count | default: '20 Lakh+' }}</strong> {{ section.settings.proof_label | default: 'households trust us' }}</div>
+      </div>
+    </div>
+    <div class="vs-crisis__cta-right">
+      <a href="{{ section.settings.cta_link | default: '#' }}" class="vs-crisis__btn">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/>
+        </svg>
+        {{ section.settings.cta_button_text | default: 'Get Franchise Now' }}
+      </a>
+      <div class="vs-crisis__btn-note">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17L4 12" stroke="#3EAD47" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        {{ section.settings.cta_note | default: 'Free Consultation Available' }}
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Vidhyut Saathi – Crisis",
+  "tag": "section",
+  "class": "vs-crisis-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "Badge Label",
+      "default": "The Problem"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_prefix",
+      "label": "Title Prefix",
+      "default": "India's"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_accent",
+      "label": "Title Accent (Orange)",
+      "default": "Electricity"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_suffix",
+      "label": "Title Suffix",
+      "default": "Crisis"
+    },
+    {
+      "type": "header",
+      "content": "Need Banner"
+    },
+    {
+      "type": "text",
+      "id": "need_label",
+      "label": "Need Label",
+      "default": "The Need is Clear."
+    },
+    {
+      "type": "range",
+      "id": "need_label_size",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading Font Size",
+      "default": 22
+    },
+    {
+      "type": "textarea",
+      "id": "need_text",
+      "label": "Need Description",
+      "default": "India needs a smart, affordable and effective solution to save electricity and reduce bills significantly across every household."
+    },
+    {
+      "type": "range",
+      "id": "need_text_size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Description Font Size",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Section Break"
+    },
+    {
+      "type": "text",
+      "id": "break_text",
+      "label": "Break Pill Text",
+      "default": "Introducing the Solution"
+    },
+    {
+      "type": "header",
+      "content": "Solution Header"
+    },
+    {
+      "type": "text",
+      "id": "solution_title_prefix",
+      "label": "Title Prefix",
+      "default": "Meet"
+    },
+    {
+      "type": "text",
+      "id": "solution_title_accent",
+      "label": "Title Accent (Orange)",
+      "default": "Vidhyut Saathi Card"
+    },
+    {
+      "type": "text",
+      "id": "solution_subtitle",
+      "label": "Subtitle",
+      "default": "India's #1 Smart Electricity Saver — Engineered for Every Home"
+    },
+    {
+      "type": "header",
+      "content": "CTA Block"
+    },
+    {
+      "type": "text",
+      "id": "cta_title_prefix",
+      "label": "CTA Title Prefix",
+      "default": "Start Saving on Your"
+    },
+    {
+      "type": "text",
+      "id": "cta_title_accent",
+      "label": "CTA Title Accent",
+      "default": "Electricity Bill"
+    },
+    {
+      "type": "text",
+      "id": "cta_title_suffix",
+      "label": "CTA Title Suffix",
+      "default": "Today"
+    },
+    {
+      "type": "text",
+      "id": "cta_subtitle",
+      "label": "CTA Subtitle",
+      "default": "Join 20 Lakh+ Indian families already saving with Vidhyut Saathi Card"
+    },
+    {
+      "type": "text",
+      "id": "proof_count",
+      "label": "Social Proof Count",
+      "default": "20 Lakh+"
+    },
+    {
+      "type": "text",
+      "id": "proof_label",
+      "label": "Social Proof Label",
+      "default": "households trust us"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "Button Text",
+      "default": "Get Franchise Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "cta_note",
+      "label": "Button Note",
+      "default": "Free Consultation Available"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat_card",
+      "name": "Stat Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stat_value",
+          "label": "Stat Value",
+          "default": "₹1.5 Lakh Cr"
+        },
+        {
+          "type": "text",
+          "id": "stat_desc",
+          "label": "Stat Description",
+          "default": "Annual household electricity spending across India"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vidhyut Saathi – Crisis",
+      "blocks": [
+        {
+          "type": "stat_card",
+          "settings": {
+            "stat_value": "₹1.5 Lakh Cr",
+            "stat_desc": "Annual household electricity spending across India"
+          }
+        },
+        {
+          "type": "stat_card",
+          "settings": {
+            "stat_value": "30%",
+            "stat_desc": "Electricity wasted due to voltage fluctuations & reactive loads"
+          }
+        },
+        {
+          "type": "stat_card",
+          "settings": {
+            "stat_value": "800M+",
+            "stat_desc": "Indians facing high electricity bills with no effective solution"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

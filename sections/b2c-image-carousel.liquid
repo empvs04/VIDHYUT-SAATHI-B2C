@@ -1,0 +1,826 @@
+{%- liquid
+  assign section_font = 'inherit'
+  case section.settings.section_title_font
+    when 'modern_sans'
+      assign section_font = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif"
+    when 'luxury_serif'
+      assign section_font = "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, serif"
+    when 'geometric'
+      assign section_font = "'Montserrat', 'Futura', 'Helvetica Neue', sans-serif"
+    when 'classic_serif'
+      assign section_font = "'Merriweather', 'Georgia', Cambria, serif"
+    when 'monospace'
+      assign section_font = "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace"
+    when 'display'
+      assign section_font = "'Impact', 'Arial Black', sans-serif"
+    when 'slab_serif'
+      assign section_font = "'Rockwell', 'Courier New', sans-serif"
+    when 'rounded'
+      assign section_font = "'Nunito', 'Varela Round', 'Arial Rounded MT Bold', sans-serif"
+    when 'humanist'
+      assign section_font = "'Gill Sans', 'Optima', 'Trebuchet MS', sans-serif"
+    when 'condensed'
+      assign section_font = "'Oswald', 'Arial Narrow', 'Impact', sans-serif"
+    when 'handwriting'
+      assign section_font = "'Caveat', 'Pacifico', 'Comic Sans MS', cursive"
+    when 'elegant_thin'
+      assign section_font = "'Raleway', 'Century Gothic', 'Futura', sans-serif"
+    when 'newspaper'
+      assign section_font = "'Libre Baskerville', 'Times New Roman', 'Palatino', serif"
+    when 'retro'
+      assign section_font = "'Abril Fatface', 'Rockwell Extra Bold', 'Arial Black', serif"
+    when 'tech'
+      assign section_font = "'Exo 2', 'Rajdhani', 'Orbitron', sans-serif"
+  endcase
+
+  assign card_font = 'inherit'
+  case section.settings.card_title_font
+    when 'modern_sans'
+      assign card_font = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif"
+    when 'luxury_serif'
+      assign card_font = "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, serif"
+    when 'geometric'
+      assign card_font = "'Montserrat', 'Futura', 'Helvetica Neue', sans-serif"
+    when 'classic_serif'
+      assign card_font = "'Merriweather', 'Georgia', Cambria, serif"
+    when 'monospace'
+      assign card_font = "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace"
+    when 'display'
+      assign card_font = "'Impact', 'Arial Black', sans-serif"
+    when 'slab_serif'
+      assign card_font = "'Rockwell', 'Courier New', sans-serif"
+    when 'rounded'
+      assign card_font = "'Nunito', 'Varela Round', 'Arial Rounded MT Bold', sans-serif"
+    when 'humanist'
+      assign card_font = "'Gill Sans', 'Optima', 'Trebuchet MS', sans-serif"
+    when 'condensed'
+      assign card_font = "'Oswald', 'Arial Narrow', 'Impact', sans-serif"
+    when 'handwriting'
+      assign card_font = "'Caveat', 'Pacifico', 'Comic Sans MS', cursive"
+    when 'elegant_thin'
+      assign card_font = "'Raleway', 'Century Gothic', 'Futura', sans-serif"
+    when 'newspaper'
+      assign card_font = "'Libre Baskerville', 'Times New Roman', 'Palatino', serif"
+    when 'retro'
+      assign card_font = "'Abril Fatface', 'Rockwell Extra Bold', 'Arial Black', serif"
+    when 'tech'
+      assign card_font = "'Exo 2', 'Rajdhani', 'Orbitron', sans-serif"
+  endcase
+-%}
+
+{%- style -%}
+  /* =============================================
+     B2C Hero Carousel — Amazon-style Peek Layout
+     Two cards visible: ~65% + ~30% peek, swipeable
+     ============================================= */
+
+  .b2c-peek-carousel-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: {{ section.settings.section_padding_vertical }}px 0;
+    background: {{ section.settings.section_background }};
+  }
+
+  /* --- Creative Section Header Styles --- */
+  .b2c-section-header-{{ section.id }} {
+    padding: 0 {{ section.settings.edge_padding }}px;
+    margin-bottom: {{ section.settings.header_margin_bottom }}px;
+    text-align: {{ section.settings.header_alignment }};
+  }
+
+  .b2c-section-title-{{ section.id }} {
+    font-family: {{ section_font }};
+    font-size: {{ section.settings.section_title_size }}px;
+    font-weight: {{ section.settings.section_title_weight }};
+    color: {{ section.settings.section_title_color }};
+    margin: 0 0 6px 0;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-transform: {{ section.settings.section_title_transform }};
+  }
+
+  .b2c-section-subtitle-{{ section.id }} {
+    font-size: {{ section.settings.section_subtitle_size }}px;
+    color: {{ section.settings.section_subtitle_color }};
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  /* --- Carousel Track & Slides --- */
+  .b2c-peek-track-{{ section.id }} {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: {{ section.settings.card_gap }}px;
+    padding-left: {{ section.settings.edge_padding }}px;
+    /* Right padding ensures last card doesn't flush to edge */
+    padding-right: {{ section.settings.edge_padding }}px;
+  }
+
+  .b2c-peek-track-{{ section.id }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  .b2c-peek-slide-{{ section.id }} {
+    /* On mobile: show ~65% of first card so ~30% of next peeks through.
+       Formula: 100% - edge_padding - gap - peek_amount = card width
+       Shopify liquid can't do full math, so we use calc() in CSS with custom props.
+    */
+    flex: 0 0 calc({{ section.settings.card_width_mobile }}% - {{ section.settings.edge_padding | times: 2 | divided_by: section.blocks.size }}px);
+    scroll-snap-align: start;
+    position: relative;
+    border-radius: {{ section.settings.card_border_radius }}px;
+    overflow: hidden;
+    background: #1a1a1a;
+    /* Tall portrait aspect ratio matching Amazon's banner cards */
+    aspect-ratio: {{ section.settings.card_aspect_ratio_mobile }};
+  }
+
+  @media screen and (min-width: 769px) {
+    .b2c-peek-slide-{{ section.id }} {
+      flex: 0 0 {{ section.settings.card_width_desktop }}%;
+      aspect-ratio: {{ section.settings.card_aspect_ratio_desktop }};
+    }
+  }
+
+  /* Card image fills the full card */
+  .b2c-peek-slide-{{ section.id }} .b2c-card-image-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .b2c-peek-slide-{{ section.id }} .b2c-card-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Text overlay — sits on top of image */
+  .b2c-peek-slide-{{ section.id }} .b2c-card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: {{ section.settings.card_text_padding }}px;
+    background: linear-gradient(
+      180deg,
+      rgba(0,0,0,{{ section.settings.overlay_top_opacity | divided_by: 100.0 }}) 0%,
+      transparent 55%,
+      rgba(0,0,0,{{ section.settings.overlay_bottom_opacity | divided_by: 100.0 }}) 100%
+    );
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .b2c-peek-slide-{{ section.id }} .b2c-card-title {
+    font-family: {{ card_font }};
+    font-size: {{ section.settings.title_font_size }}px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 6px 0;
+    color: {{ section.settings.title_color }};
+    text-shadow: 0 1px 4px rgba(0,0,0,0.35);
+  }
+
+  .b2c-peek-slide-{{ section.id }} .b2c-card-subtitle {
+    font-size: {{ section.settings.subtitle_font_size }}px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin: 0 0 10px 0;
+    color: {{ section.settings.subtitle_color }};
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  .b2c-peek-slide-{{ section.id }} .b2c-card-badge {
+    display: inline-block;
+    font-size: {{ section.settings.badge_font_size }}px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: {{ section.settings.badge_background }};
+    color: {{ section.settings.badge_color }};
+    margin-bottom: 8px;
+    align-self: flex-start;
+  }
+
+  /* Bottom label (e.g. "Notify Me", "*T&C apply") */
+  .b2c-peek-slide-{{ section.id }} .b2c-card-bottom-label {
+    position: absolute;
+    bottom: {{ section.settings.card_text_padding }}px;
+    left: {{ section.settings.card_text_padding }}px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.75);
+  }
+
+  /* Clickable full-card anchor */
+  .b2c-peek-slide-{{ section.id }} > a {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  /* Placeholder when no image is set */
+  .b2c-peek-slide-{{ section.id }} .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+{%- endstyle -%}
+
+<div
+  class="b2c-peek-carousel-{{ section.id }}"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="{{ section.settings.accessibility_info | escape | default: 'Promotional banners' }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+>
+  {%- comment -%} Custom Section Header Addition {%- endcomment -%}
+  {% if section.settings.section_title != blank or section.settings.section_subtitle != blank %}
+    <div class="b2c-section-header-{{ section.id }}">
+      {% if section.settings.section_title != blank %}
+        <h2 class="b2c-section-title-{{ section.id }}">{{ section.settings.section_title | escape }}</h2>
+      {% endif %}
+      {% if section.settings.section_subtitle != blank %}
+        <p class="b2c-section-subtitle-{{ section.id }}">{{ section.settings.section_subtitle | escape }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div
+    class="b2c-peek-track-{{ section.id }}"
+    id="b2c-peek-track-{{ section.id }}"
+  >
+    {% for block in section.blocks %}
+      <div
+        class="b2c-peek-slide-{{ section.id }}"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="Slide {{ forloop.index }} of {{ section.blocks.size }}"
+        {{ block.shopify_attributes }}
+      >
+        {%- comment -%} Full-card link (sits above overlay via z-index) {%- endcomment -%}
+        {% if block.settings.link != blank %}
+          <a href="{{ block.settings.link }}" aria-label="{{ block.settings.title | escape | default: 'View offer' }}" tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"></a>
+        {% endif %}
+
+        {%- comment -%} Background image {%- endcomment -%}
+        <div class="b2c-card-image-wrap">
+          {% if block.settings.image != blank %}
+            {%- liquid
+              assign loading_attr = 'lazy'
+              assign fetch_priority = 'auto'
+              if forloop.first
+                assign loading_attr = 'eager'
+                assign fetch_priority = 'high'
+              endif
+            -%}
+            {{ block.settings.image | image_url: width: 800 | image_tag:
+              loading: loading_attr,
+              fetchpriority: fetch_priority,
+              alt: block.settings.image.alt | default: block.settings.title
+            }}
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+        </div>
+
+        {%- comment -%} Text overlay {%- endcomment -%}
+        <div class="b2c-card-overlay">
+          {% if block.settings.badge != blank %}
+            <span class="b2c-card-badge">{{ block.settings.badge }}</span>
+          {% endif %}
+
+          {% if block.settings.title != blank %}
+            <p class="b2c-card-title">{{ block.settings.title }}</p>
+          {% endif %}
+
+          {% if block.settings.subtitle != blank %}
+            <p class="b2c-card-subtitle">{{ block.settings.subtitle }}</p>
+          {% endif %}
+        </div>
+
+        {% if block.settings.bottom_label != blank %}
+          <span class="b2c-card-bottom-label">{{ block.settings.bottom_label }}</span>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  (function() {
+    var containerId = 'b2c-peek-track-{{ section.id }}';
+    var sectionEl = document.querySelector('.b2c-peek-carousel-{{ section.id }}');
+    if (!sectionEl) return;
+
+    var track = document.getElementById(containerId);
+    var slides = track ? track.querySelectorAll('.b2c-peek-slide-{{ section.id }}') : [];
+    var speed = parseInt(sectionEl.getAttribute('data-autoplay-speed'), 10);
+    var currentIndex = 0;
+    var autoplayTimer = null;
+    var isPaused = false;
+
+    if (!track || slides.length <= 1) return;
+
+    function scrollToSlide(index) {
+      if (!slides[index]) return;
+      currentIndex = index;
+      track.scrollTo({ left: slides[index].offsetLeft - {{ section.settings.edge_padding }}, behavior: 'smooth' });
+      updateA11y();
+    }
+
+    function updateA11y() {
+      slides.forEach(function(slide, i) {
+        var active = i === currentIndex;
+        slide.setAttribute('aria-hidden', !active);
+        var link = slide.querySelector('a');
+        if (link) link.setAttribute('tabindex', active ? '0' : '-1');
+      });
+    }
+
+    function startAutoplay() {
+      if (speed <= 0 || isPaused) return;
+      stopAutoplay();
+      autoplayTimer = setInterval(function() {
+        var next = currentIndex >= slides.length - 1 ? 0 : currentIndex + 1;
+        scrollToSlide(next);
+      }, speed);
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer) clearInterval(autoplayTimer);
+    }
+
+    // Track swipe to update currentIndex
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var idx = Array.from(slides).indexOf(entry.target);
+          if (idx !== -1) currentIndex = idx;
+          updateA11y();
+        }
+      });
+    }, { root: track, threshold: 0.55 });
+
+    slides.forEach(function(slide) { observer.observe(slide); });
+
+    // Pause on hover / focus
+    sectionEl.addEventListener('mouseenter', function() { isPaused = true; stopAutoplay(); });
+    sectionEl.addEventListener('mouseleave', function() { isPaused = false; startAutoplay(); });
+    sectionEl.addEventListener('focusin',     function() { isPaused = true; stopAutoplay(); });
+    sectionEl.addEventListener('focusout',    function() { isPaused = false; startAutoplay(); });
+
+    // Resume after manual scroll
+    var scrollDebounce;
+    track.addEventListener('scroll', function() {
+      stopAutoplay();
+      clearTimeout(scrollDebounce);
+      if (!isPaused) scrollDebounce = setTimeout(startAutoplay, 2500);
+    }, { passive: true });
+
+    updateA11y();
+    startAutoplay();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "B2C Hero Carousel (Peek)",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header & Typography"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Heading Text",
+      "default": "Top Deals & Offers"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Subtitle Text",
+      "default": "Handpicked dynamic collections for you"
+    },
+    {
+      "type": "select",
+      "id": "section_title_font",
+      "label": "Heading Font Family",
+      "options": [
+        { "value": "inherit", "label": "Theme Default" },
+        { "value": "modern_sans", "label": "Clean Modern Sans" },
+        { "value": "luxury_serif", "label": "Elegant Luxury Serif" },
+        { "value": "geometric", "label": "Geometric Minimalist" },
+        { "value": "classic_serif", "label": "Editorial Classic Serif" },
+        { "value": "monospace", "label": "Technical Monospace" },
+        { "value": "display", "label": "Impactful Display" },
+        { "value": "slab_serif", "label": "Vintage Slab Serif" },
+        { "value": "rounded", "label": "Friendly Rounded" },
+        { "value": "humanist", "label": "Humanist Sans" },
+        { "value": "condensed", "label": "Bold Condensed" },
+        { "value": "handwriting", "label": "Casual Handwriting" },
+        { "value": "elegant_thin", "label": "Elegant Thin" },
+        { "value": "newspaper", "label": "Newspaper Editorial" },
+        { "value": "retro", "label": "Retro Display" },
+        { "value": "tech", "label": "Futuristic Tech" }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Header Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "section_title_color",
+      "label": "Heading Color",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "section_title_size",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading Font Size",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "section_title_weight",
+      "label": "Heading Font Weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "section_title_transform",
+      "label": "Heading Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "section_subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#555555"
+    },
+    {
+      "type": "range",
+      "id": "section_subtitle_size",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle Font Size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "header_margin_bottom",
+      "min": 4,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Header Spacing Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Card Size & Layout"
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "min": 50,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "label": "Card width on mobile",
+      "info": "Controls how much of the next card peeks through. ~65% = Amazon-style peek.",
+      "default": 65
+    },
+    {
+      "type": "range",
+      "id": "card_width_desktop",
+      "min": 20,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "label": "Card width on desktop",
+      "default": 30
+    },
+    {
+      "type": "text",
+      "id": "card_aspect_ratio_mobile",
+      "label": "Card aspect ratio (mobile)",
+      "default": "3 / 4",
+      "info": "Width / Height. e.g. 3 / 4 for tall portrait cards."
+    },
+    {
+      "type": "text",
+      "id": "card_aspect_ratio_desktop",
+      "label": "Card aspect ratio (desktop)",
+      "default": "4 / 5",
+      "info": "Width / Height for desktop card proportions."
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Card corner radius",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between cards",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "edge_padding",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Left/right edge padding",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "section_padding_vertical",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Section vertical padding",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Text & Overlay"
+    },
+    {
+      "type": "select",
+      "id": "card_title_font",
+      "label": "Card Title Font Family",
+      "options": [
+        { "value": "inherit", "label": "Theme Default" },
+        { "value": "modern_sans", "label": "Clean Modern Sans" },
+        { "value": "luxury_serif", "label": "Elegant Luxury Serif" },
+        { "value": "geometric", "label": "Geometric Minimalist" },
+        { "value": "classic_serif", "label": "Editorial Classic Serif" },
+        { "value": "monospace", "label": "Technical Monospace" },
+        { "value": "display", "label": "Impactful Display" },
+        { "value": "slab_serif", "label": "Vintage Slab Serif" },
+        { "value": "rounded", "label": "Friendly Rounded" },
+        { "value": "humanist", "label": "Humanist Sans" },
+        { "value": "condensed", "label": "Bold Condensed" },
+        { "value": "handwriting", "label": "Casual Handwriting" },
+        { "value": "elegant_thin", "label": "Elegant Thin" },
+        { "value": "newspaper", "label": "Newspaper Editorial" },
+        { "value": "retro", "label": "Retro Display" },
+        { "value": "tech", "label": "Futuristic Tech" }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "range",
+      "id": "card_text_padding",
+      "min": 8,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Card text padding",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "overlay_top_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay opacity (top)",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "overlay_bottom_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay opacity (bottom)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Title font size",
+      "default": 22
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle font size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#eeeeee"
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge font size",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Badge background",
+      "default": "#ff9900"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Badge text color",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background color",
+      "default": "#f0f2f2"
+    },
+    {
+      "type": "header",
+      "content": "Behavior"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay speed",
+      "info": "Set to 0 to disable autoplay.",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Accessibility"
+    },
+    {
+      "type": "text",
+      "id": "accessibility_info",
+      "label": "Carousel description (screen readers)",
+      "default": "Promotional banners carousel",
+      "info": "Describe the section for assistive technologies."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner_card",
+      "name": "Banner Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image",
+          "info": "Portrait/tall images work best. Recommended minimum 800×1000px."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Bold headline shown at the top of the card.",
+          "default": "Karigar Mela"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "info": "Supporting line below the title.",
+          "default": "Discover India's Handcrafted Treasures"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge text",
+          "info": "Small pill above the title (e.g. 'NEW', 'SALE', 'UNDER ₹299'). Leave blank to hide."
+        },
+        {
+          "type": "text",
+          "id": "bottom_label",
+          "label": "Bottom label",
+          "info": "Small text at bottom-left (e.g. '*T&C apply', 'Notify Me'). Leave blank to hide.",
+          "default": "*T&C apply"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "B2C Hero Carousel (Peek)",
+      "blocks": [
+        {
+          "type": "banner_card",
+          "settings": {
+            "title": "Karigar Mela",
+            "subtitle": "Discover India's Handcrafted Treasures",
+            "bottom_label": "*T&C apply"
+          }
+        },
+        {
+          "type": "banner_card",
+          "settings": {
+            "title": "Launch Tomorrow",
+            "subtitle": "Biggest Battery Ever",
+            "bottom_label": "Notify Me"
+          }
+        },
+        {
+          "type": "banner_card",
+          "settings": {
+            "title": "New Arrivals",
+            "subtitle": "Shop the latest deals"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1210 @@
+{%- style -%}
+  /* --- Global & Variables --- */
+  :root {
+    --iso-primary: {{ section.settings.primary_color | default: '#ec5c0a' }};
+    --iso-secondary: #007b3e;
+    --iso-bg: {{ section.settings.bg_color | default: '#fff8ef' }};
+    --iso-text-dark: #1a1a1a;
+    --iso-text-light: #4a4a4a;
+    --iso-radius: 16px;
+    --iso-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    --iso-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+  }
+  
+  .iso-wrapper {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    color: var(--iso-text-dark);
+    background-color: var(--iso-bg);
+    overflow: hidden;
+  }
+
+  /* --- Typography --- */
+  .iso-heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--iso-text-dark);
+  }
+  .iso-subheading {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--iso-text-light);
+  }
+  
+  /* --- Premium Hero Section --- */
+  .iso-hero {
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-color: #090e1a;
+    min-height: 480px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-breadcrumb-pill {
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 204, 0, 0.5);
+    border-radius: 50px;
+    padding: 10px 26px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .hero-breadcrumb-pill span, .hero-breadcrumb-pill a {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  
+  /* --- Left to Right Moving Marquee Text --- */
+  @keyframes scroll-left-to-right {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(50%) translateY(0); }
+  }
+  .moving-text {
+    position: absolute;
+    top: 65px;
+    left: 0;
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0.45;
+    pointer-events: none;
+    line-height: 1;
+    font-size: clamp(38px, 5.5vw, 85px);
+    font-weight: 900;
+    background: linear-gradient(90deg, #ec5c0a, #ff9900, #007b3e, #ec5c0a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: scroll-left-to-right 16s linear infinite;
+  }
+
+  /* --- Premium Certificate Showcase & Details --- */
+  .iso-showcase {
+    padding: clamp(60px, 8vw, 100px) 20px;
+    background: radial-gradient(circle at 80% 20%, rgba(236, 92, 10, 0.05) 0%, #ffffff 45%, rgba(0, 123, 62, 0.05) 100%);
+    position: relative;
+  }
+  .iso-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (min-width: 912px) {
+    .iso-grid { grid-template-columns: 1fr 1.2fr; gap: 60px; }
+  }
+
+  /* 3D Certificate Viewer Box */
+  .iso-cert-box {
+    perspective: 1200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .iso-cert-img-wrapper {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25), 0 0 40px rgba(236, 92, 10, 0.15), 0 0 0 2px rgba(255, 204, 0, 0.5);
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.6s ease;
+  }
+  .iso-cert-img-wrapper:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+    box-shadow: 0 35px 75px rgba(0, 0, 0, 0.3), 0 0 60px rgba(236, 92, 10, 0.25), 0 0 0 3px rgba(255, 204, 0, 0.8);
+  }
+  .iso-cert-img-wrapper img, .iso-cert-img-wrapper svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: translateZ(20px);
+  }
+  .iso-cert-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    padding: 16px 36px;
+    background: linear-gradient(135deg, #ec5c0a, #f1721b);
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 12px 30px rgba(236, 92, 10, 0.35);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .iso-cert-btn:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 18px 40px rgba(236, 92, 10, 0.5);
+    background: linear-gradient(135deg, #f1721b, #007b3e);
+  }
+
+  /* Details Box */
+  .iso-details-box {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(236, 92, 10, 0.2);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(236, 92, 10, 0.07);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .iso-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.12), rgba(0, 123, 62, 0.12));
+    border: 1px solid rgba(236, 92, 10, 0.3);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #ec5c0a;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    width: fit-content;
+    box-shadow: 0 4px 15px rgba(236, 92, 10, 0.1);
+  }
+  .iso-badge .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ec5c0a;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(236, 92, 10, 0.7);
+    animation: pulse-ring 1.8s infinite;
+  }
+  @keyframes pulse-ring {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 92, 10, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(236, 92, 10, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 92, 10, 0); }
+  }
+
+  .iso-details-box h2 {
+    font-size: clamp(26px, 3vw, 42px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #ec5c0a, #007b3e, #ec5c0a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: color-shift 4s linear infinite;
+  }
+  @keyframes color-shift {
+    to { background-position: 200% center; }
+  }
+  .iso-main-text {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #444;
+    margin-bottom: 35px;
+  }
+  
+  .iso-data-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 600px) {
+    .iso-data-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .iso-data-item {
+    background: #ffffff;
+    padding: 16px 20px;
+    border-radius: 16px;
+    border-left: 4px solid #007b3e;
+    border-right: 1px solid rgba(0, 123, 62, 0.1);
+    border-top: 1px solid rgba(0, 123, 62, 0.1);
+    border-bottom: 1px solid rgba(0, 123, 62, 0.1);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+  }
+  .iso-data-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 123, 62, 0.1);
+    border-left-color: #ec5c0a;
+  }
+  .iso-data-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .iso-data-value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  /* Mobile Responsive Optimizations */
+  @media screen and (max-width: 768px) {
+    .iso-hero {
+      min-height: 260px !important;
+      height: 60vw !important;
+      padding: 12px 10px !important;
+    }
+    .moving-text {
+      top: 38px !important;
+      font-size: 32px !important;
+      opacity: 0.70 !important;
+    }
+    .iso-details-box {
+      padding: 24px 18px !important;
+      border-radius: 22px !important;
+    }
+    .iso-details-box h2 {
+      font-size: clamp(22px, 5.5vw, 30px) !important;
+      line-height: 1.3 !important;
+      margin-bottom: 14px !important;
+    }
+    .iso-main-text {
+      font-size: 0.94rem !important;
+      line-height: 1.65 !important;
+      margin-bottom: 24px !important;
+    }
+    .iso-cert-btn {
+      width: 100% !important;
+      max-width: 320px !important;
+      padding: 14px 24px !important;
+      justify-content: center !important;
+    }
+    .cert-frame-stage {
+      padding: 14px !important;
+      border-radius: 20px !important;
+    }
+    .cert-stamp-badge {
+      width: 72px !important;
+      height: 72px !important;
+      top: 14px !important;
+      right: 14px !important;
+      font-size: 0.58rem !important;
+    }
+    .cert-stamp-badge span.big {
+      font-size: 0.8rem !important;
+    }
+    .official-cert-card-mockup {
+      padding: 18px 12px !important;
+      border-width: 5px !important;
+    }
+    .cert-mock-company {
+      font-size: 0.98rem !important;
+      line-height: 1.3 !important;
+    }
+    .cert-mock-table {
+      grid-template-columns: 1fr !important;
+      gap: 4px !important;
+      font-size: 0.74rem !important;
+    }
+    .cert-verification-bar {
+      flex-direction: column !important;
+      text-align: center !important;
+      align-items: center !important;
+      padding: 20px 16px !important;
+      gap: 16px !important;
+      border-radius: 20px !important;
+    }
+    .cert-verify-info {
+      flex-direction: column !important;
+      text-align: center !important;
+      gap: 10px !important;
+    }
+    .cert-verify-btn {
+      width: 100% !important;
+      max-width: 320px !important;
+      justify-content: center !important;
+      text-align: center !important;
+    }
+  }
+
+  /* --- Commitment Cards --- */
+  .iso-commitment {
+    background: #ffffff;
+    padding: clamp(60px, 8vw, 100px) 20px;
+  }
+  .comm-container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .comm-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 40px;
+  }
+  @media (min-width: 600px) {
+    .comm-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .comm-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  
+  .comm-card {
+    background: var(--iso-bg);
+    padding: 40px 20px;
+    border-radius: var(--iso-radius);
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.03);
+    transition: transform 0.3s ease;
+  }
+  .comm-card:hover {
+    transform: translateY(-5px);
+  }
+  .comm-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--iso-primary);
+  }
+  .comm-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--iso-text-dark);
+  }
+
+  /* --- Why it Matters Split Section --- */
+  .iso-why {
+    padding: clamp(60px, 8vw, 100px) 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (min-width: 912px) {
+    .why-grid { grid-template-columns: 1fr 1fr; gap: 80px; }
+    .why-grid.reverse .why-text { order: 1; }
+    .why-grid.reverse .why-img { order: 2; }
+  }
+  .why-img {
+    border-radius: var(--iso-radius);
+    overflow: hidden;
+    box-shadow: var(--iso-shadow);
+  }
+  .why-img img, .why-img svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .why-text h2 {
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .why-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--iso-text-light);
+    margin-bottom: 15px;
+  }
+
+  /* --- CTA Section --- */
+  .iso-cta {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+    color: #ffffff;
+    padding: clamp(60px, 8vw, 100px) 20px;
+    text-align: center;
+  }
+  .iso-cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .iso-cta h2 {
+    color: #ffffff;
+    margin-bottom: 15px;
+  }
+  .iso-cta p {
+    color: #cccccc;
+    margin-bottom: 30px;
+  }
+  .iso-cta-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background: var(--iso-primary);
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  /* --- Section 2: Government Approved & Official ISO Showcase --- */
+  .iso-official-cert-section {
+    padding: clamp(60px, 8vw, 100px) 20px;
+    background: linear-gradient(180deg, #090e1a 0%, #111827 50%, #090e1a 100%);
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(255, 204, 0, 0.15);
+    border-bottom: 1px solid rgba(255, 204, 0, 0.15);
+  }
+  
+  .iso-official-cert-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%; max-width: 1200px;
+    height: 100%;
+    background: radial-gradient(circle at 50% 30%, rgba(236, 92, 10, 0.15) 0%, rgba(0, 123, 62, 0.1) 40%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
+  }
+
+  .iso-cert-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .iso-cert-header {
+    text-align: center;
+    max-width: 880px;
+    margin: 0 auto 50px auto;
+  }
+
+  .iso-gov-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, rgba(255, 204, 0, 0.15), rgba(236, 92, 10, 0.15));
+    border: 1px solid rgba(255, 204, 0, 0.5);
+    border-radius: 50px;
+    color: #ffcc00;
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 8px 25px rgba(255, 204, 0, 0.15);
+    margin-bottom: 20px;
+  }
+
+  .iso-cert-header h2 {
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: #ffffff;
+  }
+
+  .iso-cert-header h2 span {
+    background: linear-gradient(90deg, #ffcc00, #ec5c0a, #00ff66);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .iso-cert-header p {
+    font-size: 1.1rem;
+    color: #9ca3af;
+    line-height: 1.75;
+  }
+
+  /* Main 5D Holographic Certificate Canvas Grid */
+  .iso-cert-display-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (min-width: 992px) {
+    .iso-cert-display-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+    }
+  }
+
+  /* Certificate Frame Stage */
+  .cert-frame-stage {
+    position: relative;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 204, 0, 0.4);
+    border-radius: 28px;
+    padding: 24px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 50px rgba(236, 92, 10, 0.25);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .cert-frame-stage:hover {
+    border-color: rgba(255, 204, 0, 0.9);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.85), 0 0 75px rgba(236, 92, 10, 0.4);
+    transform: translateY(-5px);
+  }
+
+  /* Security Wax Stamp Badge */
+  .cert-stamp-badge {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 95px;
+    height: 95px;
+    background: radial-gradient(circle, #ffcc00 0%, #d4af37 50%, #aa7c11 100%);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    font-weight: 900;
+    font-size: 0.68rem;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6), 0 0 0 4px rgba(255,204,0,0.4);
+    z-index: 10;
+    transform: rotate(12deg);
+    border: 2px dashed #000000;
+  }
+  .cert-stamp-badge span.big {
+    font-size: 0.95rem;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .cert-document-preview {
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    position: relative;
+  }
+
+  .cert-document-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  /* Right Side: Key Features & Accreditation Cards */
+  .cert-highlights-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .cert-highlight-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .cert-highlight-card:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(236, 92, 10, 0.5);
+    transform: translateX(8px);
+  }
+
+  .cert-card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.25), rgba(0, 123, 62, 0.25));
+    border: 1px solid rgba(255, 204, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .cert-card-content h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 6px 0;
+  }
+
+  .cert-card-content p {
+    font-size: 0.92rem;
+    color: #cbd5e1;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Accreditation Logos Bar */
+  .accreditation-logos-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .accred-tag {
+    padding: 6px 14px;
+    background: rgba(255, 204, 0, 0.1);
+    border: 1px solid rgba(255, 204, 0, 0.3);
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #ffcc00;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Verification Link Bar */
+  .cert-verification-bar {
+    margin-top: 50px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.15), rgba(0, 123, 62, 0.15));
+    border: 1px solid rgba(255, 204, 0, 0.5);
+    border-radius: 24px;
+    padding: 28px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  }
+
+  .cert-verify-info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .cert-verify-info .icon {
+    font-size: 2.2rem;
+  }
+
+  .cert-verify-text h4 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 4px 0;
+  }
+
+  .cert-verify-text p {
+    font-size: 0.92rem;
+    color: #9ca3af;
+    margin: 0;
+  }
+
+  .cert-verify-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #007b3e, #00a854);
+    color: #ffffff !important;
+    font-weight: 800;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px rgba(0, 123, 62, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .cert-verify-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(0, 123, 62, 0.6);
+    background: linear-gradient(135deg, #ec5c0a, #f1721b);
+  }
+  /* Visual Certificate Document Fallback Mockup */
+  .official-cert-card-mockup {
+    background: #ffffff;
+    color: #1a1a1a;
+    padding: 30px 24px;
+    border-radius: 12px;
+    border: 8px double #d4af37;
+    position: relative;
+    box-shadow: inset 0 0 25px rgba(212, 175, 55, 0.15);
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+  }
+  .cert-mock-icv {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #0088cc;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -1px;
+    margin-bottom: 2px;
+  }
+  .cert-mock-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0088cc;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .cert-mock-sub {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 6px;
+  }
+  .cert-mock-company {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #003366;
+    margin: 10px 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .cert-mock-address {
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+  .cert-mock-iso {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    letter-spacing: 1px;
+    margin: 10px 0 2px 0;
+    font-family: 'Outfit', sans-serif;
+  }
+  .cert-mock-qms {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 12px;
+  }
+  .cert-mock-scope {
+    font-size: 0.78rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 10px 0;
+    text-align: center;
+    font-family: sans-serif;
+  }
+  .cert-mock-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 12px;
+    font-size: 0.78rem;
+    text-align: left;
+    margin: 12px 0;
+    background: #fffcf0;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ffe8a3;
+    font-family: sans-serif;
+  }
+  .cert-mock-seals {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 15px;
+    gap: 8px;
+  }
+  .cert-seal-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 50px;
+    background: #003366;
+    color: #ffffff;
+    font-family: sans-serif;
+  }
+  .cert-seal-red {
+    background: #cc0000;
+  }
+{%- endstyle -%}
+
+<div class="iso-wrapper">
+  
+  <!-- Premium Hero Section -->
+  <section class="iso-hero page-header page-header_align_center" 
+           style="{% if section.settings.hero_bg != blank %}background-image: url('{{ section.settings.hero_bg | image_url: width: 1920 }}');{% else %}background-image: linear-gradient(135deg, #090e1a, #151d30);{% endif %}">
+    <div class="moving-text">{{ section.settings.hero_title }} &nbsp; &nbsp; &nbsp; &nbsp; {{ section.settings.hero_title }} &nbsp; &nbsp; &nbsp; &nbsp; {{ section.settings.hero_title }} &nbsp; &nbsp; &nbsp; &nbsp; {{ section.settings.hero_title }}</div>
+    <div class="hero-breadcrumb-pill">
+      <a href="/">Home</a>
+      <span style="color: #ffcc00;">/</span>
+      <span style="color: #ffffff; font-weight: 700; font-size: 0.92rem;">{{ section.settings.hero_title }}</span>
+    </div>
+  </section>
+
+  <!-- Showcase & Details -->
+  <section class="iso-showcase">
+    <div class="iso-grid">
+      
+      <!-- Certificate Viewer with 300 DPI PDF.js Ultra-HD Vector Canvas -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+      <div class="iso-cert-box">
+        <div class="iso-cert-img-wrapper" id="iso-canvas-container-1">
+          <canvas id="iso-pdf-canvas-1" style="width: 100%; height: auto; display: block; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);"></canvas>
+          <img id="iso-pdf-fallback-1" src="{{ 'iso-certificate.jpg' | asset_url }}" alt="Official ISO 9001:2015 Certificate of Registration - Vidhyut Saathi" loading="eager" width="2400" height="3394" style="width: 100%; height: auto; display: none; border-radius: 14px; image-rendering: -webkit-optimize-contrast;">
+        </div>
+        
+        <a href="{{ 'iso-certificate.pdf' | asset_url }}" target="_blank" rel="noopener noreferrer" class="iso-cert-btn" download="Vidhyut_Saathi_ISO_9001_Certificate.pdf">
+          <i class="fa-solid fa-file-pdf" style="margin-right: 8px;"></i> Download Full HD ISO Certificate (PDF)
+        </a>
+      </div>
+
+      <!-- Text Details -->
+      <div class="iso-details-box">
+        <div class="iso-badge">
+          <div class="pulse-dot"></div>
+          100% Verified & Compliant
+        </div>
+        <h2>{{ section.settings.details_heading | default: "ISO 9001:2015 Certified (IAF Certified)" }}</h2>
+        <div class="iso-main-text">
+          {%- if section.settings.details_text != blank -%}
+            {{ section.settings.details_text }}
+          {%- else -%}
+            <p>Proudly ISO 9001:2015 Certified (IAF Certified), Vidhyut Saathi follows internationally recognized quality management standards. IAF (International Accreditation Forum) is one of the world's most respected accreditation associations, ensuring that our certification is globally recognized. This reflects our commitment to quality, reliability, transparency, and consistent customer satisfaction—giving our customers and business partners greater confidence in every product and service we deliver.</p>
+          {%- endif -%}
+        </div>
+        
+        <div class="iso-data-grid">
+          {%- if section.settings.detail_standard != blank -%}
+            <div class="iso-data-item">
+              <div class="iso-data-label">Standard</div>
+              <div class="iso-data-value">{{ section.settings.detail_standard }}</div>
+            </div>
+          {%- endif -%}
+          
+          {%- if section.settings.detail_body != blank -%}
+            <div class="iso-data-item">
+              <div class="iso-data-label">Accreditation Body</div>
+              <div class="iso-data-value">{{ section.settings.detail_body }}</div>
+            </div>
+          {%- endif -%}
+          
+          {%- if section.settings.detail_number != blank -%}
+            <div class="iso-data-item">
+              <div class="iso-data-label">Certificate No.</div>
+              <div class="iso-data-value">{{ section.settings.detail_number }}</div>
+            </div>
+          {%- endif -%}
+          
+          {%- if section.settings.detail_issue != blank -%}
+            <div class="iso-data-item">
+              <div class="iso-data-label">Issue Date</div>
+              <div class="iso-data-value">{{ section.settings.detail_issue }}</div>
+            </div>
+          {%- endif -%}
+          
+          {%- if section.settings.detail_expiry != blank -%}
+            <div class="iso-data-item">
+              <div class="iso-data-label">Valid Until</div>
+              <div class="iso-data-value">{{ section.settings.detail_expiry }}</div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+
+
+  <!-- Commitment Cards -->
+  <section class="iso-commitment">
+    <div class="comm-container">
+      <h2 class="iso-heading" style="text-align: center;">Our Commitment to Quality</h2>
+      <div class="comm-grid">
+        <div class="comm-card">
+          <div class="comm-icon">⭐</div>
+          <h3>{{ section.settings.comm_1 }}</h3>
+        </div>
+        <div class="comm-card">
+          <div class="comm-icon">🤝</div>
+          <h3>{{ section.settings.comm_2 }}</h3>
+        </div>
+        <div class="comm-card">
+          <div class="comm-icon">📈</div>
+          <h3>{{ section.settings.comm_3 }}</h3>
+        </div>
+        <div class="comm-card">
+          <div class="comm-icon">🏆</div>
+          <h3>{{ section.settings.comm_4 }}</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why it Matters -->
+  <section class="iso-why">
+    <div class="why-grid">
+      <div class="why-text">
+        <h2>{{ section.settings.why_heading }}</h2>
+        <div class="iso-main-text">
+          {{ section.settings.why_text }}
+        </div>
+      </div>
+      <div class="why-img">
+        {%- if section.settings.why_image != blank -%}
+          {{ section.settings.why_image | image_url: width: 800, height: 600, crop: 'center' | image_tag: loading: 'lazy' }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="iso-cta">
+    <div class="iso-cta-content">
+      <h2 class="iso-heading">{{ section.settings.cta_heading }}</h2>
+      <p class="iso-subheading">{{ section.settings.cta_text }}</p>
+      <a href="{{ section.settings.cta_link }}" class="iso-cta-btn">{{ section.settings.cta_btn_text }}</a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function renderIsoPdfCertificate() {
+    const pdfUrl = "{{ 'iso-certificate.pdf' | asset_url }}";
+    if (typeof pdfjsLib !== 'undefined' && pdfUrl) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      
+      pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+        pdf.getPage(1).then(function(page) {
+          const scale = 2.5; // High resolution 300 DPI render scale
+          const viewport = page.getViewport({ scale: scale });
+          
+          ['iso-pdf-canvas-1', 'iso-pdf-canvas-2'].forEach(function(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if (canvas) {
+              const context = canvas.getContext('2d');
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+              page.render({ canvasContext: context, viewport: viewport });
+            }
+          });
+        });
+      }).catch(function(err) {
+        console.warn('PDF.js rendering fallback to image:', err);
+        const fallback1 = document.getElementById('iso-pdf-fallback-1');
+        if (fallback1) fallback1.style.display = 'block';
+        const canvas1 = document.getElementById('iso-pdf-canvas-1');
+        if (canvas1) canvas1.style.display = 'none';
+        const fallback2 = document.getElementById('iso-pdf-fallback-2');
+        if (fallback2) fallback2.style.display = 'block';
+        const canvas2 = document.getElementById('iso-pdf-canvas-2');
+        if (canvas2) canvas2.style.display = 'none';
+      });
+    }
+  }
+  document.addEventListener("DOMContentLoaded", renderIsoPdfCertificate);
+  if (window.Shopify && Shopify.designMode) { setTimeout(renderIsoPdfCertificate, 300); }
+</script>
+
+{% schema %}
+{
+  "name": "ISO Certification",
+  "settings": [
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Accent Color",
+      "default": "#ec5c0a"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fff8ef"
+    },
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_bg",
+      "label": "Hero Background Image",
+      "info": "Upload a background image for the hero section."
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "ISO Certification"
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "Internationally recognized standards for quality, reliability, and excellence."
+    },
+    {
+      "type": "header",
+      "content": "Certificate PDF & Display"
+    },
+    {
+      "type": "image_picker",
+      "id": "cert_image",
+      "label": "Certificate Preview Image",
+      "info": "Upload a PNG/JPG screenshot of your official certificate."
+    },
+    {
+      "type": "url",
+      "id": "cert_pdf_url",
+      "label": "Certificate PDF Link",
+      "info": "Upload your PDF to Shopify Files, copy the URL, and paste it here."
+    },
+    {
+      "type": "text",
+      "id": "cert_btn_text",
+      "label": "Button Text",
+      "default": "View Full Certificate"
+    },
+    {
+      "type": "header",
+      "content": "Certification Details"
+    },
+    {
+      "type": "text",
+      "id": "details_heading",
+      "label": "Heading",
+      "default": "ISO 9001:2015 Certified (IAF Certified)"
+    },
+    {
+      "type": "richtext",
+      "id": "details_text",
+      "label": "Main Description",
+      "default": "<p>Proudly ISO 9001:2015 Certified (IAF Certified), Vidhyut Saathi follows internationally recognized quality management standards. IAF (International Accreditation Forum) is one of the world's most respected accreditation associations, ensuring that our certification is globally recognized. This reflects our commitment to quality, reliability, transparency, and consistent customer satisfaction—giving our customers and business partners greater confidence in every product and service we deliver.</p>"
+    },
+    {
+      "type": "text",
+      "id": "detail_standard",
+      "label": "ISO Standard",
+      "default": "ISO 9001:2015"
+    },
+    {
+      "type": "text",
+      "id": "detail_body",
+      "label": "Accreditation Body",
+      "default": "ICV Assessments Pvt. Ltd. (IAF & EGAC)"
+    },
+    {
+      "type": "text",
+      "id": "detail_number",
+      "label": "Certificate Number",
+      "default": "IN/12523440/8795"
+    },
+    {
+      "type": "text",
+      "id": "detail_issue",
+      "label": "Issue Date",
+      "default": "24/02/2026"
+    },
+    {
+      "type": "text",
+      "id": "detail_expiry",
+      "label": "Expiry Date",
+      "default": "23/02/2029"
+    },
+    {
+      "type": "header",
+      "content": "Our Commitment Cards"
+    },
+    {
+      "type": "text",
+      "id": "comm_1",
+      "label": "Card 1 Title",
+      "default": "Quality Focus"
+    },
+    {
+      "type": "text",
+      "id": "comm_2",
+      "label": "Card 2 Title",
+      "default": "Customer Trust"
+    },
+    {
+      "type": "text",
+      "id": "comm_3",
+      "label": "Card 3 Title",
+      "default": "Continuous Improvement"
+    },
+    {
+      "type": "text",
+      "id": "comm_4",
+      "label": "Card 4 Title",
+      "default": "Professional Standards"
+    },
+    {
+      "type": "header",
+      "content": "Why ISO Matters Section"
+    },
+    {
+      "type": "text",
+      "id": "why_heading",
+      "label": "Heading",
+      "default": "Why ISO Certification Matters"
+    },
+    {
+      "type": "richtext",
+      "id": "why_text",
+      "label": "Description Text",
+      "default": "<p>An ISO 9001:2015 certification demonstrates our commitment to structured quality processes, consistency, and professionalism. It gives our customers confidence that our energy-saving technology and franchise support systems meet rigorous, internationally recognized standards for continuous improvement.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "why_image",
+      "label": "Supporting Image"
+    },
+    {
+      "type": "header",
+      "content": "CTA Section"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "Heading",
+      "default": "Committed to Quality and Excellence"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Supporting Text",
+      "default": "Partner with a certified, trusted leader in energy-saving solutions."
+    },
+    {
+      "type": "text",
+      "id": "cta_btn_text",
+      "label": "Button Text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ISO Certification Layout"
+    }
+  ]
+}
+{% endschema %}

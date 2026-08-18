@@ -1,0 +1,294 @@
+{%- style -%}
+  :root {
+    --art-primary: {{ section.settings.primary_color | default: '#ec5c0a' }};
+    --art-bg: {{ section.settings.bg_color | default: '#ffffff' }};
+    --art-text-dark: #1a1a1a;
+    --art-text-light: #444444;
+  }
+  
+  .art-wrapper {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    background: var(--art-bg);
+    color: var(--art-text-dark);
+  }
+
+  /* Article Header */
+  .art-header {
+    text-align: center;
+    padding: clamp(60px, 8vw, 100px) 20px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .art-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(236,92,10,0.1);
+    color: var(--art-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    text-decoration: none;
+  }
+  .art-header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .art-meta {
+    font-size: 1rem;
+    color: #888;
+  }
+  .art-meta span { margin: 0 10px; }
+
+  /* Featured Image */
+  .art-hero-img {
+    max-width: 1200px;
+    margin: 0 auto 50px;
+    padding: 0 20px;
+  }
+  .art-hero-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
+
+  /* Article Content */
+  .art-content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--art-text-light);
+  }
+  .art-content h2, .art-content h3, .art-content h4 {
+    color: var(--art-text-dark);
+    margin: 40px 0 20px;
+    font-weight: 700;
+  }
+  .art-content h2 { font-size: 2rem; }
+  .art-content h3 { font-size: 1.5rem; }
+  .art-content p { margin-bottom: 20px; }
+  .art-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 30px 0; }
+  .art-content ul, .art-content ol { margin: 0 0 20px 20px; }
+  .art-content li { margin-bottom: 10px; }
+  .art-content blockquote {
+    border-left: 4px solid var(--art-primary);
+    margin: 30px 0;
+    padding: 20px;
+    background: #f9f9f9;
+    font-style: italic;
+    font-size: 1.2rem;
+  }
+
+  /* Social Share */
+  .art-share {
+    max-width: 760px;
+    margin: 0 auto 80px;
+    padding: 20px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .art-share-title { font-weight: 700; }
+  .art-share-btn {
+    padding: 8px 16px;
+    background: #f4f4f4;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+  .art-share-btn:hover { background: #ddd; }
+
+  /* Related Articles */
+  .art-related {
+    background: #f9f9f9;
+    padding: clamp(60px, 8vw, 100px) 20px;
+  }
+  .related-inner { max-width: 1280px; margin: 0 auto; }
+  .related-inner h2 { font-size: 2rem; font-weight: 700; margin-bottom: 40px; text-align: center; }
+  
+  .related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  @media(min-width: 768px) { .related-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media(min-width: 1024px) { .related-grid { grid-template-columns: repeat(3, 1fr); } }
+  
+  .rel-card {
+    background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-decoration: none; color: inherit; transition: transform 0.3s ease;
+  }
+  .rel-card:hover { transform: translateY(-5px); }
+  .rel-card-img { height: 200px; width: 100%; object-fit: cover; }
+  .rel-content { padding: 20px; }
+  .rel-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; }
+  .rel-date { font-size: 0.85rem; color: #888; }
+
+  /* CTA */
+  .art-cta {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    color: #fff;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  .art-cta h2 { color: #fff; margin-bottom: 15px; }
+  .art-cta p { color: #ccc; margin-bottom: 30px; }
+  .art-cta-btn {
+    display: inline-block; padding: 15px 40px; background: var(--art-primary); color: #fff; font-weight: 600; text-decoration: none; border-radius: 50px;
+  }
+{%- endstyle -%}
+
+<!-- SEO Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "articleBody": {{ article.content | strip_html | json }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ shop.url | append: article.url | json }}
+  },
+  "headline": {{ article.title | json }},
+  {% if article.excerpt != blank %}
+    "description": {{ article.excerpt | strip_html | json }},
+  {% endif %}
+  {% if article.image %}
+    "image": [
+      {{ article.image | image_url: width: 1200 | prepend: "https:" | json }}
+    ],
+  {% endif %}
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }}
+  }
+}
+</script>
+
+<div class="art-wrapper">
+  
+  <header class="art-header">
+    {%- if article.tags.size > 0 -%}
+      <a href="{{ blog.url }}/tagged/{{ article.tags.first | handle }}" class="art-tag">{{ article.tags.first }}</a>
+    {%- endif -%}
+    <h1>{{ article.title }}</h1>
+    <div class="art-meta">
+      By {{ article.author }} <span>|</span> {{ article.published_at | date: "%B %d, %Y" }}
+    </div>
+  </header>
+
+  {%- if article.image -%}
+    <div class="art-hero-img">
+      {{ article.image | image_url: width: 1600 | image_tag: loading: 'eager', alt: article.image.alt | escape }}
+    </div>
+  {%- endif -%}
+
+  <div class="art-content">
+    {{ article.content }}
+  </div>
+
+  <!-- Social Share -->
+  <div class="art-share">
+    <span class="art-share-title">Share this article:</span>
+    <a href="https://www.facebook.com/sharer.php?u={{ shop.url | append: article.url }}" target="_blank" class="art-share-btn">Facebook</a>
+    <a href="https://twitter.com/share?url={{ shop.url | append: article.url }}&text={{ article.title | url_param_escape }}" target="_blank" class="art-share-btn">Twitter</a>
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ shop.url | append: article.url }}&title={{ article.title | url_param_escape }}" target="_blank" class="art-share-btn">LinkedIn</a>
+  </div>
+
+  <!-- Related Articles -->
+  <section class="art-related">
+    <div class="related-inner">
+      <h2>Recent Articles</h2>
+      <div class="related-grid">
+        {%- assign current_article_id = article.id -%}
+        {%- assign count = 0 -%}
+        {%- for related_article in blog.articles limit: 4 -%}
+          {%- if related_article.id != current_article_id and count < 3 -%}
+            <a href="{{ related_article.url }}" class="rel-card">
+              {%- if related_article.image -%}
+                {{ related_article.image | image_url: width: 600 | image_tag: class: 'rel-card-img', loading: 'lazy' }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg rel-card-img' }}
+              {%- endif -%}
+              <div class="rel-content">
+                <div class="rel-title">{{ related_article.title }}</div>
+                <div class="rel-date">{{ related_article.published_at | date: "%b %d, %Y" }}</div>
+              </div>
+            </a>
+            {%- assign count = count | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="art-cta">
+    <h2>{{ section.settings.cta_heading }}</h2>
+    <p>{{ section.settings.cta_text }}</p>
+    <a href="{{ section.settings.cta_link }}" class="art-cta-btn">{{ section.settings.cta_btn_text }}</a>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Premium Article Layout",
+  "settings": [
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Accent Color",
+      "default": "#ec5c0a"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Footer CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "Heading",
+      "default": "Ready to save energy?"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Subheading",
+      "default": "Discover how Vidhyut Saathi can transform your electricity bills."
+    },
+    {
+      "type": "text",
+      "id": "cta_btn_text",
+      "label": "Button Text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    }
+  ]
+}
+{% endschema %}

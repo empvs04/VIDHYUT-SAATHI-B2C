@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "required_cards": {
+      "type": "required-cards-layout",
+      "settings": {}
+    }
+  },
+  "order": [
+    "required_cards"
+  ]
+}

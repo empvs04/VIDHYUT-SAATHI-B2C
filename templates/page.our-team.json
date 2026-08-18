@@ -1,0 +1,194 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "our_team": {
+      "type": "our-team-layout",
+      "blocks": {
+        "member_1": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/100248.webp",
+            "name": "Jyoti Bajaj",
+            "role": "Sales & Marketing Head",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_2": {
+          "type": "team_member",
+          "settings": {
+            "name": "Shabnam Saxena",
+            "role": "Senior Sales Manager",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_3": {
+          "type": "team_member",
+          "settings": {
+            "name": "Riya Juneja",
+            "role": "Training Manager",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_4": {
+          "type": "team_member",
+          "settings": {
+            "name": "Vaishali Sharma",
+            "role": "Relationship Manager",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_5": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_4_2026_09_58_26_AM.png",
+            "name": "Khushi Rajput",
+            "role": "Senior Sales Executive",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_6": {
+          "type": "team_member",
+          "settings": {
+            "name": "Charu Wadhwa",
+            "role": "Sales Consultant",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_7": {
+          "type": "team_member",
+          "settings": {
+            "name": "Gunjan Goyal",
+            "role": "Sales Development Representative",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_8": {
+          "type": "team_member",
+          "settings": {
+            "name": "Himani Arora",
+            "role": "Marketing Analyst",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_9": {
+          "type": "team_member",
+          "settings": {
+            "name": "Prerna Mittal",
+            "role": "Accounting Manager",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_10": {
+          "type": "team_member",
+          "settings": {
+            "name": "Seema Ahlawat",
+            "role": "Sales Executive",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_11": {
+          "type": "team_member",
+          "settings": {
+            "name": "Renuka Kumari",
+            "role": "Sales Associate",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_12": {
+          "type": "team_member",
+          "settings": {
+            "name": "Simran Mishra",
+            "role": "Sales Executive",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_13": {
+          "type": "team_member",
+          "settings": {
+            "name": "Bhavya Malik",
+            "role": "Sales Executive",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_14": {
+          "type": "team_member",
+          "settings": {
+            "name": "Saloni Bhushan",
+            "role": "Sales Executive",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        },
+        "member_15": {
+          "type": "team_member",
+          "settings": {
+            "name": "Ritika Balgani",
+            "role": "Sales Executive",
+            "bio": "A short description of the team member's role and expertise.",
+            "social_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "member_1",
+        "member_2",
+        "member_3",
+        "member_4",
+        "member_5",
+        "member_6",
+        "member_7",
+        "member_8",
+        "member_9",
+        "member_10",
+        "member_11",
+        "member_12",
+        "member_13",
+        "member_14",
+        "member_15"
+      ],
+      "settings": {
+        "primary_color": "#ec5c0a",
+        "bg_color": "#fff8ef",
+        "hero_title": "Our Vidhyut Saathi Team",
+        "hero_subtitle": "The people behind our vision, innovation and growth",
+        "hero_image": "shopify://shop_images/who_we_are_tech.jpg",
+        "sec2_image": "shopify://shop_images/IMG_20240601_125734_jpg.jpg",
+        "intro_heading": "Meet the Team Behind Vidhyut Saathi",
+        "intro_text": "<p>Behind Vidhyut Saathi Energy Savers Pvt. Ltd. is a dynamic team of industry experts, engineers, business strategists, and customer success professionals committed to driving sustainable growth. Our team works closely with every franchise partner, providing comprehensive training, technical expertise, sales support, and strategic marketing assistance to ensure long-term business success. We don't just supply products—we build profitable partnerships backed by innovation, transparency, and continuous guidance. With a customer-first approach and a passion for excellence, our professionals are dedicated to helping entrepreneurs expand confidently while delivering high-quality energy-saving solutions that create lasting value for homes, businesses, industries, and institutions across India.</p>",
+        "bring_heading": "What We Bring",
+        "bring_1": "Industry Expertise",
+        "bring_2": "Technical Excellence",
+        "bring_3": "Business Strategy",
+        "bring_4": "Customer Success",
+        "cta_heading": "Building Success Together",
+        "cta_text": "Partner with our team for continuous innovation, support, and long-term growth in the energy sector.",
+        "cta_btn_text": "Contact Us",
+        "cta_link": ""
+      }
+    }
+  },
+  "order": [
+    "our_team"
+  ]
+}

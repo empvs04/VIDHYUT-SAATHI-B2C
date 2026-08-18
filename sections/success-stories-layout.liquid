@@ -1,0 +1,687 @@
+{%- style -%}
+  /* --- Global & Variables --- */
+  :root {
+    --ss-primary: {{ section.settings.primary_color | default: '#ec5c0a' }};
+    --ss-secondary: #007b3e;
+    --ss-bg: {{ section.settings.bg_color | default: '#fdfdfd' }};
+    --ss-bg-alt: #f4f6f8;
+    --ss-text-dark: #1a1a1a;
+    --ss-text-light: #555555;
+    --ss-radius: 16px;
+    --ss-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    --ss-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ss-wrapper {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    color: var(--ss-text-dark);
+    background-color: var(--ss-bg);
+    overflow: hidden;
+  }
+
+  /* --- Typography --- */
+  .ss-heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--ss-text-dark);
+  }
+  .ss-subheading {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--ss-text-light);
+  }
+  
+  /* --- Hero Section --- */
+  .ss-hero {
+    position: relative;
+    padding: clamp(60px, 10vw, 100px) 20px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--ss-bg-alt) 0%, #ffffff 100%);
+  }
+  .ss-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .ss-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: var(--ss-text-dark);
+  }
+  .ss-hero-image {
+    max-width: 1000px;
+    margin: 40px auto 0;
+    border-radius: var(--ss-radius);
+    overflow: hidden;
+    box-shadow: var(--ss-shadow);
+  }
+  .ss-hero-image img, .ss-hero-image svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  /* --- Featured Story --- */
+  .ss-featured {
+    padding: clamp(60px, 8vw, 100px) 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .ss-featured-inner {
+    background: #ffffff;
+    border-radius: var(--ss-radius);
+    overflow: hidden;
+    box-shadow: var(--ss-shadow);
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 912px) {
+    .ss-featured-inner { grid-template-columns: 1fr 1fr; }
+  }
+  .ss-feat-img {
+    position: relative;
+    min-height: 300px;
+  }
+  .ss-feat-img img, .ss-feat-img svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .ss-feat-content {
+    padding: clamp(30px, 5vw, 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .ss-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(236,92,10,0.1);
+    color: var(--ss-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+  }
+  .ss-feat-quote {
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    color: var(--ss-text-dark);
+  }
+  .ss-feat-meta {
+    margin-bottom: 20px;
+  }
+  .ss-feat-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .ss-feat-details {
+    font-size: 0.95rem;
+    color: var(--ss-text-light);
+  }
+  .ss-feat-result {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ss-primary);
+  }
+
+  /* --- Results / Stats --- */
+  .ss-stats {
+    background: var(--ss-bg-alt);
+    padding: clamp(50px, 6vw, 80px) 20px;
+  }
+  .ss-stats-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .ss-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 40px;
+  }
+  @media (min-width: 600px) {
+    .ss-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 912px) {
+    .ss-stats-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .ss-stat-card {
+    background: #ffffff;
+    padding: 30px 20px;
+    border-radius: var(--ss-radius);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    transition: transform 0.3s ease;
+  }
+  .ss-stat-card:hover {
+    transform: translateY(-5px);
+  }
+  .ss-stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--ss-primary);
+    margin-bottom: 10px;
+  }
+  .ss-stat-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ss-text-dark);
+  }
+
+  /* --- Story Grid --- */
+  .ss-grid-section {
+    padding: clamp(60px, 8vw, 100px) 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .ss-grid-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  .ss-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  @media (min-width: 768px) {
+    .ss-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .ss-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  
+  .ss-card {
+    background: #ffffff;
+    border-radius: var(--ss-radius);
+    overflow: hidden;
+    box-shadow: var(--ss-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .ss-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--ss-shadow-hover);
+  }
+  .ss-card-img {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+    background: #f0f0f0;
+  }
+  .ss-card-img img, .ss-card-img svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .ss-card:hover .ss-card-img img {
+    transform: scale(1.05);
+  }
+  .ss-card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .ss-card-result {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ss-primary);
+    margin-bottom: 15px;
+  }
+  .ss-card-quote {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--ss-text-dark);
+    font-style: italic;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+  .ss-card-author {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #eaeaea;
+    padding-top: 15px;
+  }
+  .ss-card-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ss-text-dark);
+  }
+  .ss-card-details {
+    font-size: 0.85rem;
+    color: var(--ss-text-light);
+  }
+  .ss-card-date {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 5px;
+  }
+
+  /* --- CTA Section --- */
+  .ss-cta {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+    color: #ffffff;
+    padding: clamp(60px, 8vw, 100px) 20px;
+    text-align: center;
+  }
+  .ss-cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .ss-cta h2 {
+    color: #ffffff;
+    margin-bottom: 15px;
+  }
+  .ss-cta p {
+    color: #cccccc;
+    margin-bottom: 30px;
+  }
+  .ss-cta-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background: var(--ss-primary);
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .ss-cta-btn:hover {
+    background: #d45007;
+    transform: translateY(-3px);
+  }
+{%- endstyle -%}
+
+<div class="ss-wrapper">
+  
+  <!-- Hero Section -->
+  <section class="ss-hero">
+    <div class="ss-hero-content">
+      <h1>{{ section.settings.hero_title }}</h1>
+      <p class="ss-subheading">{{ section.settings.hero_subtitle }}</p>
+    </div>
+    {%- if section.settings.hero_image != blank -%}
+      <div class="ss-hero-image">
+        {{ section.settings.hero_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: 'Success Stories' }}
+      </div>
+    {%- endif -%}
+  </section>
+
+  <!-- Featured Story -->
+  {%- if section.settings.enable_featured -%}
+  <section class="ss-featured">
+    <div class="ss-featured-inner">
+      <div class="ss-feat-img">
+        {%- if section.settings.feat_image != blank -%}
+          {{ section.settings.feat_image | image_url: width: 800, height: 800, crop: 'center' | image_tag: loading: 'lazy' }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      <div class="ss-feat-content">
+        <span class="ss-badge">Featured Story</span>
+        <div class="ss-feat-quote">"{{ section.settings.feat_quote }}"</div>
+        
+        <div class="ss-feat-meta">
+          <div class="ss-feat-name">{{ section.settings.feat_name }}</div>
+          {%- if section.settings.feat_details != blank -%}
+            <div class="ss-feat-details">{{ section.settings.feat_details }}</div>
+          {%- endif -%}
+        </div>
+        
+        {%- if section.settings.feat_result != blank -%}
+          <div class="ss-feat-result">{{ section.settings.feat_result }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  <!-- Statistics Section -->
+  {%- if section.settings.enable_stats -%}
+  <section class="ss-stats">
+    <div class="ss-stats-container">
+      <h2 class="ss-heading">{{ section.settings.stats_heading }}</h2>
+      <p class="ss-subheading">{{ section.settings.stats_subheading }}</p>
+      
+      <div class="ss-stats-grid">
+        <div class="ss-stat-card">
+          <div class="ss-stat-number">{{ section.settings.stat_1_num }}</div>
+          <div class="ss-stat-label">{{ section.settings.stat_1_label }}</div>
+        </div>
+        <div class="ss-stat-card">
+          <div class="ss-stat-number">{{ section.settings.stat_2_num }}</div>
+          <div class="ss-stat-label">{{ section.settings.stat_2_label }}</div>
+        </div>
+        <div class="ss-stat-card">
+          <div class="ss-stat-number">{{ section.settings.stat_3_num }}</div>
+          <div class="ss-stat-label">{{ section.settings.stat_3_label }}</div>
+        </div>
+        <div class="ss-stat-card">
+          <div class="ss-stat-number">{{ section.settings.stat_4_num }}</div>
+          <div class="ss-stat-label">{{ section.settings.stat_4_label }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  <!-- Story Grid -->
+  <section class="ss-grid-section">
+    <div class="ss-grid-header">
+      <h2 class="ss-heading">{{ section.settings.grid_heading }}</h2>
+      <p class="ss-subheading">{{ section.settings.grid_subheading }}</p>
+    </div>
+    
+    <div class="ss-grid">
+      {%- for block in section.blocks -%}
+        <div class="ss-card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <div class="ss-card-img">
+              {{ block.settings.image | image_url: width: 600, height: 400, crop: 'center' | image_tag: loading: 'lazy' }}
+            </div>
+          {%- endif -%}
+          
+          <div class="ss-card-content">
+            {%- if block.settings.result != blank -%}
+              <div class="ss-card-result">{{ block.settings.result }}</div>
+            {%- endif -%}
+            
+            <div class="ss-card-quote">"{{ block.settings.quote }}"</div>
+            
+            <div class="ss-card-author">
+              <span class="ss-card-name">{{ block.settings.name }}</span>
+              
+              {%- if block.settings.location != blank or block.settings.designation != blank -%}
+                <span class="ss-card-details">
+                  {{ block.settings.designation }}{% if block.settings.designation != blank and block.settings.location != blank %}, {% endif %}{{ block.settings.location }}
+                </span>
+              {%- endif -%}
+              
+              {%- if block.settings.date != blank -%}
+                <span class="ss-card-date">{{ block.settings.date }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="ss-cta">
+    <div class="ss-cta-content">
+      <h2 class="ss-heading">{{ section.settings.cta_heading }}</h2>
+      <p class="ss-subheading">{{ section.settings.cta_text }}</p>
+      <a href="{{ section.settings.cta_link }}" class="ss-cta-btn">{{ section.settings.cta_btn_text }}</a>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Success Stories Layout",
+  "settings": [
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Accent Color",
+      "default": "#ec5c0a"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fdfdfd"
+    },
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Success Stories"
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "Discover how businesses and homes across India are saving energy and money with Vidhyut Saathi."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image (Optional)"
+    },
+    {
+      "type": "header",
+      "content": "Featured Story"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_featured",
+      "label": "Enable Featured Story",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "feat_image",
+      "label": "Featured Image"
+    },
+    {
+      "type": "textarea",
+      "id": "feat_quote",
+      "label": "Testimonial / Quote",
+      "default": "[Placeholder] Vidhyut Saathi has completely transformed our energy consumption."
+    },
+    {
+      "type": "text",
+      "id": "feat_name",
+      "label": "Customer / Business Name",
+      "default": "[Placeholder] Customer Name"
+    },
+    {
+      "type": "text",
+      "id": "feat_details",
+      "label": "Designation & Location",
+      "default": "[Placeholder] Factory Owner, Delhi"
+    },
+    {
+      "type": "text",
+      "id": "feat_result",
+      "label": "Result / Statistic",
+      "default": "[Placeholder] Saved 25% on Monthly Bill"
+    },
+    {
+      "type": "header",
+      "content": "Statistics Section"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_stats",
+      "label": "Enable Statistics",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stats_heading",
+      "label": "Heading",
+      "default": "Measurable Results"
+    },
+    {
+      "type": "text",
+      "id": "stats_subheading",
+      "label": "Subheading",
+      "default": "Real data from our successful installations."
+    },
+    {
+      "type": "text",
+      "id": "stat_1_num",
+      "label": "Stat 1 Number",
+      "default": "20%+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 Label",
+      "default": "Average Savings"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_num",
+      "label": "Stat 2 Number",
+      "default": "2M+"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 Label",
+      "default": "Happy Customers"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_num",
+      "label": "Stat 3 Number",
+      "default": "130+"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 Label",
+      "default": "Active Locations"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_num",
+      "label": "Stat 4 Number",
+      "default": "10 Yrs"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_label",
+      "label": "Stat 4 Label",
+      "default": "Product Life"
+    },
+    {
+      "type": "header",
+      "content": "Story Grid Section"
+    },
+    {
+      "type": "text",
+      "id": "grid_heading",
+      "label": "Heading",
+      "default": "Real Stories. Real Experiences."
+    },
+    {
+      "type": "text",
+      "id": "grid_subheading",
+      "label": "Subheading",
+      "default": "Read what our customers have to say."
+    },
+    {
+      "type": "header",
+      "content": "CTA Section"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "Heading",
+      "default": "Start Your Success Story With Vidhyut Saathi"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Supporting Text",
+      "default": "Join millions of Indians saving energy and money today."
+    },
+    {
+      "type": "text",
+      "id": "cta_btn_text",
+      "label": "Button Text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Customer Story",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Customer / Site Image"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Testimonial / Story",
+          "default": "[Placeholder] Write the customer's testimonial or success story here."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer / Business Name",
+          "default": "[Placeholder] Customer Name"
+        },
+        {
+          "type": "text",
+          "id": "designation",
+          "label": "Designation / Business Type",
+          "default": "[Placeholder] Designation"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location",
+          "default": "[Placeholder] City, State"
+        },
+        {
+          "type": "text",
+          "id": "result",
+          "label": "Key Result / Statistic",
+          "default": "[Placeholder] Saved 20%"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "info": "Optional"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Success Stories Layout"
+    }
+  ]
+}
+{% endschema %}

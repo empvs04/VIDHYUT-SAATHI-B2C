@@ -1,0 +1,1969 @@
+{%- style -%}
+  /* --- Global & Variables --- */
+  :root {
+    --req-primary: {{ section.settings.primary_color | default: '#ec5c0a' }};
+    --req-secondary: #007b3e;
+    --req-bg: {{ section.settings.bg_color | default: '#fff8ef' }};
+    --req-text-dark: #0f172a;
+    --req-text-light: #334155;
+    --req-radius: 24px;
+    --req-shadow: 0 16px 45px rgba(0, 0, 0, 0.08);
+    --req-shadow-hover: 0 25px 55px rgba(236, 92, 10, 0.18);
+    --req-border: rgba(236, 92, 10, 0.2);
+  }
+  
+  .req-wrapper {
+    font-family: 'Plus Jakarta Sans', 'Outfit', 'Inter', sans-serif;
+    color: var(--req-text-dark);
+    background: radial-gradient(circle at 50% 0%, rgba(236, 92, 10, 0.06) 0%, #ffffff 45%, rgba(0, 123, 62, 0.05) 100%);
+    overflow: hidden;
+  }
+
+  /* --- Section 1: Hero Header & Interactive 3D Card Tabs --- */
+  .req-hero-section {
+    position: relative;
+    padding: clamp(50px, 7vw, 90px) 20px 70px 20px;
+    background: linear-gradient(135deg, #090e1a 0%, #151d30 50%, #0d1527 100%);
+    color: #ffffff;
+    overflow: hidden;
+    border-bottom: 3px solid rgba(255, 204, 0, 0.4);
+  }
+
+  /* Moving Marquee Background Text */
+  @keyframes scroll-left-to-right {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(50%) translateY(0); }
+  }
+  .req-moving-text {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0.35;
+    pointer-events: none;
+    line-height: 1;
+    font-size: clamp(36px, 5.5vw, 85px);
+    font-weight: 900;
+    background: linear-gradient(90deg, #ec5c0a, #ff9900, #007b3e, #ec5c0a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: scroll-left-to-right 18s linear infinite;
+  }
+
+  .hero-breadcrumb-pill {
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 204, 0, 0.5);
+    border-radius: 50px;
+    padding: 8px 24px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .hero-breadcrumb-pill span, .hero-breadcrumb-pill a {
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .req-hero-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .req-hero-header {
+    text-align: center;
+    max-width: 920px;
+    margin: 0 auto 36px auto;
+  }
+
+  .req-badge-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 22px;
+    background: linear-gradient(90deg, rgba(236, 92, 10, 0.25), rgba(0, 123, 62, 0.25));
+    border: 1px solid rgba(255, 204, 0, 0.6);
+    border-radius: 50px;
+    color: #ffcc00;
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    box-shadow: 0 6px 20px rgba(255, 204, 0, 0.15);
+  }
+  .req-badge-top .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #00ff66;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7);
+    animation: pulse-ring 1.8s infinite;
+  }
+  @keyframes pulse-ring {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 255, 102, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
+  }
+
+  .req-hero-header h1 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 900;
+    margin-bottom: 14px;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .req-hero-header h1 span {
+    background: linear-gradient(90deg, #ffcc00, #ec5c0a, #00ff66);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .req-hero-subheading {
+    font-size: clamp(1.02rem, 2vw, 1.18rem);
+    line-height: 1.7;
+    color: #cbd5e1;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* Golden Rule Top Banner */
+  .req-golden-banner {
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.25), rgba(0, 123, 62, 0.25));
+    border: 2px solid #ffcc00;
+    border-radius: 20px;
+    padding: 18px 24px;
+    margin-bottom: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+    flex-wrap: wrap;
+  }
+  .req-golden-text {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .req-golden-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+  .req-golden-info h3 {
+    color: #ffcc00;
+    font-weight: 900;
+    font-size: 1.1rem;
+    margin: 0 0 4px 0;
+  }
+  .req-golden-info p {
+    color: #ffffff;
+    font-size: 0.94rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+  .req-golden-pill {
+    padding: 8px 18px;
+    background: #ffcc00;
+    color: #000000;
+    font-weight: 900;
+    font-size: 0.88rem;
+    border-radius: 50px;
+    white-space: nowrap;
+    box-shadow: 0 6px 18px rgba(255, 204, 0, 0.3);
+  }
+
+  /* Interactive 3D Card Requirement Tabs */
+  .req-tabs-wrapper {
+    margin-bottom: 35px;
+  }
+  .req-tabs-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 60px;
+    padding: 8px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .req-tab-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1.5px solid transparent;
+    border-radius: 50px;
+    color: #cbd5e1;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+  }
+  .req-tab-btn:hover {
+    color: #ffcc00;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .req-tab-btn.active {
+    background: linear-gradient(135deg, #ec5c0a 0%, #f1721b 100%);
+    color: #ffffff !important;
+    border-color: rgba(255, 204, 0, 0.6);
+    box-shadow: 0 8px 25px rgba(236, 92, 10, 0.4);
+    transform: translateY(-2px);
+  }
+  .req-tab-btn .tab-count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 900;
+  }
+
+  /* Tab Content Panels Stage */
+  .req-tab-panel {
+    display: none;
+    animation: fadeInTab 0.4s ease forwards;
+  }
+  .req-tab-panel.active {
+    display: block;
+  }
+
+  /* Lucrative Card Info Showcase Box */
+  .req-card-info-dashboard {
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 204, 0, 0.4);
+    border-radius: 28px;
+    padding: 32px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  @media (min-width: 992px) {
+    .req-card-info-dashboard {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+    }
+  }
+
+  .req-info-details-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .req-dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .req-dash-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #ffffff;
+    margin: 0;
+  }
+  .req-dash-title span {
+    color: #ffcc00;
+  }
+  .req-dash-tag {
+    background: linear-gradient(90deg, #007b3e, #00a854);
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 900;
+    padding: 6px 16px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .req-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .req-spec-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 16px 18px;
+    transition: all 0.3s ease;
+  }
+  .req-spec-box:hover {
+    background: rgba(236, 92, 10, 0.15);
+    border-color: rgba(255, 204, 0, 0.4);
+    transform: translateY(-2px);
+  }
+  .req-spec-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .req-spec-value {
+    font-size: 1.12rem;
+    font-weight: 900;
+    color: #ffffff;
+    display: block;
+  }
+  .req-spec-value .highlight {
+    color: #00ff66;
+  }
+  .req-spec-value .highlight-orange {
+    color: #ff5500;
+  }
+
+  .req-apps-banner {
+    background: rgba(0, 123, 62, 0.15);
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    border-radius: 18px;
+    padding: 18px 20px;
+  }
+  .req-apps-banner h4 {
+    font-size: 1rem;
+    font-weight: 900;
+    color: #00ff66;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .req-apps-banner p {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+    margin: 0;
+  }
+
+  .req-info-visual-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 22px;
+    padding: 24px;
+    text-align: center;
+  }
+  .req-card-thumb-wrapper {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 30px rgba(236, 92, 10, 0.2);
+    border: 2px solid rgba(255, 204, 0, 0.5);
+    margin-bottom: 18px;
+    transition: transform 0.4s ease;
+  }
+  .req-card-thumb-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .req-savings-tag {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #ffcc00;
+    margin-bottom: 16px;
+    background: rgba(255, 204, 0, 0.12);
+    padding: 8px 18px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 204, 0, 0.3);
+  }
+
+  .req-tab-order-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 28px;
+    background: linear-gradient(135deg, #ec5c0a, #f1721b);
+    color: #ffffff !important;
+    font-size: 1.05rem;
+    font-weight: 900;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px rgba(236, 92, 10, 0.4);
+    transition: all 0.3s ease;
+  }
+  .req-tab-order-btn:hover {
+    background: linear-gradient(135deg, #f1721b, #007b3e);
+    transform: translateY(-3px);
+  }
+
+  .req-multi-rows-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .req-multi-row-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 204, 0, 0.3);
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .req-multi-row-kw {
+    font-size: 0.98rem;
+    font-weight: 900;
+    color: #00ff66;
+  }
+  .req-multi-row-bill {
+    font-size: 0.82rem;
+    color: #cbd5e1;
+  }
+  .req-multi-row-cards {
+    background: rgba(236, 92, 10, 0.25);
+    border: 1px solid #ec5c0a;
+    color: #ffcc00;
+    font-size: 0.92rem;
+    font-weight: 900;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+
+  /* ==========================================
+     SECTION 2: PRACTICAL SELECTION EXAMPLES (3 SECTORS)
+     ========================================== */
+  .req-sec2-section {
+    padding: clamp(60px, 8vw, 100px) 20px;
+    background: #ffffff;
+    position: relative;
+  }
+  .req-sec2-container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .req-sec2-header {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 45px auto;
+  }
+
+  .req-sec2-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 22px;
+    background: rgba(236, 92, 10, 0.1);
+    border: 1px solid rgba(236, 92, 10, 0.3);
+    border-radius: 50px;
+    color: #ec5c0a;
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .req-sec2-header h2 {
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 14px;
+    line-height: 1.25;
+  }
+  .req-sec2-header h2 span {
+    background: linear-gradient(90deg, #ec5c0a, #007b3e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .req-sec2-header p {
+    font-size: 1.1rem;
+    color: #475569;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Sector Switcher Tabs Navigation - Ultra-Lucrative High-Visibility 3D Dock */
+  .req-sector-tabs-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 0 auto 45px auto;
+    flex-wrap: wrap;
+    background: #ffffff;
+    padding: 12px 18px;
+    border-radius: 60px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(241, 126, 57, 0.15);
+    max-width: 1100px;
+  }
+  
+  .req-sector-tab {
+    padding: 14px 28px;
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 50px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: inherit;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    min-height: 52px;
+  }
+
+  .req-sector-tab:hover {
+    transform: translateY(-3px) scale(1.02);
+  }
+
+  /* 🟢 Residential Button Styling */
+  .req-sector-tab[data-sector="residential"] {
+    border-color: rgba(0, 168, 84, 0.3);
+    color: #007b3e;
+    background: linear-gradient(135deg, rgba(0, 168, 84, 0.08), rgba(0, 123, 62, 0.03));
+  }
+  .req-sector-tab[data-sector="residential"]:hover {
+    border-color: #00a854;
+    box-shadow: 0 8px 25px rgba(0, 168, 84, 0.25);
+  }
+  .req-sector-tab[data-sector="residential"].active {
+    background: linear-gradient(135deg, #007b3e 0%, #00a854 100%);
+    color: #ffffff !important;
+    border-color: #00a854;
+    box-shadow: 0 14px 35px rgba(0, 168, 84, 0.45);
+    transform: translateY(-3px) scale(1.03);
+  }
+
+  /* 🟠 Commercial Button Styling */
+  .req-sector-tab[data-sector="commercial"] {
+    border-color: rgba(236, 92, 10, 0.3);
+    color: #ec5c0a;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.08), rgba(255, 119, 0, 0.03));
+  }
+  .req-sector-tab[data-sector="commercial"]:hover {
+    border-color: #ec5c0a;
+    box-shadow: 0 8px 25px rgba(236, 92, 10, 0.25);
+  }
+  .req-sector-tab[data-sector="commercial"].active {
+    background: linear-gradient(135deg, #ec5c0a 0%, #ff7700 100%);
+    color: #ffffff !important;
+    border-color: #ff7700;
+    box-shadow: 0 14px 35px rgba(236, 92, 10, 0.45);
+    transform: translateY(-3px) scale(1.03);
+  }
+
+  /* 🔵 Industrial Button Styling */
+  .req-sector-tab[data-sector="industrial"] {
+    border-color: rgba(13, 82, 191, 0.3);
+    color: #0d52bf;
+    background: linear-gradient(135deg, rgba(13, 82, 191, 0.08), rgba(37, 99, 235, 0.03));
+  }
+  .req-sector-tab[data-sector="industrial"]:hover {
+    border-color: #2563eb;
+    box-shadow: 0 8px 25px rgba(13, 82, 191, 0.25);
+  }
+  .req-sector-tab[data-sector="industrial"].active {
+    background: linear-gradient(135deg, #0d52bf 0%, #2563eb 100%);
+    color: #ffffff !important;
+    border-color: #2563eb;
+    box-shadow: 0 14px 35px rgba(13, 82, 191, 0.45);
+    transform: translateY(-3px) scale(1.03);
+  }
+
+  /* Mobile Responsive for 3 Buttons */
+  @media screen and (max-width: 768px) {
+    .req-sector-tabs-wrapper {
+      flex-direction: column;
+      border-radius: 24px;
+      padding: 14px;
+      gap: 12px;
+    }
+    .req-sector-tab {
+      width: 100%;
+      box-sizing: border-box;
+      justify-content: center;
+      padding: 14px 18px;
+      font-size: 0.98rem;
+    }
+  }
+
+  /* Sector Panel Containers */
+  .req-sector-panel {
+    display: none;
+    animation: fadeInPanel 0.4s ease forwards;
+  }
+  .req-sector-panel.active {
+    display: block;
+  }
+
+  /* Practical Example Cards Layout */
+  .req-examples-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .req-example-card {
+    border-radius: 24px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+    transition: all 0.35s ease;
+  }
+  .req-example-card:hover {
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+  }
+
+  /* Theme Colors for Examples */
+  .req-theme-green .req-example-card { border-color: rgba(0, 123, 62, 0.3); }
+  .req-theme-green .req-ex-header { background: #007b3e; color: #ffffff; }
+  .req-theme-green .req-ex-consider { background: #007b3e; color: #ffffff; }
+  .req-theme-green .req-ex-3phase-bar { background: rgba(0, 123, 62, 0.08); border-color: #007b3e; color: #007b3e; }
+  
+  .req-theme-orange .req-example-card { border-color: rgba(236, 92, 10, 0.3); }
+  .req-theme-orange .req-ex-header { background: #ec5c0a; color: #ffffff; }
+  .req-theme-orange .req-ex-consider { background: #ec5c0a; color: #ffffff; }
+  .req-theme-orange .req-ex-3phase-bar { background: rgba(236, 92, 10, 0.08); border-color: #ec5c0a; color: #ec5c0a; }
+
+  .req-theme-blue .req-example-card { border-color: rgba(13, 82, 191, 0.3); }
+  .req-theme-blue .req-ex-header { background: #0d52bf; color: #ffffff; }
+  .req-theme-blue .req-ex-consider { background: #0d52bf; color: #ffffff; }
+  .req-theme-blue .req-ex-3phase-bar { background: rgba(13, 82, 191, 0.08); border-color: #0d52bf; color: #0d52bf; }
+
+  .req-ex-header {
+    padding: 14px 24px;
+    font-size: 1.1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+
+  .req-ex-body {
+    padding: 24px 28px;
+  }
+
+  .req-ex-content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  @media (min-width: 900px) {
+    .req-ex-content-grid {
+      grid-template-columns: 300px 1fr 1fr;
+      gap: 24px;
+    }
+  }
+
+  /* Building Photo Showcase Box */
+  .req-building-img-box {
+    width: 100%;
+    height: 200px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e2e8f0;
+    flex-shrink: 0;
+    position: relative;
+    background: #0f172a;
+  }
+  .req-building-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .req-building-img-box:hover img {
+    transform: scale(1.06);
+  }
+
+  .req-customer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .req-c-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .req-c-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .req-c-detail span {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+  }
+  .req-c-detail strong {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #0f172a;
+  }
+
+  /* Card Calculation Box Inside Example */
+  .req-calc-matrix-box {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .req-calc-rows {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .req-calc-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #334155;
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 6px;
+    gap: 10px;
+  }
+  .req-calc-line:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .req-calc-line strong {
+    color: #0f172a;
+    font-size: 1.02rem;
+  }
+
+  .req-ex-consider {
+    padding: 14px 20px;
+    border-radius: 14px;
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  .req-ex-consider span {
+    font-size: 0.82rem;
+    font-weight: 800;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .req-ex-consider strong {
+    font-size: 1.5rem;
+    font-weight: 900;
+    display: block;
+    line-height: 1.1;
+  }
+
+  /* 3-Phase Bar */
+  .req-ex-3phase-bar {
+    border: 2px dashed;
+    border-radius: 14px;
+    padding: 14px 20px;
+    font-size: 1.08rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  /* Why Explanation Box */
+  .req-ex-why-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .req-why-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .req-why-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0;
+  }
+  .req-why-text strong {
+    color: #0f172a;
+    font-weight: 900;
+  }
+
+  /* Sector Bottom Fixed Rule Banner */
+  .req-sector-rule-footer {
+    margin-top: 40px;
+    background: linear-gradient(135deg, #090e1a, #151d30);
+    border-radius: 20px;
+    padding: 18px 24px;
+    text-align: center;
+    color: #ffcc00;
+    font-size: 1.15rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  }
+
+  /* --- Mobile Responsive Fixes (Phones & Tablets) --- */
+  @media screen and (max-width: 768px) {
+    .req-sec2-section {
+      padding: 40px 12px !important;
+    }
+    .req-sec2-header h2 {
+      font-size: clamp(1.7rem, 6vw, 2.2rem) !important;
+    }
+    .req-sec2-header p {
+      font-size: 0.92rem !important;
+      line-height: 1.6 !important;
+    }
+    .req-sec2-badge {
+      font-size: 0.72rem !important;
+      padding: 6px 14px !important;
+    }
+    .req-sector-tabs-wrapper {
+      gap: 8px !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      justify-content: flex-start !important;
+      -webkit-overflow-scrolling: touch !important;
+      padding: 4px 0 !important;
+      margin-bottom: 25px !important;
+    }
+    .req-sector-tabs-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+    .req-sector-tab {
+      flex-shrink: 0 !important;
+      padding: 10px 18px !important;
+      font-size: 0.85rem !important;
+      white-space: nowrap !important;
+    }
+    .req-example-card {
+      border-radius: 18px !important;
+    }
+    .req-ex-header {
+      padding: 12px 16px !important;
+      font-size: 0.94rem !important;
+    }
+    .req-ex-body {
+      padding: 16px 14px !important;
+    }
+    .req-ex-content-grid {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+    }
+    .req-building-img-box {
+      height: 190px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      border-radius: 14px !important;
+    }
+    .req-c-detail strong {
+      font-size: 1rem !important;
+    }
+    .req-calc-matrix-box {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      padding: 14px !important;
+      border-radius: 14px !important;
+    }
+    .req-calc-line {
+      font-size: 0.88rem !important;
+    }
+    .req-ex-consider {
+      width: 100% !important;
+      padding: 12px 14px !important;
+      border-radius: 12px !important;
+    }
+    .req-ex-consider strong {
+      font-size: 1.35rem !important;
+    }
+    .req-ex-3phase-bar {
+      font-size: 0.9rem !important;
+      padding: 12px 12px !important;
+      border-radius: 12px !important;
+    }
+    .req-ex-why-box {
+      padding: 12px 14px !important;
+      border-radius: 12px !important;
+    }
+    .req-why-text {
+      font-size: 0.88rem !important;
+      line-height: 1.55 !important;
+    }
+    .req-sector-rule-footer {
+      font-size: 0.88rem !important;
+      padding: 14px 16px !important;
+      border-radius: 16px !important;
+      margin-top: 25px !important;
+    }
+  }
+{%- endstyle -%}
+
+<div class="req-wrapper">
+  
+  <!-- ==========================================
+       SECTION 1: HERO HEADER & INTERACTIVE CARD TABS
+       ========================================== -->
+  <section class="req-hero-section">
+    <div class="req-moving-text">Required Vidhyut Saathi Card &nbsp; &nbsp; Interactive Card Calculator &nbsp; &nbsp; Save Electricity</div>
+
+    <div class="req-hero-container">
+      
+      <!-- Top Breadcrumb & Badge -->
+      <div class="text-center">
+        <div class="hero-breadcrumb-pill">
+          <a href="/">Home</a>
+          <span style="color: #ffcc00;">/</span>
+          <span style="color: #ffffff; font-weight: 700;">Required Cards</span>
+          <span style="color: rgba(255,255,255,0.3); margin: 0 4px;">|</span>
+          <span style="color: #ffcc00; font-weight: 800;"><span class="pulse-dot"></span> Card Requirements</span>
+        </div>
+      </div>
+
+      <div class="req-hero-header">
+        <div class="req-badge-top">
+          <span class="pulse-dot"></span>
+          <span>⚡ OFFICIAL CARD REQUIREMENT GUIDE</span>
+        </div>
+        <h1>Required Vidhyut Saathi Card <span>Select Your Card Quantity Tab</span></h1>
+        <p class="req-hero-subheading">Aapke ghar, shop, ya factory me kitne cards lagenge? Har tab par click karke exact KW load, bill amount, 1-Phase / 3-Phase requirement, aur complete info dekhein.</p>
+      </div>
+
+      <!-- Golden Rule Banner -->
+      <div class="req-golden-banner">
+        <div class="req-golden-text">
+          <div class="req-golden-icon">🧮</div>
+          <div class="req-golden-info">
+            <h3>Golden Rule: Always Consider Higher Requirement</h3>
+            <p>KW Connected Load aur Monthly Electricity Bill amount (₹) <strong>donon me se jisme zyaada cards aayein</strong>, usi ko consider karein!</p>
+          </div>
+        </div>
+        <div class="req-golden-pill">⚡ 3-Phase Meter = Add +1 Extra Card</div>
+      </div>
+
+      <!-- INTERACTIVE TABS NAVIGATION BAR (Clean & Precise) -->
+      <div class="req-tabs-wrapper">
+        <div class="req-tabs-nav" id="reqTabsNav">
+          <button class="req-tab-btn active" data-tab="tab1">
+            💳 1 Card <span class="tab-count">1-6 KW</span>
+          </button>
+          <button class="req-tab-btn" data-tab="tab2">
+            💳 2 Cards <span class="tab-count">7-12 KW</span>
+          </button>
+          <button class="req-tab-btn" data-tab="tab3">
+            💳 3 Cards <span class="tab-count">13-18 KW</span>
+          </button>
+          <button class="req-tab-btn" data-tab="tab4">
+            💳 4 Cards <span class="tab-count">19-24 KW</span>
+          </button>
+          <button class="req-tab-btn" data-tab="tab5">
+            💳 5 Cards <span class="tab-count">25-30 KW</span>
+          </button>
+          <button class="req-tab-btn" data-tab="tab6">
+            💳 6 Cards <span class="tab-count">31-36 KW</span>
+          </button>
+          <button class="req-tab-btn" data-tab="tab7">
+            🏬 7-10 Cards <span class="tab-count">37-60 KW</span>
+          </button>
+          <button class="req-tab-btn" data-tab="tab8">
+            🏭 10+ Industrial <span class="tab-count">60+ KW</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- TABS CONTENT PANELS STAGE -->
+      <div class="req-panels-stage">
+        
+        <!-- TAB 1 PANEL: 1 Card Required -->
+        <div class="req-tab-panel active" id="tab1">
+          <div class="req-card-info-dashboard">
+            <div class="req-info-details-left">
+              <div class="req-dash-header">
+                <h3 class="req-dash-title">💳 1 Vidhyut Saathi Card <span>Information</span></h3>
+                <span class="req-dash-tag">Ideal for Small Load</span>
+              </div>
+
+              <div class="req-specs-grid">
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 Connected KW Load</span>
+                  <span class="req-spec-value highlight">1 – 6 KW Load</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🧾 Monthly Electricity Bill</span>
+                  <span class="req-spec-value">Upto ₹6,000 / month</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">⚡ Single Phase Meter</span>
+                  <span class="req-spec-value highlight">1 Card Required</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 3-Phase Meter (+1 Extra)</span>
+                  <span class="req-spec-value highlight-orange">2 Cards Required</span>
+                </div>
+              </div>
+
+              <div class="req-apps-banner">
+                <h4>🏡 Suitable Applications &amp; Appliances:</h4>
+                <p>Ideal for 1-2 BHK Homes, Small Apartments, Retail Shops, Small Offices, Clinics with basic electrical load (AC up to 1.5 Ton, Refrigerator, Fans, Lights, TV).</p>
+              </div>
+            </div>
+
+            <div class="req-info-visual-right">
+              <div class="req-card-thumb-wrapper">
+                {%- assign saver_card_img = 'vidhyut-power-saver-card.jpg' | asset_url -%}
+                <img src="{{ saver_card_img }}" alt="1 Vidhyut Saathi Card Showcase" loading="lazy">
+              </div>
+              <div class="req-savings-tag">💰 Monthly Bill Savings: 20% – 30%</div>
+              <a href="/products/vidhyut-saathi-card" class="req-tab-order-btn">Order 1 Card Now &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2 PANEL: 2 Cards Required -->
+        <div class="req-tab-panel" id="tab2">
+          <div class="req-card-info-dashboard">
+            <div class="req-info-details-left">
+              <div class="req-dash-header">
+                <h3 class="req-dash-title">💳 2 Vidhyut Saathi Cards <span>Information</span></h3>
+                <span class="req-dash-tag">Ideal for Medium Homes &amp; Shops</span>
+              </div>
+
+              <div class="req-specs-grid">
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 Connected KW Load</span>
+                  <span class="req-spec-value highlight">7 – 12 KW Load</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🧾 Monthly Electricity Bill</span>
+                  <span class="req-spec-value">₹6,001 – ₹12,000 / month</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">⚡ Single Phase Meter</span>
+                  <span class="req-spec-value highlight">2 Cards Required</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 3-Phase Meter (+1 Extra)</span>
+                  <span class="req-spec-value highlight-orange">3 Cards Required</span>
+                </div>
+              </div>
+
+              <div class="req-apps-banner">
+                <h4>🏡 Suitable Applications &amp; Appliances:</h4>
+                <p>Ideal for 3-4 BHK Homes, Duplexes, Medium Retail Shops, Offices, Showrooms, Restaurants with multiple Air Conditioners, Water Pumps, and Heavy Lighting.</p>
+              </div>
+            </div>
+
+            <div class="req-info-visual-right">
+              <div class="req-card-thumb-wrapper">
+                {%- assign saver_card_img = 'vidhyut-power-saver-card.jpg' | asset_url -%}
+                <img src="{{ saver_card_img }}" alt="2 Vidhyut Saathi Cards Showcase" loading="lazy">
+              </div>
+              <div class="req-savings-tag">💰 Monthly Bill Savings: 20% – 30%</div>
+              <a href="/products/vidhyut-saathi-card" class="req-tab-order-btn">Order 2 Cards Pack &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3 PANEL: 3 Cards Required -->
+        <div class="req-tab-panel" id="tab3">
+          <div class="req-card-info-dashboard">
+            <div class="req-info-details-left">
+              <div class="req-dash-header">
+                <h3 class="req-dash-title">💳 3 Vidhyut Saathi Cards <span>Information</span></h3>
+                <span class="req-dash-tag">Ideal for Large Villas &amp; Commercial</span>
+              </div>
+
+              <div class="req-specs-grid">
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 Connected KW Load</span>
+                  <span class="req-spec-value highlight">13 – 18 KW Load</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🧾 Monthly Electricity Bill</span>
+                  <span class="req-spec-value">₹12,001 – ₹18,000 / month</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">⚡ Single Phase Meter</span>
+                  <span class="req-spec-value highlight">3 Cards Required</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 3-Phase Meter (+1 Extra)</span>
+                  <span class="req-spec-value highlight-orange">4 Cards Required</span>
+                </div>
+              </div>
+
+              <div class="req-apps-banner">
+                <h4>🏢 Suitable Applications &amp; Appliances:</h4>
+                <p>Ideal for Luxury Villas, Commercial Showrooms, Mini Hospitals, Small Hotels, Boutiques, Commercial Buildings with 3-Phase or Heavy Motor Load.</p>
+              </div>
+            </div>
+
+            <div class="req-info-visual-right">
+              <div class="req-card-thumb-wrapper">
+                {%- assign saver_card_img = 'vidhyut-power-saver-card.jpg' | asset_url -%}
+                <img src="{{ saver_card_img }}" alt="3 Vidhyut Saathi Cards Showcase" loading="lazy">
+              </div>
+              <div class="req-savings-tag">💰 Monthly Bill Savings: 20% – 30%</div>
+              <a href="/products/vidhyut-saathi-card" class="req-tab-order-btn">Order 3 Cards Pack &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4 PANEL: 4 Cards Required -->
+        <div class="req-tab-panel" id="tab4">
+          <div class="req-card-info-dashboard">
+            <div class="req-info-details-left">
+              <div class="req-dash-header">
+                <h3 class="req-dash-title">💳 4 Vidhyut Saathi Cards <span>Information</span></h3>
+                <span class="req-dash-tag">Heavy Commercial Load</span>
+              </div>
+
+              <div class="req-specs-grid">
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 Connected KW Load</span>
+                  <span class="req-spec-value highlight">19 – 24 KW Load</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🧾 Monthly Electricity Bill</span>
+                  <span class="req-spec-value">₹18,001 – ₹24,000 / month</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">⚡ Single Phase Meter</span>
+                  <span class="req-spec-value highlight">4 Cards Required</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 3-Phase Meter (+1 Extra)</span>
+                  <span class="req-spec-value highlight-orange">5 Cards Required</span>
+                </div>
+              </div>
+
+              <div class="req-apps-banner">
+                <h4>🏢 Suitable Applications &amp; Appliances:</h4>
+                <p>Ideal for Large Commercial Showrooms, Supermarkets, Banquet Halls, Gyms, Dental Clinics, Commercial Complex floors with heavy 3-Phase continuous load.</p>
+              </div>
+            </div>
+
+            <div class="req-info-visual-right">
+              <div class="req-card-thumb-wrapper">
+                {%- assign saver_card_img = 'vidhyut-power-saver-card.jpg' | asset_url -%}
+                <img src="{{ saver_card_img }}" alt="4 Vidhyut Saathi Cards Showcase" loading="lazy">
+              </div>
+              <div class="req-savings-tag">💰 Monthly Bill Savings: 20% – 30%</div>
+              <a href="/products/vidhyut-saathi-card" class="req-tab-order-btn">Order 4 Cards Pack &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5 PANEL: 5 Cards Required -->
+        <div class="req-tab-panel" id="tab5">
+          <div class="req-card-info-dashboard">
+            <div class="req-info-details-left">
+              <div class="req-dash-header">
+                <h3 class="req-dash-title">💳 5 Vidhyut Saathi Cards <span>Information</span></h3>
+                <span class="req-dash-tag">Commercial &amp; Mini Industrial</span>
+              </div>
+
+              <div class="req-specs-grid">
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 Connected KW Load</span>
+                  <span class="req-spec-value highlight">25 – 30 KW Load</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🧾 Monthly Electricity Bill</span>
+                  <span class="req-spec-value">₹24,001 – ₹30,000 / month</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">⚡ Single Phase Meter</span>
+                  <span class="req-spec-value highlight">5 Cards Required</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 3-Phase Meter (+1 Extra)</span>
+                  <span class="req-spec-value highlight-orange">6 Cards Required</span>
+                </div>
+              </div>
+
+              <div class="req-apps-banner">
+                <h4>🏭 Suitable Applications &amp; Appliances:</h4>
+                <p>Ideal for Small Industrial Units, Manufacturing Plants, Hotels, Hospitals, Cold Storages, Large Offices with continuous heavy motor &amp; inductive loads.</p>
+              </div>
+            </div>
+
+            <div class="req-info-visual-right">
+              <div class="req-card-thumb-wrapper">
+                {%- assign saver_card_img = 'vidhyut-power-saver-card.jpg' | asset_url -%}
+                <img src="{{ saver_card_img }}" alt="5 Vidhyut Saathi Cards Showcase" loading="lazy">
+              </div>
+              <div class="req-savings-tag">💰 Monthly Bill Savings: 20% – 30%</div>
+              <a href="/products/vidhyut-saathi-card" class="req-tab-order-btn">Order 5 Cards Pack &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 6 PANEL: 6 Cards Required -->
+        <div class="req-tab-panel" id="tab6">
+          <div class="req-card-info-dashboard">
+            <div class="req-info-details-left">
+              <div class="req-dash-header">
+                <h3 class="req-dash-title">💳 6 Vidhyut Saathi Cards <span>Information</span></h3>
+                <span class="req-dash-tag">Commercial &amp; Heavy Load</span>
+              </div>
+
+              <div class="req-specs-grid">
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 Connected KW Load</span>
+                  <span class="req-spec-value highlight">31 – 36 KW Load</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🧾 Monthly Electricity Bill</span>
+                  <span class="req-spec-value">₹30,001 – ₹36,000 / month</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">⚡ Single Phase Meter</span>
+                  <span class="req-spec-value highlight">6 Cards Required</span>
+                </div>
+                <div class="req-spec-box">
+                  <span class="req-spec-label">🔌 3-Phase Meter (+1 Extra)</span>
+                  <span class="req-spec-value highlight-orange">7 Cards Required</span>
+                </div>
+              </div>
+
+              <div class="req-apps-banner">
+                <h4>🏭 Suitable Applications:</h4>
+                <p>Ideal for Large Commercial Complexes, Departmental Stores, Multi-story Offices, Marriage Halls, and Commercial Establishments with 31-36 KW Load.</p>
+              </div>
+            </div>
+
+            <div class="req-info-visual-right">
+              <div class="req-card-thumb-wrapper">
+                {%- assign saver_card_img = 'vidhyut-power-saver-card.jpg' | asset_url -%}
+                <img src="{{ saver_card_img }}" alt="6 Vidhyut Saathi Cards Showcase" loading="lazy">
+              </div>
+              <div class="req-savings-tag">💰 Monthly Bill Savings: 20% – 30%</div>
+              <a href="/products/vidhyut-saathi-card" class="req-tab-order-btn">Order 6 Cards Pack &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 7 PANEL: 7-10 Cards (37 to 60 KW Step-by-Step Clear Breakdown) -->
+        <div class="req-tab-panel" id="tab7">
+          <div class="req-card-info-dashboard">
+            <div class="req-info-details-left">
+              <div class="req-dash-header">
+                <h3 class="req-dash-title">🏬 7 to 10 Cards <span>Detailed Range Breakdown</span></h3>
+                <span class="req-dash-tag">37 KW to 60 KW Load</span>
+              </div>
+
+              <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0 0 10px 0;">Niche 37 KW se 60 KW load aur bill range ke hisab se <strong>exact cards count</strong> ka complete clear breakdown diya gaya hai:</p>
+
+              <div class="req-multi-rows-grid">
+                <div class="req-multi-row-card">
+                  <div class="req-multi-row-left">
+                    <div class="req-multi-row-kw">🔌 37 – 42 KW Load</div>
+                    <div class="req-multi-row-bill">Bill: ₹36,001 – ₹42,000</div>
+                  </div>
+                  <div class="req-multi-row-cards">7 Cards (3P: 8)</div>
+                </div>
+
+                <div class="req-multi-row-card">
+                  <div class="req-multi-row-left">
+                    <div class="req-multi-row-kw">🔌 43 – 48 KW Load</div>
+                    <div class="req-multi-row-bill">Bill: ₹42,001 – ₹48,000</div>
+                  </div>
+                  <div class="req-multi-row-cards">8 Cards (3P: 9)</div>
+                </div>
+
+                <div class="req-multi-row-card">
+                  <div class="req-multi-row-left">
+                    <div class="req-multi-row-kw">🔌 49 – 54 KW Load</div>
+                    <div class="req-multi-row-bill">Bill: ₹48,001 – ₹54,000</div>
+                  </div>
+                  <div class="req-multi-row-cards">9 Cards (3P: 10)</div>
+                </div>
+
+                <div class="req-multi-row-card">
+                  <div class="req-multi-row-left">
+                    <div class="req-multi-row-kw">🔌 55 – 60 KW Load</div>
+                    <div class="req-multi-row-bill">Bill: ₹54,001 – ₹60,000</div>
+                  </div>
+                  <div class="req-multi-row-cards">10 Cards (3P: 11)</div>
+                </div>
+              </div>
+
+              <div class="req-apps-banner" style="margin-top: 14px;">
+                <h4>🏬 Suitable Establishments:</h4>
+                <p>Hotels, Hospitals, Commercial Malls, Educational Institutions, Large Offices, and Heavy Commercial Establishments with continuous load up to 60 KW.</p>
+              </div>
+            </div>
+
+            <div class="req-info-visual-right">
+              <div class="req-card-thumb-wrapper">
+                {%- assign saver_card_img = 'vidhyut-power-saver-card.jpg' | asset_url -%}
+                <img src="{{ saver_card_img }}" alt="7-10 Cards Pack Showcase" loading="lazy">
+              </div>
+              <div class="req-savings-tag">💰 Commercial Savings: 20% – 30%</div>
+              <a href="/pages/contact" class="req-tab-order-btn">Order Commercial Pack &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 8 PANEL: 10+ Industrial Cards (60+ KW Heavy Load) -->
+        <div class="req-tab-panel" id="tab8">
+          <div class="req-card-info-dashboard">
+            <div class="req-info-details-left">
+              <div class="req-dash-header">
+                <h3 class="req-dash-title">🏭 10+ Cards <span>Industrial &amp; Heavy Machinery</span></h3>
+                <span class="req-dash-tag">60+ KW Heavy Industrial</span>
+              </div>
+
+              <p style="color: #cbd5e1; font-size: 0.95rem; margin: 0 0 10px 0;">60 KW se upar heavy industrial load par <strong>har 6 KW load par 1 Card</strong> calculate hota hai:</p>
+
+              <div class="req-multi-rows-grid">
+                <div class="req-multi-row-card">
+                  <div class="req-multi-row-left">
+                    <div class="req-multi-row-kw">🏭 90 KW Industrial Load</div>
+                    <div class="req-multi-row-bill">Bill: ₹2,40,000 / month</div>
+                  </div>
+                  <div class="req-multi-row-cards">40 Cards (3P: 41)</div>
+                </div>
+
+                <div class="req-multi-row-card">
+                  <div class="req-multi-row-left">
+                    <div class="req-multi-row-kw">🏭 180 KW Industrial Load</div>
+                    <div class="req-multi-row-bill">Bill: ₹1,20,000 / month</div>
+                  </div>
+                  <div class="req-multi-row-cards">30 Cards (3P: 31)</div>
+                </div>
+              </div>
+
+              <div class="req-apps-banner" style="margin-top: 14px;">
+                <h4>🏭 Industrial Machinery &amp; Plants:</h4>
+                <p>Textile Mills, Chemical Processing Plants, Rice Mills, Heavy Manufacturing Units, Cold Storages, and High KV Transformer Connections.</p>
+              </div>
+            </div>
+
+            <div class="req-info-visual-right">
+              <div class="req-card-thumb-wrapper">
+                {%- assign saver_card_img = 'vidhyut-power-saver-card.jpg' | asset_url -%}
+                <img src="{{ saver_card_img }}" alt="Industrial Cards Pack Showcase" loading="lazy">
+              </div>
+              <div class="req-savings-tag">💰 Industrial Savings: 20% – 30%</div>
+              <a href="/pages/contact" class="req-tab-order-btn">Consult Industrial Specialist &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 2: PRACTICAL SELECTION EXAMPLES (3 SECTORS)
+       ========================================== -->
+  <section class="req-sec2-section">
+    <div class="req-sec2-container">
+      
+      <!-- Section 2 Header -->
+      <div class="req-sec2-header">
+        <div class="req-sec2-badge">
+          <span>💡 REAL WORLD PRACTICAL SELECTION EXAMPLES</span>
+        </div>
+        <h2>Card Selection Examples <span>&amp; Calculation Scenarios</span></h2>
+        <p>Aapke convenience ke liye niche Residential, Commercial, aur Industrial sectors ke real customer examples photo ke saath diye gaye hain. Samjhein ki connected load, monthly bill, aur meter connection ke hisab se final cards kaise select hote hain.</p>
+      </div>
+
+      <!-- Sector Switcher Tabs Navigation -->
+      <div class="req-sector-tabs-wrapper">
+        <button class="req-sector-tab active" data-sector="residential">
+          🟢 Residential Examples (Homes)
+        </button>
+        <button class="req-sector-tab" data-sector="commercial">
+          🟠 Commercial Examples (Shops/Offices)
+        </button>
+        <button class="req-sector-tab" data-sector="industrial">
+          🔵 Industrial Examples (Factories)
+        </button>
+      </div>
+
+      <!-- SECTOR 1 PANEL: RESIDENTIAL EXAMPLES (GREEN THEME) -->
+      <div class="req-sector-panel req-theme-green active" id="sector-residential">
+        <div class="req-examples-grid">
+          
+          <!-- Residential Example 1: Low KW Load, High Bill -->
+          <div class="req-example-card">
+            <div class="req-ex-header">
+              ⚡ EXAMPLE 1 — LOW KW LOAD, HIGH BILL
+            </div>
+            <div class="req-ex-body">
+              <div class="req-ex-content-grid">
+                
+                <!-- Building Photo Showcase -->
+                <div class="req-building-img-box">
+                  {%- assign res_house_1 = 'residential-house-1.png' | asset_url -%}
+                  <img src="{{ res_house_1 }}" alt="Residential House - Mr. Rohan, Mumbai" loading="lazy">
+                </div>
+
+                <div class="req-customer-info">
+                  <div class="req-c-row">
+                    <div class="req-c-icon">👤</div>
+                    <div class="req-c-detail">
+                      <span>Customer Profile</span>
+                      <strong>Mr. Rohan, Mumbai</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🔌</div>
+                    <div class="req-c-detail">
+                      <span>Connected Load</span>
+                      <strong>5 KW Load</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🧾</div>
+                    <div class="req-c-detail">
+                      <span>Monthly Electricity Bill</span>
+                      <strong>₹18,000 / month</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="req-calc-matrix-box">
+                  <div class="req-calc-rows">
+                    <div class="req-calc-line">
+                      <span>5 KW Load Requirement</span>
+                      <strong>1 Card</strong>
+                    </div>
+                    <div class="req-calc-line">
+                      <span>₹18,000 Bill Requirement</span>
+                      <strong>3 Cards</strong>
+                    </div>
+                  </div>
+                  <div class="req-ex-consider">
+                    <span>Higher Rule Result</span>
+                    <strong>3 Cards</strong>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="req-ex-3phase-bar">
+                ⚡ 3-Phase Connection: 3 + 1 Extra Card = 4 Cards
+              </div>
+
+              <div class="req-ex-why-box">
+                <div class="req-why-icon">📋</div>
+                <p class="req-why-text">
+                  <strong>Why?</strong> The 5 KW load requires only 1 Card, while the ₹18,000 bill requires 3 Cards. Since the bill-based requirement is higher, we consider <strong>3 Cards</strong> (and 4 Cards for 3-Phase Meter).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Residential Example 2: Higher KW Load, Lower Bill -->
+          <div class="req-example-card">
+            <div class="req-ex-header">
+              ⚡ EXAMPLE 2 — HIGHER KW LOAD, LOWER BILL
+            </div>
+            <div class="req-ex-body">
+              <div class="req-ex-content-grid">
+                
+                <!-- Building Photo Showcase -->
+                <div class="req-building-img-box">
+                  {%- assign res_house_2 = 'residential-house-2.png' | asset_url -%}
+                  <img src="{{ res_house_2 }}" alt="Residential Villa - Mr. Rahul Mohan" loading="lazy">
+                </div>
+
+                <div class="req-customer-info">
+                  <div class="req-c-row">
+                    <div class="req-c-icon">👤</div>
+                    <div class="req-c-detail">
+                      <span>Customer Profile</span>
+                      <strong>Mr. Rahul Mohan</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🔌</div>
+                    <div class="req-c-detail">
+                      <span>Connected Load</span>
+                      <strong>15 KW Load</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🧾</div>
+                    <div class="req-c-detail">
+                      <span>Monthly Electricity Bill</span>
+                      <strong>₹10,000 / month</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="req-calc-matrix-box">
+                  <div class="req-calc-rows">
+                    <div class="req-calc-line">
+                      <span>15 KW Load Requirement</span>
+                      <strong>3 Cards</strong>
+                    </div>
+                    <div class="req-calc-line">
+                      <span>₹10,000 Bill Requirement</span>
+                      <strong>2 Cards</strong>
+                    </div>
+                  </div>
+                  <div class="req-ex-consider">
+                    <span>Higher Rule Result</span>
+                    <strong>3 Cards</strong>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="req-ex-3phase-bar">
+                ⚡ 3-Phase Connection: 3 + 1 Extra Card = 4 Cards
+              </div>
+
+              <div class="req-ex-why-box">
+                <div class="req-why-icon">📋</div>
+                <p class="req-why-text">
+                  <strong>Why?</strong> The 15 KW load requires 3 Cards, while the ₹10,000 bill requires 2 Cards. Since the KW-based requirement is higher, we consider <strong>3 Cards</strong> (and 4 Cards for 3-Phase Meter).
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTOR 2 PANEL: COMMERCIAL EXAMPLES (ORANGE THEME) -->
+      <div class="req-sector-panel req-theme-orange" id="sector-commercial">
+        <div class="req-examples-grid">
+          
+          <!-- Commercial Example 1: Low KW Load, High Bill -->
+          <div class="req-example-card">
+            <div class="req-ex-header">
+              ⚡ EXAMPLE 1 — LOW KW LOAD, HIGH BILL
+            </div>
+            <div class="req-ex-body">
+              <div class="req-ex-content-grid">
+                
+                <!-- Building Photo Showcase -->
+                <div class="req-building-img-box">
+                  {%- assign com_build_1 = 'commercial-building-1.png' | asset_url -%}
+                  <img src="{{ com_build_1 }}" alt="Commercial Building - Mr. Deepak Sawlani" loading="lazy">
+                </div>
+
+                <div class="req-customer-info">
+                  <div class="req-c-row">
+                    <div class="req-c-icon">👤</div>
+                    <div class="req-c-detail">
+                      <span>Commercial Owner</span>
+                      <strong>Mr. Deepak Sawlani</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🔌</div>
+                    <div class="req-c-detail">
+                      <span>Connected Load</span>
+                      <strong>10 KW Load</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🧾</div>
+                    <div class="req-c-detail">
+                      <span>Monthly Electricity Bill</span>
+                      <strong>₹24,000 / month</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="req-calc-matrix-box">
+                  <div class="req-calc-rows">
+                    <div class="req-calc-line">
+                      <span>10 KW Load Requirement</span>
+                      <strong>2 Cards</strong>
+                    </div>
+                    <div class="req-calc-line">
+                      <span>₹24,000 Bill Requirement</span>
+                      <strong>4 Cards</strong>
+                    </div>
+                  </div>
+                  <div class="req-ex-consider">
+                    <span>Higher Rule Result</span>
+                    <strong>4 Cards</strong>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="req-ex-3phase-bar">
+                ⚡ 3-Phase Connection: 4 + 1 Extra Card = 5 Cards
+              </div>
+
+              <div class="req-ex-why-box">
+                <div class="req-why-icon">📋</div>
+                <p class="req-why-text">
+                  <strong>Why?</strong> The 10 KW load requires 2 Cards, while the ₹24,000 bill requires 4 Cards. Since the bill-based requirement is higher, we consider <strong>4 Cards</strong> (and 5 Cards for 3-Phase Meter).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Commercial Example 2: High KW Load, Lower Bill -->
+          <div class="req-example-card">
+            <div class="req-ex-header">
+              ⚡ EXAMPLE 2 — HIGH KW LOAD, LOWER BILL
+            </div>
+            <div class="req-ex-body">
+              <div class="req-ex-content-grid">
+                
+                <!-- Building Photo Showcase -->
+                <div class="req-building-img-box">
+                  {%- assign com_build_2 = 'commercial-building-2.png' | asset_url -%}
+                  <img src="{{ com_build_2 }}" alt="Commercial Complex - Mr. Satyajeet" loading="lazy">
+                </div>
+
+                <div class="req-customer-info">
+                  <div class="req-c-row">
+                    <div class="req-c-icon">👤</div>
+                    <div class="req-c-detail">
+                      <span>Commercial Owner</span>
+                      <strong>Mr. Satyajeet</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🔌</div>
+                    <div class="req-c-detail">
+                      <span>Connected Load</span>
+                      <strong>35 KW Load</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🧾</div>
+                    <div class="req-c-detail">
+                      <span>Monthly Electricity Bill</span>
+                      <strong>₹29,000 / month</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="req-calc-matrix-box">
+                  <div class="req-calc-rows">
+                    <div class="req-calc-line">
+                      <span>35 KW Load Requirement</span>
+                      <strong>6 Cards</strong>
+                    </div>
+                    <div class="req-calc-line">
+                      <span>₹29,000 Bill Requirement</span>
+                      <strong>5 Cards</strong>
+                    </div>
+                  </div>
+                  <div class="req-ex-consider">
+                    <span>Higher Rule Result</span>
+                    <strong>6 Cards</strong>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="req-ex-3phase-bar">
+                ⚡ 3-Phase Connection: 6 + 1 Extra Card = 7 Cards
+              </div>
+
+              <div class="req-ex-why-box">
+                <div class="req-why-icon">📋</div>
+                <p class="req-why-text">
+                  <strong>Why?</strong> The 35 KW load requires 6 Cards, while the ₹29,000 bill requires 5 Cards. Since the KW-based requirement is higher, we consider <strong>6 Cards</strong> (and 7 Cards for 3-Phase Meter).
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTOR 3 PANEL: INDUSTRIAL EXAMPLES (BLUE THEME) -->
+      <div class="req-sector-panel req-theme-blue" id="sector-industrial">
+        <div class="req-examples-grid">
+          
+          <!-- Industrial Example 1: Low KW Load, High Bill -->
+          <div class="req-example-card">
+            <div class="req-ex-header">
+              ⚡ EXAMPLE 1 — LOW KW LOAD, HIGH BILL
+            </div>
+            <div class="req-ex-body">
+              <div class="req-ex-content-grid">
+                
+                <!-- Building Photo Showcase -->
+                <div class="req-building-img-box">
+                  {%- assign ind_fact_1 = 'industrial-factory-1.png' | asset_url -%}
+                  <img src="{{ ind_fact_1 }}" alt="Industrial Factory - Mr. Rajeev Sharma" loading="lazy">
+                </div>
+
+                <div class="req-customer-info">
+                  <div class="req-c-row">
+                    <div class="req-c-icon">👤</div>
+                    <div class="req-c-detail">
+                      <span>Factory Owner</span>
+                      <strong>Mr. Rajeev Sharma</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🔌</div>
+                    <div class="req-c-detail">
+                      <span>Connected Load</span>
+                      <strong>90 KW Industrial Load</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🧾</div>
+                    <div class="req-c-detail">
+                      <span>Monthly Electricity Bill</span>
+                      <strong>₹2,40,000 / month</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="req-calc-matrix-box">
+                  <div class="req-calc-rows">
+                    <div class="req-calc-line">
+                      <span>90 KW Load Requirement</span>
+                      <strong>15 Cards</strong>
+                    </div>
+                    <div class="req-calc-line">
+                      <span>₹2,40,000 Bill Requirement</span>
+                      <strong>40 Cards</strong>
+                    </div>
+                  </div>
+                  <div class="req-ex-consider">
+                    <span>Higher Rule Result</span>
+                    <strong>40 Cards</strong>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="req-ex-3phase-bar">
+                ⚡ 3-Phase Connection: 40 + 1 Extra Card = 41 Cards
+              </div>
+
+              <div class="req-ex-why-box">
+                <div class="req-why-icon">📋</div>
+                <p class="req-why-text">
+                  <strong>Why?</strong> The 90 KW load requires 15 Cards, while the ₹2,40,000 bill requires 40 Cards. Since the bill-based requirement is higher, we consider <strong>40 Cards</strong> (and 41 Cards for 3-Phase Meter).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Industrial Example 2: High KW Load, Lower Bill -->
+          <div class="req-example-card">
+            <div class="req-ex-header">
+              ⚡ EXAMPLE 2 — HIGH KW LOAD, LOWER BILL
+            </div>
+            <div class="req-ex-body">
+              <div class="req-ex-content-grid">
+                
+                <!-- Building Photo Showcase -->
+                <div class="req-building-img-box">
+                  {%- assign ind_fact_2 = 'industrial-factory-2.png' | asset_url -%}
+                  <img src="{{ ind_fact_2 }}" alt="Industrial Facility - Mr. Ashish Patel" loading="lazy">
+                </div>
+
+                <div class="req-customer-info">
+                  <div class="req-c-row">
+                    <div class="req-c-icon">👤</div>
+                    <div class="req-c-detail">
+                      <span>Factory Owner</span>
+                      <strong>Mr. Ashish Patel</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🔌</div>
+                    <div class="req-c-detail">
+                      <span>Connected Load</span>
+                      <strong>180 KW Industrial Load</strong>
+                    </div>
+                  </div>
+                  <div class="req-c-row">
+                    <div class="req-c-icon">🧾</div>
+                    <div class="req-c-detail">
+                      <span>Monthly Electricity Bill</span>
+                      <strong>₹1,20,000 / month</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="req-calc-matrix-box">
+                  <div class="req-calc-rows">
+                    <div class="req-calc-line">
+                      <span>180 KW Load Requirement</span>
+                      <strong>30 Cards</strong>
+                    </div>
+                    <div class="req-calc-line">
+                      <span>₹1,20,000 Bill Requirement</span>
+                      <strong>20 Cards</strong>
+                    </div>
+                  </div>
+                  <div class="req-ex-consider">
+                    <span>Higher Rule Result</span>
+                    <strong>30 Cards</strong>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="req-ex-3phase-bar">
+                ⚡ 3-Phase Connection: 30 + 1 Extra Card = 31 Cards
+              </div>
+
+              <div class="req-ex-why-box">
+                <div class="req-why-icon">📋</div>
+                <p class="req-why-text">
+                  <strong>Why?</strong> The 180 KW load requires 30 Cards, while the ₹1,20,000 bill requires 20 Cards. Since the KW-based requirement is higher, we consider <strong>30 Cards</strong> (and 31 Cards for 3-Phase Meter).
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Sector Bottom Fixed Rule Banner -->
+      <div class="req-sector-rule-footer">
+        <span>⚡ 3-PHASE CONNECTION &rarr; ADD 1 EXTRA CARD FOR ALL PREMISES ⚡</span>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Section 1 Cards Tabs Logic
+  const tabBtns = document.querySelectorAll('.req-tab-btn');
+  const tabPanels = document.querySelectorAll('.req-tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      const targetTabId = btn.getAttribute('data-tab');
+      const targetPanel = document.getElementById(targetTabId);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+      }
+    });
+  });
+
+  // Section 2 Sector Switcher Tabs Logic
+  const sectorBtns = document.querySelectorAll('.req-sector-tab');
+  const sectorPanels = document.querySelectorAll('.req-sector-panel');
+
+  sectorBtns.forEach(sBtn => {
+    sBtn.addEventListener('click', () => {
+      sectorBtns.forEach(sb => sb.classList.remove('active'));
+      sectorPanels.forEach(sp => sp.classList.remove('active'));
+
+      sBtn.classList.add('active');
+      const sectorId = sBtn.getAttribute('data-sector');
+      const targetSectorPanel = document.getElementById('sector-' + sectorId);
+      if (targetSectorPanel) {
+        targetSectorPanel.classList.add('active');
+      }
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Required Cards Layout",
+  "settings": [
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Accent Color",
+      "default": "#ec5c0a"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fff8ef"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Required Cards Layout"
+    }
+  ]
+}
+{% endschema %}

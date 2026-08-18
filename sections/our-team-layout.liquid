@@ -1,0 +1,1305 @@
+{%- style -%}
+  /* --- Global & Variables --- */
+  :root {
+    --team-primary: {{ section.settings.primary_color | default: '#ec5c0a' }};
+    --team-secondary: #007b3e;
+    --team-bg: {{ section.settings.bg_color | default: '#fff8ef' }};
+    --team-text-dark: #1a1a1a;
+    --team-text-light: #4a4a4a;
+    --team-radius: 16px;
+    --team-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    --team-shadow-hover: 0 20px 40px rgba(236, 92, 10, 0.15);
+  }
+  
+  .our-team-wrapper {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    color: var(--team-text-dark);
+    background-color: var(--team-bg);
+    overflow: hidden;
+  }
+
+  /* --- Typography --- */
+  .team-section-heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--team-text-dark);
+  }
+  .team-section-subheading {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--team-text-light);
+  }
+  
+  /* --- Section 1: Our Team Hero Banner --- */
+  .team-page-hero {
+    position: relative;
+    width: 100%;
+    min-height: 480px;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center 25% !important;
+    background-color: #090e1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 70px 20px;
+    box-sizing: border-box;
+    image-rendering: -webkit-optimize-contrast;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .team-page-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, rgba(9, 14, 26, 0.75) 0%, rgba(9, 14, 26, 0.88) 100%);
+    z-index: 1;
+  }
+
+  /* Moving Background Marquee Text */
+  @keyframes teamMarqueeMove {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+  .team-marquee-track {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 200%;
+    transform: translateY(-50%);
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.22;
+    overflow: hidden;
+  }
+  .team-marquee-content {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: clamp(55px, 9.5vw, 140px);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ec5c0a, #ff9a00, #007b3e, #ec5c0a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: teamMarqueeMove 20s linear infinite;
+  }
+
+  .team-hero-inner {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .team-hero-inner h1.title {
+    font-size: clamp(32px, 5.5vw, 58px);
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 22px;
+    line-height: 1.25;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    letter-spacing: -0.5px;
+  }
+
+  .team-hero-inner .breadcumb--con {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .team-hero-inner .breadcrumb {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 204, 0, 0.5);
+    border-radius: 50px;
+    padding: 10px 28px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    list-style: none;
+    margin: 0 auto;
+  }
+
+  .team-hero-inner .breadcrumb-item {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .team-hero-inner .breadcrumb-item a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-weight: 800;
+    transition: color 0.3s ease;
+  }
+  .team-hero-inner .breadcrumb-item a:hover {
+    color: #00ff75;
+  }
+
+  .team-hero-inner .breadcrumb-item.active {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .team-hero-inner .breadcrumb-item + .breadcrumb-item::before {
+    content: '/';
+    color: rgba(255, 255, 255, 0.4);
+    padding-right: 12px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .team-page-hero {
+      min-height: 320px !important;
+      padding: 45px 16px !important;
+      background-size: cover !important;
+      background-position: center 15% !important;
+    }
+    .team-marquee-content {
+      font-size: clamp(32px, 8vw, 48px) !important;
+      opacity: 0.28 !important;
+    }
+    .team-hero-inner h1.title {
+      font-size: clamp(26px, 6.5vw, 38px) !important;
+      font-weight: 900 !important;
+      -webkit-text-stroke: 0.5px #0b1120 !important;
+      margin-bottom: 16px !important;
+    }
+    .team-hero-inner .breadcrumb {
+      padding: 8px 20px !important;
+    }
+  }
+  /* --- Section 2: Lucrative Styling Enhancements --- */
+  .team-sec2-section {
+    padding: clamp(70px, 9vw, 110px) 20px;
+    background: linear-gradient(180deg, #ffffff 0%, #fff9f2 100%);
+    position: relative;
+  }
+  .team-sec2-container {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .team-sec2-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 40px;
+  }
+  .team-sec2-col-text {
+    flex: 1 1 500px;
+  }
+  .team-sec2-col-img {
+    flex: 1 1 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Gradient Badge */
+  .dream-dots {
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .gradient-text.animate-charcter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(90deg, #ec5c0a 0%, #ff9a00 50%, #007b3e 100%);
+    color: #ffffff;
+    font-size: 0.88rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 7px 18px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(236, 92, 10, 0.25);
+  }
+
+  /* Heading & Text */
+  .sec2-team-title {
+    font-size: clamp(30px, 3.8vw, 46px);
+    font-weight: 900;
+    color: #0b1120;
+    line-height: 1.25;
+    margin-bottom: 22px;
+    letter-spacing: -0.5px;
+  }
+  .title-gradient-span {
+    background: linear-gradient(90deg, #ec5c0a 0%, #ff9a00 50%, #007b3e 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    font-size: clamp(20px, 2.5vw, 28px);
+    margin-top: 4px;
+    font-weight: 800;
+  }
+
+  .sec2-team-text {
+    font-size: 1.02rem;
+    line-height: 1.8;
+    color: #334155;
+    margin-bottom: 18px;
+    text-align: justify;
+  }
+
+  /* Full-Width Bottom Banner Below Section 2 Grid */
+  .team-sec2-bottom-banner {
+    width: 100%;
+    margin-top: 36px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(236, 92, 10, 0.2);
+    border-radius: 26px;
+    padding: 28px 32px;
+    box-shadow: 0 16px 45px rgba(236, 92, 10, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    box-sizing: border-box;
+  }
+
+  .team-stat-pills-banner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    width: 100%;
+  }
+
+  .team-highlights-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  /* Stat Pills Bar */
+  .team-stat-pills {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 26px 0 20px 0;
+  }
+  .team-stat-pill {
+    background: #ffffff;
+    border: 1px solid rgba(236, 92, 10, 0.15);
+    border-radius: 16px;
+    padding: 14px 12px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .team-stat-pill:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(236, 92, 10, 0.15);
+    border-color: #ec5c0a;
+  }
+  .stat-num {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #ec5c0a;
+    line-height: 1.2;
+  }
+  .stat-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #475569;
+    margin-top: 2px;
+  }
+
+  /* Highlights */
+  .team-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .team-highlight-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 123, 62, 0.08);
+    border: 1px solid rgba(0, 123, 62, 0.2);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #007b3e;
+  }
+
+  /* 3D Image Frame & Floating Badge */
+  .welcome-meter {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+    border: 3px solid #ffffff;
+    outline: 2px solid rgba(236, 92, 10, 0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    background: #090e1a;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .welcome-meter:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 25px 50px rgba(236, 92, 10, 0.2);
+  }
+  .team-avatar-img {
+    width: 100%;
+    height: auto;
+    max-height: 520px;
+    object-fit: contain;
+    display: block;
+    border-radius: 20px;
+  }
+  .team-floating-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 204, 0, 0.5);
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 0.84rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  }
+  .pulse-dot-green {
+    width: 8px;
+    height: 8px;
+    background-color: #00ff75;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00ff75;
+    animation: blink-dot 1.5s infinite;
+  }
+
+  /* --- Section 3: Untitled UI Minimalist Luxury Design (Dribbble Inspired) --- */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap');
+
+  /* Animated Brand Orange Color-Changing Background (1s Interval Shift) */
+  .team-sec3-section {
+    padding: clamp(45px, 5vw, 65px) 20px;
+    background: linear-gradient(-45deg, #ffedd5, #fff7ed, #fdba74, #fff8f2, #fed7aa, #ffedd5);
+    background-size: 400% 400%;
+    animation: orangeGradientShift 3s ease-in-out infinite;
+    position: relative;
+  }
+  @keyframes orangeGradientShift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 100%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 0%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .team-sec3-container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .team-sec3-header {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 22px auto;
+  }
+  .sec3-main-title {
+    font-size: clamp(32px, 4vw, 50px);
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.16;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+  }
+  .sec3-main-title em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 600;
+    background: linear-gradient(90deg, #ec5c0a 0%, #ff9a00 50%, #007b3e 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 4px;
+  }
+  .sec3-sub-text {
+    font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+    color: #475569;
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Filter Pills Bar Navigation */
+  .team-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    background: rgba(235, 229, 219, 0.75);
+    padding: 6px;
+    border-radius: 50px;
+    border: 1px solid rgba(236, 92, 10, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    max-width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
+  }
+  .team-filter-btn {
+    background: transparent;
+    border: 1.5px solid transparent;
+    outline: none;
+    color: #475569;
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 9px 22px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .team-filter-btn:hover {
+    color: #ec5c0a;
+  }
+  .team-filter-btn.active {
+    background: #ffffff;
+    color: #ec5c0a;
+    border-color: rgba(236, 92, 10, 0.25);
+    box-shadow: 0 6px 20px rgba(236, 92, 10, 0.15);
+    font-weight: 800;
+  }
+
+  /* Cards Grid */
+  .team-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+  @media (max-width: 1100px) {
+    .team-cards-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 768px) {
+    .team-sec2-section {
+      padding: 35px 14px !important;
+    }
+    .team-sec2-row {
+      flex-direction: column !important;
+      gap: 24px !important;
+    }
+    .team-sec2-col-text,
+    .team-sec2-col-img {
+      flex: 1 1 100% !important;
+      width: 100% !important;
+      text-align: center !important;
+    }
+    .dream-dots {
+      margin: 0 auto 12px auto !important;
+    }
+    .sec2-team-title {
+      font-size: clamp(24px, 5.8vw, 32px) !important;
+      text-align: center !important;
+      margin-bottom: 14px !important;
+    }
+    .sec2-team-text {
+      font-size: 0.92rem !important;
+      line-height: 1.65 !important;
+      text-align: center !important;
+      color: #444444 !important;
+      margin-bottom: 12px !important;
+    }
+    .welcome-meter {
+      max-width: 380px !important;
+      margin: 0 auto !important;
+    }
+    .team-cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .team-filter-bar {
+      border-radius: 20px;
+      padding: 5px;
+    }
+    .sec3-main-title {
+      font-size: clamp(28px, 6.5vw, 38px) !important;
+      font-weight: 900 !important;
+    }
+    .team-sec2-bottom-banner {
+      margin-top: 22px !important;
+      padding: 18px 12px !important;
+      border-radius: 20px !important;
+      gap: 14px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .team-stat-pills-banner {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 6px !important;
+    }
+    .team-stat-pill {
+      padding: 10px 4px !important;
+      border-radius: 12px !important;
+    }
+    .stat-num {
+      font-size: 1.05rem !important;
+      font-weight: 900 !important;
+    }
+    .stat-label {
+      font-size: 0.65rem !important;
+      line-height: 1.2 !important;
+    }
+    .team-highlights-banner {
+      flex-direction: column !important;
+      gap: 8px !important;
+      width: 100% !important;
+    }
+    .team-highlights-banner .team-highlight-item {
+      width: 100% !important;
+      justify-content: center !important;
+      font-size: 0.82rem !important;
+      padding: 9px 12px !important;
+      box-sizing: border-box !important;
+      text-align: center !important;
+    }
+  }
+
+  /* Mobile & Tablet Specific Responsive Card Scaling */
+  @media (max-width: 640px) {
+    .team-cards-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .untitled-card {
+      padding: 26px 16px 20px 16px;
+      border-radius: 22px;
+    }
+    .untitled-card-image-wrapper {
+      width: 140px !important;
+      height: 140px !important;
+      margin-bottom: 14px !important;
+    }
+    .member-name {
+      font-size: 1.15rem !important;
+      margin-bottom: 6px !important;
+    }
+    .member-role {
+      font-size: 0.78rem !important;
+      padding: 5px 14px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .team-stat-pills-banner {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 5px !important;
+    }
+    .stat-num {
+      font-size: 0.98rem !important;
+    }
+    .stat-label {
+      font-size: 0.62rem !important;
+    }
+  }
+
+  /* Untitled UI Card Component (2026 Trending Circular Hero Avatar Bento Card) */
+  .untitled-card {
+    background: linear-gradient(160deg, #ffffff 0%, #fff9f2 100%);
+    border-radius: 28px;
+    padding: 32px 20px 24px 20px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.05), 0 4px 15px rgba(236, 92, 10, 0.08);
+    border: 2px solid rgba(236, 92, 10, 0.18);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+  }
+  .untitled-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 5px;
+    background: linear-gradient(90deg, #ec5c0a, #ff9a00, #007b3e, #ec5c0a);
+    background-size: 200% auto;
+    animation: color-shift 4s linear infinite;
+  }
+  .untitled-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 28px 65px rgba(236, 92, 10, 0.25), 0 8px 25px rgba(0, 123, 62, 0.18);
+    border-color: #ec5c0a;
+  }
+
+  /* Trending Circular Avatar Stage - Ultra HD 180px Image Size */
+  .untitled-card-image-wrapper {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 0 auto 18px auto;
+    position: relative;
+    overflow: visible !important;
+    background: linear-gradient(135deg, #fff3eb 0%, #e8f5e9 100%);
+    border: 4px solid #ec5c0a;
+    box-shadow: 0 14px 35px rgba(236, 92, 10, 0.25), 0 0 20px rgba(0, 123, 62, 0.12);
+    flex-shrink: 0;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+  }
+  .untitled-card:hover .untitled-card-image-wrapper {
+    transform: scale(1.06);
+    border-color: #ff9a00;
+  }
+  .untitled-member-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .untitled-card:hover .untitled-member-img {
+    transform: scale(1.08);
+  }
+
+  /* Floating Status Dot */
+  .untitled-status-dot {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    width: 20px;
+    height: 20px;
+    background: #00c853;
+    border: 3.5px solid #ffffff;
+    border-radius: 50%;
+    animation: statusPulseGreen 2s infinite;
+    z-index: 5;
+  }
+
+  /* Member Info Footer - Name First, Designation Second */
+  .untitled-card-footer {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    text-align: center;
+    margin-top: 4px;
+    border: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-grow: 1;
+  }
+  .member-name {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.25;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.3px;
+    transition: color 0.3s ease;
+  }
+  .untitled-card:hover .member-name {
+    color: #ec5c0a;
+  }
+  .member-role {
+    font-size: 0.84rem;
+    font-weight: 800;
+    font-family: 'Poppins', 'Inter', sans-serif;
+    color: #ec5c0a;
+    margin: 0;
+    line-height: 1.3;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.08) 0%, rgba(0, 123, 62, 0.06) 100%);
+    border: 1.5px solid rgba(236, 92, 10, 0.25);
+    padding: 6px 18px;
+    border-radius: 50px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(236, 92, 10, 0.08);
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .untitled-card:hover .member-role {
+    transform: scale(1.06);
+    background: linear-gradient(135deg, #ec5c0a 0%, #007b3e 100%);
+    color: #ffffff;
+    border-color: #ec5c0a;
+    box-shadow: 0 8px 24px rgba(236, 92, 10, 0.35);
+  }
+{%- endstyle -%}
+
+<div class="our-team-wrapper">
+  
+  <!-- Hero Section (Section 1: Our Team Showcase) -->
+  {%- if section.settings.hero_bg_image != blank -%}
+    {%- assign team_hero_bg_url = section.settings.hero_bg_image | image_url: width: 1920 -%}
+  {%- else -%}
+    {%- assign team_hero_bg_url = 'vidhyut-saathi-team-bg.jpg' | asset_url -%}
+  {%- endif -%}
+
+  <section class="team-page-hero" style="background-image: url('{{ team_hero_bg_url }}');">
+    
+    <!-- Moving Background Marquee Text -->
+    <div class="team-marquee-track">
+      <div class="team-marquee-content">Our Team &nbsp; &nbsp; &nbsp; &nbsp; Our Team &nbsp; &nbsp; &nbsp; &nbsp; Our Team &nbsp; &nbsp; &nbsp; &nbsp; Our Team &nbsp; &nbsp; &nbsp; &nbsp; Our Team</div>
+    </div>
+
+    <div class="team-hero-inner">
+      <div class="row h-100 align-items-center">
+        <div class="col-12 text-center">
+          <nav aria-label="breadcrumb" class="breadcumb--con text-center">
+            <h1 class="w-text title wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+              {{ section.settings.hero_title | default: "Our Vidhyut Saathi Team" }}
+            </h1>
+            <ol class="breadcrumb justify-content-center wow fadeInUp" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Team</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Section 2: Vidhyut Saathi Team Overview -->
+  <section class="team-sec2-section">
+    <div class="team-sec2-container">
+      
+      <!-- Top Center Badge Header -->
+      <div class="dream-dots text-center fadeInUp" data-wow-delay="0.2s" style="display: flex; justify-content: center; margin-bottom: 24px; width: 100%;">
+        <span class="gradient-text blue animate-charcter">{{ section.settings.sec2_badge | default: "⚡ DEDICATED ENERGY INNOVATORS" }}</span>
+      </div>
+
+      <div class="team-sec2-row">
+        
+        <!-- Text Side -->
+        <div class="team-sec2-col-text heading-primary-sub">
+          <div class="who-we-contant heading-primary-sub">
+
+            <h4 class="sec2-team-title fadeInUp" data-wow-delay="0.3s">
+              {{ section.settings.sec2_title | default: "Vidhyut Saathi Team" }}
+              <span class="title-gradient-span">Pioneering Energy Savings Across India</span>
+            </h4>
+
+            <p class="sec2-team-text fadeInUp" data-wow-delay="0.4s">
+              Behind Vidhyut Saathi Energy Savers Pvt. Ltd. is a dynamic team of industry experts, engineers, business strategists, and customer success professionals committed to driving sustainable growth. Our team works closely with every franchise partner, providing comprehensive training, technical expertise, sales support, and strategic marketing assistance to ensure long-term business success.
+            </p>
+
+            <p class="sec2-team-text fadeInUp" data-wow-delay="0.4s">
+              We don't just supply products—we build profitable partnerships backed by innovation, transparency, and continuous guidance. With a customer-first approach and a passion for excellence, our professionals are dedicated to helping entrepreneurs expand confidently while delivering high-quality energy-saving solutions that create lasting value for homes, businesses, industries, and institutions across India.
+            </p>
+
+          </div>
+        </div>
+
+        <!-- Image Side -->
+        <div class="team-sec2-col-img heading-primary-main">
+          <div class="welcome-meter heading-primary-main">
+            {%- if section.settings.sec2_image != blank -%}
+              <img src="{{ section.settings.sec2_image | image_url: width: 1200 }}" class="avatar team-avatar-img" decoding="async" loading="lazy" width="1000" height="1000" alt="Vidhyut Saathi Team">
+            {%- elsif section.settings.hero_image != blank -%}
+              <img src="{{ section.settings.hero_image | image_url: width: 1200 }}" class="avatar team-avatar-img" decoding="async" loading="lazy" width="1000" height="1000" alt="Vidhyut Saathi Team">
+            {%- else -%}
+              {%- assign team_avatar_url = 'vidhyut-saathi-team-bg.jpg' | asset_url -%}
+              <img src="{{ team_avatar_url }}" class="avatar team-avatar-img" decoding="async" loading="lazy" width="1000" height="1000" alt="Vidhyut Saathi Team">
+            {%- endif -%}
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dedicated Full-Width Sub-Section Bar Below Section 2 Grid -->
+      <div class="team-sec2-bottom-banner fadeInUp" data-wow-delay="0.5s">
+        
+        <!-- 3 Stat Pills Row -->
+        <div class="team-stat-pills-banner">
+          <div class="team-stat-pill">
+            <span class="stat-num">100+</span>
+            <span class="stat-label">Experts &amp; Engineers</span>
+          </div>
+          <div class="team-stat-pill">
+            <span class="stat-num">20,000</span>
+            <span class="stat-label">Negative Ion Tech</span>
+          </div>
+          <div class="team-stat-pill">
+            <span class="stat-num">20+</span>
+            <span class="stat-label">States Pan-India</span>
+          </div>
+        </div>
+
+        <!-- 2 Highlight Badges Row -->
+        <div class="team-highlights-banner">
+          <div class="team-highlight-item">
+            <span class="highlight-icon">📜</span>
+            <span>ISO Certified &amp; Govt. Compliant</span>
+          </div>
+          <div class="team-highlight-item">
+            <span class="highlight-icon">💡</span>
+            <span>100% Legal &amp; Safe Power Savings</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+    </div>
+  </section>
+
+  <!-- Section 3: Meet Our Team That Makes The Magic Happen (Untitled UI Style) -->
+  <section class="team-sec3-section">
+    <div class="team-sec3-container">
+      
+      <!-- Section Header -->
+      <div class="team-sec3-header">
+        <h2 class="sec3-main-title fadeInUp" data-wow-delay="0.1s">
+          Meet the team that makes <br class="d-none d-md-block"> the <em>magic</em> happen
+        </h2>
+        <p class="sec3-sub-text fadeInUp" data-wow-delay="0.2s">
+          Meet our diverse team of world-class creators, sales strategists, and power saving experts.
+        </p>
+      </div>
+
+      <!-- Department Filter Pills -->
+      <div class="team-filter-bar fadeInUp" data-wow-delay="0.3s">
+        <button type="button" class="team-filter-btn active" data-filter="all">View all</button>
+        <button type="button" class="team-filter-btn" data-filter="sales">Sales &amp; Marketing</button>
+        <button type="button" class="team-filter-btn" data-filter="management">Management</button>
+        <button type="button" class="team-filter-btn" data-filter="training">Training</button>
+        <button type="button" class="team-filter-btn" data-filter="relationship">Relationship</button>
+        <button type="button" class="team-filter-btn" data-filter="accounts">Accounts</button>
+      </div>
+
+      <!-- Team Cards Grid -->
+      <div class="team-cards-grid">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- assign member_role_lower = block.settings.role | downcase -%}
+            {%- assign category = 'sales' -%}
+            {%- if member_role_lower contains 'head' or member_role_lower contains 'manager' or member_role_lower contains 'co-founder' -%}
+              {%- assign category = category | append: ' management' -%}
+            {%- endif -%}
+            {%- if member_role_lower contains 'training' -%}
+              {%- assign category = 'training management' -%}
+            {%- elsif member_role_lower contains 'relationship' -%}
+              {%- assign category = 'relationship management' -%}
+            {%- elsif member_role_lower contains 'accounting' or member_role_lower contains 'account' -%}
+              {%- assign category = 'accounts management' -%}
+            {%- elsif member_role_lower contains 'marketing' -%}
+              {%- assign category = category | append: ' sales' -%}
+            {%- endif -%}
+
+            <div class="untitled-card team-card-item {{ category }}" {{ block.shopify_attributes }}>
+              <div class="untitled-card-image-wrapper">
+                <span class="untitled-status-dot"></span>
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 450, height: 450, crop: 'center' | image_tag: loading: 'lazy', alt: block.settings.name, class: 'untitled-member-img' }}
+                {%- else -%}
+                  {%- assign default_img = 'vidhyut-saathi-team-bg.jpg' | asset_url -%}
+                  <img src="{{ default_img }}" alt="{{ block.settings.name | default: 'Team Member' }}" class="untitled-member-img" decoding="async" loading="lazy">
+                {%- endif -%}
+              </div>
+              <div class="untitled-card-footer">
+                <h3 class="member-name">{{ block.settings.name | default: 'Team Member' }}</h3>
+                <p class="member-role">{{ block.settings.role | default: 'Designation' }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Default 15 Team Members Fallback (Lucrative Circular Avatar Style) -->
+          {%- assign default_img = 'vidhyut-saathi-team-bg.jpg' | asset_url -%}
+          
+          <div class="untitled-card team-card-item sales management">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Jyoti Bajaj" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Jyoti Bajaj</h3>
+              <p class="member-role">Sales &amp; Marketing Head</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales management">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Shabnam Saxena" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Shabnam Saxena</h3>
+              <p class="member-role">Senior Sales Manager</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item training management">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Riya Juneja" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Riya Juneja</h3>
+              <p class="member-role">Training Manager</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item relationship management">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Vaishali Sharma" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Vaishali Sharma</h3>
+              <p class="member-role">Relationship Manager</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Khushi Rajput" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Khushi Rajput</h3>
+              <p class="member-role">Senior Sales Executive</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Charu Wadhwa" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Charu Wadhwa</h3>
+              <p class="member-role">Sales Consultant</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Gunjan Goyal" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Gunjan Goyal</h3>
+              <p class="member-role">Sales Development Representative</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Himani Arora" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Himani Arora</h3>
+              <p class="member-role">Marketing Analyst</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item accounts management">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Prerna Mittal" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Prerna Mittal</h3>
+              <p class="member-role">Accounting Manager</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Seema Ahlawat" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Seema Ahlawat</h3>
+              <p class="member-role">Sales Executive</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Renuka Kumari" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Renuka Kumari</h3>
+              <p class="member-role">Sales Associate</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Simran Mishra" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Simran Mishra</h3>
+              <p class="member-role">Sales Executive</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Bhavya Malik" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Bhavya Malik</h3>
+              <p class="member-role">Sales Executive</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Saloni Bhushan" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Saloni Bhushan</h3>
+              <p class="member-role">Sales Executive</p>
+            </div>
+          </div>
+
+          <div class="untitled-card team-card-item sales">
+            <div class="untitled-card-image-wrapper">
+              <span class="untitled-status-dot"></span>
+              <img src="{{ default_img }}" alt="Ritika Balgani" class="untitled-member-img" decoding="async" loading="lazy">
+            </div>
+            <div class="untitled-card-footer">
+              <h3 class="member-name">Ritika Balgani</h3>
+              <p class="member-role">Sales Executive</p>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Dynamic Tab Filter JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterBtns = document.querySelectorAll('.team-filter-btn');
+      const teamItems = document.querySelectorAll('.team-card-item');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+
+          const filter = this.getAttribute('data-filter');
+
+          teamItems.forEach(item => {
+            if (filter === 'all' || item.classList.contains(filter)) {
+              item.style.display = 'flex';
+              item.style.opacity = '1';
+            } else {
+              item.style.display = 'none';
+              item.style.opacity = '0';
+            }
+          });
+        });
+      });
+    });
+  </script>
+
+</div>
+
+{% schema %}
+{
+  "name": "Our Team Layout",
+  "settings": [
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Accent Color",
+      "default": "#ec5c0a"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fff8ef"
+    },
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "Our Team"
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "The people behind our vision, innovation and growth"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Company/Team Image (Section 2 Main Photo)"
+    },
+    {
+      "type": "image_picker",
+      "id": "sec2_image",
+      "label": "Section 2 Team Overview Photo"
+    },
+    {
+      "type": "header",
+      "content": "Introduction"
+    },
+    {
+      "type": "text",
+      "id": "intro_heading",
+      "label": "Heading",
+      "default": "Meet the Team Behind Vidhyut Saathi"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Introduction Text",
+      "default": "<p>Behind Vidhyut Saathi Energy Savers Pvt. Ltd. is a dynamic team of industry experts, engineers, business strategists, and customer success professionals committed to driving sustainable growth. Our team works closely with every franchise partner, providing comprehensive training, technical expertise, sales support, and strategic marketing assistance to ensure long-term business success. We don't just supply products—we build profitable partnerships backed by innovation, transparency, and continuous guidance. With a customer-first approach and a passion for excellence, our professionals are dedicated to helping entrepreneurs expand confidently while delivering high-quality energy-saving solutions that create lasting value for homes, businesses, industries, and institutions across India.</p>"
+    },
+    {
+      "type": "header",
+      "content": "What We Bring Cards"
+    },
+    {
+      "type": "text",
+      "id": "bring_heading",
+      "label": "Section Heading",
+      "default": "What We Bring"
+    },
+    {
+      "type": "text",
+      "id": "bring_1",
+      "label": "Card 1 Title",
+      "default": "Industry Expertise"
+    },
+    {
+      "type": "text",
+      "id": "bring_2",
+      "label": "Card 2 Title",
+      "default": "Technical Excellence"
+    },
+    {
+      "type": "text",
+      "id": "bring_3",
+      "label": "Card 3 Title",
+      "default": "Business Strategy"
+    },
+    {
+      "type": "text",
+      "id": "bring_4",
+      "label": "Card 4 Title",
+      "default": "Customer Success"
+    },
+    {
+      "type": "header",
+      "content": "CTA Section"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "Heading",
+      "default": "Building Success Together"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Supporting Text",
+      "default": "Partner with our team for continuous innovation, support, and long-term growth in the energy sector."
+    },
+    {
+      "type": "text",
+      "id": "cta_btn_text",
+      "label": "Button Text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "team_member",
+      "name": "Team Member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Member Photo",
+          "info": "Recommended: Square or portrait image."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Member Name"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Designation",
+          "default": "Designation"
+        },
+        {
+          "type": "textarea",
+          "id": "bio",
+          "label": "Short Description",
+          "default": "A short description of the team member's role and expertise."
+        },
+        {
+          "type": "url",
+          "id": "social_url",
+          "label": "Profile/Social URL (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Team Layout",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

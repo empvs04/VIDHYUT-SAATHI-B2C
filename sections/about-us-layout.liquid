@@ -1,0 +1,2889 @@
+{%- style -%}
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  /* --- Base Variables & Reset --- */
+  :root {
+    --about-primary: #ec5c0a;
+    --about-secondary: #007b3e;
+    --about-bg: #fffbf5;
+    --about-text-dark: #1a1a1a;
+    --about-text-light: #555555;
+    --about-radius: 24px;
+    --about-shadow: 0 15px 45px rgba(236, 92, 10, 0.08);
+  }
+  
+  .about-us-wrapper {
+    font-family: 'Outfit', 'Plus Jakarta Sans', 'Poppins', sans-serif;
+    color: var(--about-text-dark);
+    background-color: var(--about-bg);
+    overflow: hidden;
+  }
+
+  /* --- Premium 3D & Reveal Utilities --- */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .reveal-up.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .tilt-element {
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    will-change: transform;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* --- Hero Showcase Section --- */
+  .about-hero {
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center 25% !important;
+    background-color: #090e1a;
+    min-height: 520px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    image-rendering: -webkit-optimize-contrast;
+    -webkit-backface-visibility: hidden;
+  }
+  .hero-breadcrumb-pill {
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 204, 0, 0.5);
+    border-radius: 50px;
+    padding: 10px 26px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  
+  /* --- Left to Right Moving Marquee Text --- */
+  @keyframes scroll-left-to-right {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(50%) translateY(0); }
+  }
+  .moving-text {
+    position: absolute;
+    top: 65px !important;
+    left: 0;
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0.45;
+    pointer-events: none;
+    line-height: 1;
+    font-size: clamp(38px, 5.5vw, 85px);
+    font-weight: 900;
+    background: linear-gradient(90deg, #ec5c0a, #ff9900, #007b3e, #ec5c0a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: scroll-left-to-right 16s linear infinite;
+  }
+
+  /* --- Responsive --- */
+  @media screen and (max-width: 900px) {
+    .page-header_title { font-size: 3rem !important; }
+  }
+  @media screen and (max-width: 768px) {
+    .about-hero {
+      min-height: 260px !important;
+      height: 60vw !important;
+      background-size: cover !important;
+      background-position: center 15% !important;
+      padding: 12px 10px !important;
+    }
+    .moving-text {
+      top: 38px !important;
+      font-size: 32px !important;
+      opacity: 0.70 !important; /* Darker & bolder visibility on mobile */
+      filter: drop-shadow(0px 2px 8px rgba(0,0,0,0.6));
+    }
+    .hero-breadcrumb-pill {
+      padding: 6px 16px !important;
+      font-size: 0.75rem !important;
+      gap: 6px !important;
+      margin-bottom: 4px !important;
+    }
+    .hero-breadcrumb-pill span,
+    .hero-breadcrumb-pill a {
+      font-size: 0.75rem !important;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .page-header_title { font-size: 2.2rem !important; }
+  }
+  
+  /* --- Marquee CSS Animation --- */
+  @keyframes scroll-right {
+    0% { transform: translateX(-100%) translateY(-50%); }
+    100% { transform: translateX(100%) translateY(-50%); }
+  }
+  .moving-text {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: max-content;
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0.8;
+    pointer-events: none;
+    line-height: 1;
+    font-size: clamp(80px, 12vw, 150px);
+    font-weight: 900;
+    background: linear-gradient(90deg, #ec5c0a, #ffcc00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: scroll-right 25s linear infinite;
+  }
+  
+  /* ==========================================================================
+     Section 2: 5D Ultra-Futuristic Card Showcase & Responsive Container
+     ========================================================================== */
+  .company-info-section {
+    padding: 45px 20px;
+    background: radial-gradient(circle at 80% 20%, rgba(236, 92, 10, 0.08) 0%, rgba(255, 255, 255, 1) 45%, rgba(0, 123, 62, 0.08) 100%);
+    position: relative;
+  }
+
+  .company-info-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    align-items: center; /* Center photo container vertically with left text div */
+  }
+
+  /* Left Text Container - Equal Height */
+  .company-info-text {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(236, 92, 10, 0.2);
+    border-radius: 30px;
+    padding: 38px 34px;
+    box-shadow: 0 20px 50px rgba(236, 92, 10, 0.07);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .company-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.12), rgba(0, 123, 62, 0.12));
+    border: 1px solid rgba(236, 92, 10, 0.3);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #ec5c0a;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    width: fit-content;
+    box-shadow: 0 4px 15px rgba(236, 92, 10, 0.1);
+  }
+
+  .company-badge .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ec5c0a;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(236, 92, 10, 0.7);
+    animation: pulse-ring 1.8s infinite;
+  }
+
+  .company-info-text .gradient-heading {
+    font-size: clamp(26px, 2.9vw, 38px);
+    font-weight: 900;
+    line-height: 1.22;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, #ec5c0a, #007b3e, #ec5c0a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    animation: color-shift 4s linear infinite;
+  }
+
+  .company-info-text p {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #444;
+    margin-bottom: 16px;
+  }
+
+  .company-bottom-banner {
+    max-width: 1280px;
+    margin: 32px auto 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(236, 92, 10, 0.2);
+    border-radius: 30px;
+    padding: 30px 34px;
+    box-shadow: 0 20px 50px rgba(236, 92, 10, 0.07);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .company-tagline-pill {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.08), rgba(0, 123, 62, 0.08));
+    border: 1px solid rgba(236, 92, 10, 0.25);
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.88rem;
+    color: #ec5c0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(236, 92, 10, 0.08);
+  }
+
+  .company-feature-grid-banner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    width: 100%;
+  }
+
+  .company-cta-group-center {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .company-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 18px 0 24px 0;
+  }
+
+  .company-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #ffffff;
+    border: 1px solid rgba(236, 92, 10, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+  }
+
+  .company-feature-item:hover {
+    transform: translateY(-3px);
+    border-color: #ec5c0a;
+    box-shadow: 0 10px 22px rgba(236, 92, 10, 0.15);
+  }
+
+  .company-feature-icon {
+    font-size: 1.3rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.15), rgba(0, 123, 62, 0.15));
+    flex-shrink: 0;
+  }
+
+  .company-feature-text h4 {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 0 0 2px 0;
+  }
+
+  .company-feature-text p {
+    font-size: 0.78rem;
+    color: #666;
+    margin: 0 !important;
+    line-height: 1.3 !important;
+  }
+
+  .company-cta-group {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .company-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 30px;
+    background: linear-gradient(135deg, #ec5c0a, #f1721b);
+    color: #ffffff !important;
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 12px 30px rgba(236, 92, 10, 0.35);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .company-btn-primary:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 18px 40px rgba(236, 92, 10, 0.5);
+    background: linear-gradient(135deg, #f1721b, #007b3e);
+  }
+
+  .company-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 26px;
+    background: #ffffff;
+    color: #007b3e !important;
+    border: 2px solid #007b3e;
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 8px 20px rgba(0, 123, 62, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .company-btn-secondary:hover {
+    background: #007b3e;
+    color: #ffffff !important;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 123, 62, 0.25);
+  }
+
+  /* Right 5D Holographic Card Stage Container - Matching Left Height */
+  .company-info-image {
+    perspective: 1200px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: linear-gradient(135deg, #090e1a 0%, #151d30 50%, #0d1527 100%);
+    border: 1px solid rgba(255, 204, 0, 0.4);
+    border-radius: 28px;
+    padding: 28px 18px;
+    box-shadow: 0 25px 60px rgba(10, 14, 26, 0.4), inset 0 0 30px rgba(0, 200, 255, 0.1);
+  }
+
+  /* Layer 1: Ambient 5D Pulsating Energy Ring Background */
+  .company-info-image::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(236, 92, 10, 0.4) 0%, rgba(0, 200, 255, 0.25) 45%, rgba(0, 0, 0, 0) 75%);
+    filter: blur(45px);
+    pointer-events: none;
+    animation: energyPulse5D 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes energyPulse5D {
+    0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.6; }
+    100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  }
+
+  /* Layer 2: 5D Card Floating Stage (Sleek Compact 450px Width) */
+  .card-5d-stage {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    border-radius: 22px;
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+    will-change: transform;
+    cursor: pointer;
+    animation: floatCard5D 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes floatCard5D {
+    0% { transform: perspective(1000px) translateY(0px) rotateX(4deg) rotateY(-3deg); }
+    50% { transform: perspective(1000px) translateY(-10px) rotateX(-2deg) rotateY(3deg); }
+    100% { transform: perspective(1000px) translateY(-5px) rotateX(3deg) rotateY(-4deg); }
+  }
+
+  .card-5d-stage:hover {
+    animation-play-state: paused;
+  }
+
+  /* Layer 3: Metallic Chamfered 3D Card Shell */
+  .card-5d-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #000000;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 0 0 45px rgba(236, 92, 10, 0.35), 0 0 0 2px rgba(255, 204, 0, 0.5);
+    transform-style: preserve-3d;
+    transition: box-shadow 0.4s ease;
+  }
+
+  .card-5d-stage:hover .card-5d-wrapper {
+    box-shadow: 0 45px 95px rgba(0, 0, 0, 0.85), 0 0 75px rgba(0, 200, 255, 0.5), 0 0 0 3px rgba(255, 204, 0, 0.9);
+  }
+
+  .card-5d-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 24px;
+    transform: translateZ(15px);
+    transition: transform 0.4s ease;
+    object-fit: cover;
+  }
+
+  /* Layer 4: Interactive Holographic Glare & Foil Reflection */
+  .card-5d-glare {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 24px;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    mix-blend-mode: overlay;
+    transform: translateZ(35px);
+  }
+
+  /* Layer 5: Floating 3D Holographic Badges popping in Z-Space */
+  .card-float-badge {
+    position: absolute;
+    padding: 8px 16px;
+    background: rgba(9, 14, 26, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 204, 0, 0.6);
+    border-radius: 50px;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    z-index: 20;
+    pointer-events: none;
+    transform: translateZ(65px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .card-float-badge-top {
+    top: -16px;
+    left: -12px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.95), rgba(9, 14, 26, 0.95));
+  }
+
+  .card-float-badge-bottom {
+    bottom: -16px;
+    right: -12px;
+    background: linear-gradient(135deg, rgba(0, 123, 62, 0.95), rgba(9, 14, 26, 0.95));
+  }
+
+  .card-float-badge span.highlight {
+    color: #ffcc00;
+  }
+
+  /* Tablet & Mobile Responsive Alignment */
+  @media screen and (max-width: 900px) {
+    .company-info-section { padding: 30px 14px; }
+    .company-info-container {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .company-info-text {
+      padding: 24px 18px;
+      text-align: center;
+      align-items: center;
+    }
+    .company-info-image {
+      padding: 24px 14px;
+      border-radius: 22px;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: visible;
+    }
+    .card-5d-stage {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    .company-bottom-banner {
+      margin-top: 20px;
+      padding: 20px 16px;
+      border-radius: 22px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .company-tagline-pill {
+      font-size: 0.76rem;
+      padding: 8px 12px;
+      gap: 4px;
+      line-height: 1.45;
+      text-align: center;
+      justify-content: center;
+    }
+    .company-feature-grid-banner {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .card-float-badge-top {
+      top: -12px;
+      left: 0;
+      font-size: 0.68rem;
+      padding: 5px 10px;
+    }
+    .card-float-badge-bottom {
+      bottom: -12px;
+      right: 0;
+      font-size: 0.68rem;
+      padding: 5px 10px;
+    }
+    
+    /* Center Section 2 Buttons on Mobile */
+    .company-cta-group,
+    .company-cta-group-center {
+      justify-content: center !important;
+      width: 100% !important;
+      gap: 12px !important;
+      margin: 14px auto 0 auto !important;
+      flex-direction: column !important;
+    }
+    .company-btn-primary,
+    .company-btn-secondary {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 14px 20px !important;
+      justify-content: center !important;
+      text-align: center !important;
+      box-sizing: border-box !important;
+      margin: 0 auto !important;
+    }
+  }
+
+  @media screen and (max-width: 550px) {
+    .company-feature-grid-banner {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .company-feature-item {
+      padding: 10px 12px;
+      gap: 10px;
+    }
+    .company-feature-text h4 {
+      font-size: 0.85rem;
+    }
+    .company-feature-text p {
+      font-size: 0.75rem;
+    }
+  }
+  
+  /* --- Upgraded Section 3: Mission, Vision & What We Do Grid --- */
+  .mission-vision-section {
+    padding: 45px 20px;
+    background: radial-gradient(circle at top right, rgba(236,92,10,0.06) 0%, rgba(255,255,255,1) 50%, rgba(0,123,62,0.06) 100%);
+    position: relative;
+  }
+  .mv-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: stretch; /* All 3 cards stretch to exact same height */
+  }
+  .mv-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 42px 34px;
+    border-radius: 28px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.04);
+    border: 1px solid rgba(236,92,10,0.18);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    z-index: 1;
+  }
+  .mv-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #ec5c0a, #ffcc00, #007b3e);
+    z-index: 2;
+  }
+  .mv-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 28px 60px rgba(236,92,10,0.14), 0 0 25px rgba(0,123,62,0.1);
+    border-color: rgba(236,92,10,0.4);
+  }
+  .mv-icon {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    width: 68px;
+    height: 68px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(236,92,10,0.12), rgba(0,123,62,0.12));
+    border: 1px solid rgba(236,92,10,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(236,92,10,0.08);
+    flex-shrink: 0;
+  }
+  .mv-card h2 {
+    font-size: 1.7rem;
+    font-weight: 900;
+    margin-bottom: 14px;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mv-card p {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #555555;
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+  .mv-badge {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.08), rgba(0, 123, 62, 0.08));
+    border: 1px solid rgba(236, 92, 10, 0.2);
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #ec5c0a;
+    width: fit-content;
+  }
+  @media screen and (max-width: 768px) {
+    .mission-vision-section,
+    .services-section,
+    .trust-achievements-section,
+    .our-team-section {
+      padding: 35px 16px;
+    }
+    .mv-container,
+    .services-container,
+    .trust-grid,
+    .team-grid {
+      display: flex !important;
+      grid-template-columns: none !important;
+      overflow-x: auto !important;
+      scroll-snap-type: x mandatory !important;
+      scroll-behavior: smooth !important;
+      -webkit-overflow-scrolling: touch;
+      gap: 0 !important;
+      scrollbar-width: none;
+      padding-top: 16px !important;
+      padding-bottom: 16px !important;
+      align-items: stretch !important;
+    }
+    .mv-container::-webkit-scrollbar,
+    .services-container::-webkit-scrollbar,
+    .trust-grid::-webkit-scrollbar,
+    .team-grid::-webkit-scrollbar {
+      display: none;
+    }
+    .trust-card {
+      flex: 0 0 90% !important;
+      width: 90% !important;
+      max-width: 90% !important;
+      scroll-snap-align: center !important;
+      scroll-snap-stop: always !important;
+      box-sizing: border-box !important;
+      padding: 28px 20px !important;
+      margin: 0 5% !important;
+      border-radius: 24px !important;
+      box-shadow: 0 12px 30px rgba(236, 92, 10, 0.12) !important;
+    }
+    .team-card {
+      flex: 0 0 90% !important;
+      width: 90% !important;
+      max-width: 90% !important;
+      scroll-snap-align: center !important;
+      scroll-snap-stop: always !important;
+      box-sizing: border-box !important;
+      padding: 34px 20px 28px 20px !important;
+      margin: 0 5% !important;
+      border-radius: 26px !important;
+      position: relative !important;
+      overflow: hidden !important;
+      border: 2px solid rgba(236, 92, 10, 0.3) !important;
+      box-shadow: 0 14px 35px rgba(236, 92, 10, 0.12) !important;
+    }
+    .team-card::before {
+      content: '' !important;
+      position: absolute !important;
+      top: 0 !important; left: 0 !important; right: 0 !important; height: 6px !important;
+      background: linear-gradient(90deg, #ec5c0a, #ff9a00, #007b3e, #ec5c0a) !important;
+      background-size: 200% auto !important;
+      z-index: 10 !important;
+      display: block !important;
+    }
+    .mv-card,
+    .service-card {
+      flex: 0 0 100% !important;
+      width: 100% !important;
+      scroll-snap-align: center !important;
+      scroll-snap-stop: always !important;
+      box-sizing: border-box !important;
+      padding: 32px 22px !important;
+    }
+    .mv-slider-dots,
+    .services-slider-dots,
+    .trust-slider-dots,
+    .team-slider-dots {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .mv-dot,
+    .services-dot,
+    .trust-dot,
+    .team-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(236, 92, 10, 0.25);
+      border: 1px solid rgba(236, 92, 10, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .mv-dot.active,
+    .services-dot.active,
+    .trust-dot.active,
+    .team-dot.active {
+      width: 28px;
+      border-radius: 20px;
+      background: linear-gradient(90deg, #ec5c0a, #007b3e);
+      border-color: transparent;
+      box-shadow: 0 2px 8px rgba(236, 92, 10, 0.3);
+    }
+
+    /* Mobile Font Boldness for Section 2, Section 4, & Section 7 Headings */
+    .sec2-heading-custom,
+    .wwa-title,
+    .wwa-title span,
+    .our-team-title,
+    .our-team-title span {
+      font-weight: 900 !important;
+      -webkit-font-smoothing: antialiased !important;
+    }
+
+    .wwa-title,
+    .our-team-title {
+      font-size: clamp(26px, 6.2vw, 36px) !important;
+      color: #0b1120 !important;
+      -webkit-text-stroke: 0.5px #0b1120 !important;
+      line-height: 1.3 !important;
+    }
+
+    .wwa-title span,
+    .our-team-title span {
+      -webkit-text-stroke: 0.5px #ec5c0a !important;
+      font-weight: 900 !important;
+    }
+
+    .our-team-header {
+      margin-bottom: 24px !important;
+      padding: 0 8px !important;
+    }
+    .our-team-subtitle {
+      font-size: 0.94rem !important;
+      line-height: 1.65 !important;
+      color: #444444 !important;
+      text-align: center !important;
+    }
+
+    /* Section 2 Mobile 3-Line Color Formatting */
+    .sec2-heading-custom {
+      font-size: clamp(24px, 6vw, 32px) !important;
+      text-align: center !important;
+      line-height: 1.35 !important;
+    }
+    .sec2-line1,
+    .sec2-line2,
+    .sec2-line3 {
+      display: block !important;
+      margin-bottom: 3px !important;
+    }
+    .sec2-line1 {
+      color: #000000 !important;
+      -webkit-text-fill-color: #000000 !important;
+      -webkit-text-stroke: 0.6px #000000 !important;
+      font-weight: 900 !important;
+    }
+    .sec2-brand-gradient {
+      background: linear-gradient(90deg, #ec5c0a 0%, #ff9a00 50%, #007b3e 100%) !important;
+      background-size: 200% auto !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      -webkit-text-stroke: 0.5px #ec5c0a !important;
+      font-weight: 900 !important;
+      display: inline-block !important;
+    }
+    .sec2-line3 {
+      color: #000000 !important;
+      -webkit-text-fill-color: #000000 !important;
+      -webkit-text-stroke: 0.6px #000000 !important;
+      font-weight: 900 !important;
+    }
+    .sec2-eco-highlight {
+      color: #007b3e !important;
+      -webkit-text-fill-color: #007b3e !important;
+      -webkit-text-stroke: 0.5px #007b3e !important;
+      font-weight: 900 !important;
+      display: inline-block !important;
+    }
+  }
+  @media screen and (min-width: 769px) {
+    .mv-slider-dots,
+    .services-slider-dots,
+    .trust-slider-dots,
+    .team-slider-dots {
+      display: none !important;
+    }
+  }
+
+  /* --- Masterpiece Section: Who We Are Showcase --- */
+  .who-we-are-section {
+    padding: 45px 20px;
+    background: radial-gradient(circle at 20% 50%, rgba(236,92,10,0.06) 0%, #ffffff 40%, rgba(0,123,62,0.06) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .wwa-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    align-items: stretch; /* Left & Right Containers match exact equal height line */
+  }
+  
+  /* Left Media Container */
+  .wwa-image {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wwa-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 460px;
+    max-height: 520px;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 123, 62, 0.16), 0 0 0 2px rgba(255, 204, 0, 0.4);
+    border: 1px solid rgba(0, 123, 62, 0.3);
+    background: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wwa-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-radius: 28px;
+  }
+  .wwa-image-wrapper:hover img {
+    transform: scale(1.06);
+  }
+  
+  /* Left Overlay Glass Badges */
+  .wwa-img-badge {
+    position: absolute;
+    padding: 8px 16px;
+    background: rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 204, 0, 0.6);
+    border-radius: 50px;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .wwa-img-badge-top {
+    top: 18px;
+    left: 18px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.95), rgba(15, 23, 42, 0.95));
+  }
+  .wwa-img-badge-bottom {
+    bottom: 18px;
+    right: 18px;
+    background: linear-gradient(135deg, rgba(0, 123, 62, 0.95), rgba(15, 23, 42, 0.95));
+  }
+
+  /* Right Content Container */
+  .wwa-content {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 123, 62, 0.2);
+    border-radius: 28px;
+    padding: 38px 34px;
+    box-shadow: 0 20px 50px rgba(0, 123, 62, 0.07);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .wwa-subtitle {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, rgba(0,123,62,0.1), rgba(236,92,10,0.1));
+    border: 1px solid rgba(0,123,62,0.25);
+    border-radius: 50px;
+    color: #007b3e;
+    width: fit-content;
+    box-shadow: 0 4px 12px rgba(0,123,62,0.08);
+  }
+
+  .wwa-title {
+    font-size: clamp(26px, 3.1vw, 38px);
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 14px;
+    color: #1a1a1a;
+  }
+
+  .wwa-title span {
+    background: linear-gradient(90deg, #ec5c0a, #007b3e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .wwa-text {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #555;
+    margin-bottom: 18px;
+  }
+
+  /* Metric Stat Boxes */
+  .wwa-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .wwa-metric-box {
+    background: linear-gradient(135deg, rgba(236,92,10,0.06), rgba(0,123,62,0.06));
+    border: 1px solid rgba(0,123,62,0.18);
+    border-radius: 16px;
+    padding: 12px 10px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  .wwa-metric-box:hover {
+    transform: translateY(-3px);
+    border-color: #007b3e;
+  }
+  .wwa-metric-box h4 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #ec5c0a;
+    margin: 0 0 2px 0;
+  }
+  .wwa-metric-box p {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #555;
+    margin: 0 !important;
+  }
+
+  /* Bottom CEO & Features Row */
+  .wwa-bottom-row {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 16px;
+    border-top: 1px solid rgba(0,123,62,0.15);
+    padding-top: 20px;
+    margin-top: auto;
+  }
+
+  .wwa-ceo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, rgba(236,92,10,0.06), rgba(0,123,62,0.06));
+    padding: 12px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,123,62,0.2);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+  }
+
+  .wwa-ceo img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007b3e;
+    box-shadow: 0 0 12px rgba(0,123,62,0.3);
+    flex-shrink: 0;
+  }
+
+  .wwa-ceo-info h4 {
+    margin: 0 0 2px 0;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .wwa-ceo-info span {
+    font-size: 0.82rem;
+    color: #ec5c0a;
+    font-weight: 700;
+    display: block;
+  }
+
+  .wwa-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .wwa-features li {
+    position: relative;
+    padding-left: 26px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #2d3748;
+  }
+
+  .wwa-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    background: linear-gradient(135deg, #ec5c0a, #007b3e);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 900;
+    box-shadow: 0 4px 10px rgba(236,92,10,0.3);
+  }
+
+  @media screen and (max-width: 900px) {
+    .wwa-container { grid-template-columns: 1fr; gap: 30px; }
+    .wwa-image-wrapper { min-height: 340px; max-height: none; }
+    .wwa-content { padding: 30px 22px; }
+    .wwa-bottom-row { grid-template-columns: 1fr; }
+    .wwa-metrics-row { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* --- Upgraded Section 4: Services / Core Benefits 3-Column Grid --- */
+  .services-section {
+    padding: 45px 20px;
+    background: radial-gradient(circle at 80% 20%, rgba(0,123,62,0.06) 0%, #ffffff 50%, rgba(236,92,10,0.06) 100%);
+    color: #1a1a1a;
+    position: relative;
+    overflow: hidden;
+  }
+  .services-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    align-items: stretch; /* All 3 cards stretch to exact same height */
+    position: relative;
+    z-index: 2;
+  }
+  .service-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 45px 32px;
+    border-radius: 28px;
+    text-align: center;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(236, 92, 10, 0.18);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #ec5c0a, #ffcc00, #007b3e);
+    z-index: 2;
+  }
+  .service-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 30px 65px rgba(236,92,10,0.15), 0 0 25px rgba(0,123,62,0.12);
+    border-color: rgba(0,123,62,0.4);
+  }
+  .service-icon-wrapper {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 22px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    position: relative;
+    background: linear-gradient(135deg, rgba(236,92,10,0.12), rgba(0,123,62,0.12));
+    border: 1px solid rgba(236,92,10,0.25);
+    box-shadow: 0 10px 25px rgba(236,92,10,0.1);
+    flex-shrink: 0;
+  }
+  .service-icon-wrapper img {
+    width: 60%;
+    height: auto;
+    object-fit: contain;
+  }
+  .service-card h3 {
+    font-size: 1.7rem;
+    font-weight: 900;
+    margin-bottom: 14px;
+    color: #1a1a1a;
+  }
+  .service-card p {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #555;
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+  .service-badge {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.08), rgba(0, 123, 62, 0.08));
+    border: 1px solid rgba(236, 92, 10, 0.2);
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #ec5c0a;
+  }
+
+  @media screen and (max-width: 900px) {
+    .company-info-container { grid-template-columns: 1fr; }
+    .wwa-container { grid-template-columns: 1fr; }
+    .wwa-bottom-row { grid-template-columns: 1fr; }
+    .mv-container { grid-template-columns: 1fr; }
+    .services-container { grid-template-columns: 1fr; }
+  }
+
+  /* --- Upgraded Section 6: Trust & Live Achievements Showcase --- */
+  .trust-achievements-section {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 45px 20px;
+    background: radial-gradient(circle at 50% 30%, rgba(236,92,10,0.06) 0%, #ffffff 50%, rgba(0,123,62,0.06) 100%);
+    color: #1a1a1a;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .trust-achievements-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Badge & Section Header */
+  .trust-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 900px;
+    margin: 0 auto 35px auto;
+  }
+  .trust-top-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.1), rgba(0, 123, 62, 0.1));
+    border: 1px solid rgba(236, 92, 10, 0.3);
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #ec5c0a;
+    letter-spacing: 0.5px;
+    margin: 0 auto 20px auto;
+    box-shadow: 0 4px 15px rgba(236, 92, 10, 0.1);
+  }
+  .trust-top-badge .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #007b3e;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #007b3e;
+    animation: blink-dot 1.5s infinite;
+  }
+
+  /* --- Section 2 Custom Heading Styling --- */
+  .sec2-heading-custom {
+    font-size: clamp(28px, 3.2vw, 44px);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+    color: #0b1120;
+  }
+  .sec2-line1, .sec2-line3 {
+    color: #0b1120;
+    font-weight: 900;
+  }
+  .sec2-brand-gradient {
+    background: linear-gradient(90deg, #ec5c0a 0%, #ff9a00 50%, #007b3e 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: color-shift 4s linear infinite;
+    font-weight: 900;
+  }
+  .sec2-eco-highlight {
+    color: #007b3e;
+    font-weight: 900;
+  }
+
+  .company-info-text h2 {
+    font-size: clamp(28px, 3.2vw, 44px);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+  }
+  .trust-title .highlight-gradient {
+    background: linear-gradient(90deg, #ec5c0a, #007b3e, #ec5c0a);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: color-shift 4s linear infinite;
+  }
+  .trust-subtitle {
+    font-size: 1.05rem;
+    color: #555555;
+    max-width: 780px;
+    margin: 0 auto;
+    line-height: 1.75;
+  }
+
+  /* 4-Card Equal Height Grid */
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    align-items: stretch; /* All 4 cards stretch to exact same height */
+    margin-bottom: 45px;
+  }
+
+  .trust-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(236, 92, 10, 0.18);
+    border-radius: 28px;
+    padding: 38px 24px;
+    text-align: center;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .trust-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 5px;
+    background: linear-gradient(90deg, #ec5c0a, #ffcc00, #007b3e);
+  }
+  .trust-card:hover {
+    transform: translateY(-12px);
+    border-color: rgba(0, 123, 62, 0.4);
+    box-shadow: 0 25px 60px rgba(0, 123, 62, 0.14), 0 0 25px rgba(236, 92, 10, 0.1);
+  }
+
+  .trust-icon-box {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 18px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(236,92,10,0.12), rgba(0,123,62,0.12));
+    border: 1px solid rgba(236,92,10,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    box-shadow: 0 8px 20px rgba(236,92,10,0.08);
+    flex-shrink: 0;
+  }
+  .trust-number {
+    font-size: clamp(2.1rem, 2.8vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+  }
+  .trust-number span {
+    color: #ec5c0a;
+  }
+  .trust-card-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+  }
+  .trust-card-desc {
+    font-size: 0.92rem;
+    color: #555555;
+    line-height: 1.65;
+    margin-bottom: 18px;
+    flex-grow: 1;
+  }
+  .trust-card-badge {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.08), rgba(0, 123, 62, 0.08));
+    border: 1px solid rgba(236, 92, 10, 0.2);
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #ec5c0a;
+  }
+
+  /* Live Customer Growing Ticker Bar - Centered & Mobile Responsive */
+  .trust-live-bar {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 123, 62, 0.25);
+    border-radius: 24px;
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 123, 62, 0.08);
+    margin: 45px auto 0 auto;
+    max-width: 960px;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 16px;
+  }
+  .trust-live-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    width: 100%;
+  }
+  .trust-live-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: linear-gradient(135deg, rgba(0,123,62,0.12), rgba(236,92,10,0.12));
+    border: 1px solid rgba(0,123,62,0.3);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #007b3e;
+    margin: 0 auto;
+  }
+  .trust-live-text {
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    text-align: center;
+  }
+  .trust-live-text span {
+    color: #ec5c0a;
+  }
+  .trust-features-pills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .trust-pill {
+    padding: 7px 16px;
+    background: #ffffff;
+    border: 1px solid rgba(236, 92, 10, 0.2);
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #333;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  }
+
+  @media screen and (max-width: 1024px) {
+    .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  }
+  @media screen and (max-width: 768px) {
+    .trust-live-bar {
+      flex-direction: column !important;
+      text-align: center !important;
+      align-items: center !important;
+      padding: 22px 18px !important;
+      gap: 16px !important;
+      border-radius: 22px !important;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 245, 235, 0.98)) !important;
+      border: 1.5px solid rgba(236, 92, 10, 0.3) !important;
+      box-shadow: 0 10px 30px rgba(236, 92, 10, 0.1) !important;
+      margin-top: 25px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .trust-live-info {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      gap: 10px !important;
+      width: 100% !important;
+    }
+    .trust-live-badge {
+      margin: 0 auto !important;
+      padding: 6px 16px !important;
+      font-size: 0.8rem !important;
+      width: fit-content !important;
+    }
+    .trust-live-text {
+      font-size: 0.95rem !important;
+      line-height: 1.5 !important;
+      text-align: center !important;
+    }
+    .trust-features-pills {
+      justify-content: center !important;
+      gap: 8px !important;
+      width: 100% !important;
+      flex-wrap: wrap !important;
+    }
+    .trust-pill {
+      font-size: 0.76rem !important;
+      padding: 6px 14px !important;
+      text-align: center !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+    }
+  }
+
+  /* Live Customer Growing Ticker Bar */
+  .trust-live-bar {
+    background: linear-gradient(90deg, rgba(236, 92, 10, 0.08), rgba(0, 123, 62, 0.08));
+    border: 1px solid rgba(0, 123, 62, 0.2);
+    border-radius: 20px;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+  }
+  .trust-live-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .trust-live-badge {
+    background: #007b3e;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 6px 16px;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0, 123, 62, 0.25);
+  }
+  .trust-live-text {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #2d3748;
+  }
+  .trust-live-text span {
+    color: #ec5c0a;
+    font-weight: 800;
+  }
+  .trust-features-pills {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .trust-pill {
+    background: #ffffff;
+    border: 1px solid rgba(236, 92, 10, 0.2);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  @media screen and (max-width: 1024px) {
+    .trust-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  /* --- Section 7: Continuous Moving Gradient Flow Executive Showcase --- */
+  @keyframes moveGradientFlow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes floatOrbOne {
+    0% { transform: translate(0px, 0px) scale(1); }
+    50% { transform: translate(120px, -60px) scale(1.15); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+
+  @keyframes floatOrbTwo {
+    0% { transform: translate(0px, 0px) scale(1); }
+    50% { transform: translate(-100px, 70px) scale(1.2); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+
+  @keyframes foilShimmer {
+    0% { transform: translateX(-100%) rotate(45deg); opacity: 0; }
+    50% { opacity: 0.4; }
+    100% { transform: translateX(200%) rotate(45deg); opacity: 0; }
+  }
+
+  @keyframes statusPulseGreen {
+    0% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 200, 83, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
+  }
+
+  .our-team-section {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 60px 20px;
+    background: linear-gradient(120deg, #ffffff 0%, rgba(236, 92, 10, 0.18) 25%, #fff5ea 50%, rgba(0, 123, 62, 0.15) 75%, #ffffff 100%);
+    background-size: 300% 300%;
+    animation: moveGradientFlow 12s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border-top: 2px solid rgba(236, 92, 10, 0.25);
+    border-bottom: 2px solid rgba(0, 123, 62, 0.25);
+  }
+
+  .our-team-section::before {
+    content: '';
+    position: absolute;
+    top: -20%; left: -10%; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(236, 92, 10, 0.22) 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    animation: floatOrbOne 14s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  .our-team-section::after {
+    content: '';
+    position: absolute;
+    bottom: -20%; right: -10%; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0, 123, 62, 0.2) 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    animation: floatOrbTwo 16s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  .our-team-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .our-team-header {
+    text-align: center;
+    max-width: 880px;
+    margin: 0 auto 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .our-team-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(236, 92, 10, 0.15), rgba(0, 123, 62, 0.15));
+    border: 1.5px solid rgba(236, 92, 10, 0.35);
+    padding: 8px 24px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 900;
+    color: #ec5c0a;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+    box-shadow: 0 6px 20px rgba(236, 92, 10, 0.15);
+  }
+  .our-team-title {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+  }
+  .our-team-title span {
+    background: linear-gradient(90deg, #ec5c0a, #ff9a00, #007b3e);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: color-shift 4s linear infinite;
+  }
+  .our-team-subtitle {
+    font-size: 1.05rem;
+    color: #555555;
+    line-height: 1.75;
+  }
+
+  /* White & Orange 4-Card Equal Height Executive Grid - Redesigned 3D Bento Style */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .team-card {
+    background: linear-gradient(145deg, #ffffff 0%, #fffcf8 100%);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.05), 0 4px 15px rgba(236, 92, 10, 0.06);
+    border: 2px solid rgba(236, 92, 10, 0.18);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 100%;
+    padding: 32px 20px 24px 20px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .team-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 5px;
+    background: linear-gradient(90deg, #ec5c0a, #ff9a00, #007b3e, #ec5c0a);
+    background-size: 200% auto;
+    animation: color-shift 4s linear infinite;
+  }
+  .team-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(236, 92, 10, 0.22), 0 8px 25px rgba(0, 123, 62, 0.15);
+    border-color: #ec5c0a;
+  }
+
+  .team-img-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 18px auto;
+    border-radius: 50%;
+    overflow: visible !important;
+    background: linear-gradient(135deg, #fff3eb, #e8f5e9);
+    border: 3.5px solid #ec5c0a;
+    box-shadow: 0 10px 25px rgba(236, 92, 10, 0.25), 0 0 16px rgba(0, 123, 62, 0.12);
+    flex-shrink: 0;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+  }
+  .team-card:hover .team-img-wrapper {
+    transform: scale(1.06);
+    border-color: #ff9a00;
+  }
+  .team-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .team-card:hover .team-img-wrapper img {
+    transform: scale(1.08);
+  }
+  .team-status-indicator {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background: #00c853;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    animation: statusPulseGreen 2s infinite;
+  }
+
+  .team-role-tag {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+    white-space: nowrap;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(236, 92, 10, 0.25);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+  }
+  .team-card:hover .team-role-tag {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(236, 92, 10, 0.4);
+  }
+
+  .team-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .team-name {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #0f172a;
+    margin: 0 0 14px 0;
+    transition: color 0.3s ease;
+  }
+  .team-card:hover .team-name {
+    color: #ec5c0a;
+  }
+
+  .team-socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .team-social-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(236, 92, 10, 0.08);
+    border: 1px solid rgba(236, 92, 10, 0.2);
+    color: #ec5c0a !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .team-social-btn:hover {
+    background: #ec5c0a;
+    color: #ffffff !important;
+    border-color: #ec5c0a;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(236, 92, 10, 0.35);
+  }
+
+  /* Mobile Responsive for Team Cards */
+  @media screen and (max-width: 1024px) {
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+  @media screen and (max-width: 640px) {
+    .team-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .team-card {
+      padding: 26px 18px 22px 18px;
+    }
+  }
+  .team-bio {
+    font-size: 0.92rem;
+    color: #555555;
+    line-height: 1.65;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+
+  .team-socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: auto;
+  }
+  .team-social-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1.5px solid rgba(236, 92, 10, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: #ec5c0a;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  }
+  .team-social-btn:hover {
+    background: linear-gradient(135deg, #ec5c0a, #ff6b00);
+    color: #ffffff !important;
+    transform: translateY(-4px) rotate(360deg);
+    box-shadow: 0 8px 22px rgba(236, 92, 10, 0.45);
+    border-color: transparent;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .team-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  }
+  @media screen and (max-width: 600px) {
+    .team-grid { grid-template-columns: 1fr; }
+  }
+
+  .team-socials {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+  }
+  .team-social-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #f8fafc;
+    border: 1px solid rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: #444;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .team-social-btn:hover {
+    background: #ec5c0a;
+    color: #ffffff;
+    border-color: #ec5c0a;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(236, 92, 10, 0.3);
+  }
+
+  @media screen and (max-width: 1024px) {
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media screen and (max-width: 600px) {
+    .team-grid { grid-template-columns: 1fr; }
+  }
+{%- endstyle -%}
+
+<div class="about-us-wrapper" style="position: relative;">
+  
+  <!-- Hero Section (Clean Full-Width Official Vidhyut Saathi Team Showcase) -->
+  {%- assign hero_bg_url = 'vidhyut-saathi-team-bg.jpg' | asset_url -%}
+
+  <section class="about-hero page-header page-header_align_center" style="background-image: url('{{ hero_bg_url }}');">
+    
+    <!-- Left to Right Moving Marquee Text -->
+    <div class="moving-text">About Us &nbsp; &nbsp; &nbsp; &nbsp; About Us &nbsp; &nbsp; &nbsp; &nbsp; About Us &nbsp; &nbsp; &nbsp; &nbsp; About Us &nbsp; &nbsp; &nbsp; &nbsp; About Us</div>
+
+    <!-- Floating Minimal Breadcrumbs Bar at Bottom of Hero -->
+    <div class="hero-breadcrumb-pill">
+      <a href="/" style="color: #ffcc00; text-decoration: none; font-weight: 800; font-size: 0.92rem;">Home</a>
+      <span style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">/</span>
+      <span style="color: #ffffff; font-weight: 700; font-size: 0.92rem;">About Us</span>
+      <span style="color: rgba(255,255,255,0.3); margin: 0 4px;">|</span>
+      <span style="color: #ffcc00; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;"><span class="pulse-dot"></span> Official Vidhyut Saathi Team</span>
+    </div>
+
+  </section>
+
+  <!-- About Company Section (Lucrative & 3D Card Showcase) -->
+  <section class="company-info-section">
+    
+    <!-- Top Center Badge Header -->
+    <div style="max-width: 1280px; margin: 0 auto 24px auto; display: flex; justify-content: center; width: 100%;">
+      <div class="company-badge" style="margin: 0 auto;">
+        <span class="pulse-dot"></span>
+        <span>⚡ INDIA'S #1 ELECTRIC POWER SAVER CARD</span>
+      </div>
+    </div>
+
+    <div class="company-info-container">
+      
+      <!-- Text Side -->
+      <div class="company-info-text reveal-up active">
+        <h2 class="sec2-heading-custom">
+          <span class="sec2-line1">Empowering India</span>
+          <span class="sec2-line2">
+            <span class="sec2-brand-gradient">With Green Energy &amp; Power</span>
+          </span>
+          <span class="sec2-line3">Savings <span class="sec2-eco-highlight">Across Nation</span></span>
+        </h2>
+        
+        <p><b>Vidhyut Saathi Energy Savers Pvt. Ltd.</b> is more than a company—it is a mission to empower every Indian family to save money, every entrepreneur to build wealth, and every citizen to contribute towards a greener and stronger India. Through our revolutionary <b>Vidhyut Saathi Card</b> – India's First Energy Saver Card powered by Advanced US-German Nano Technology, we are helping homes, shops, offices, businesses, and industries save <b>20%–30%</b> on their monthly electricity bills while promoting smarter energy consumption.</p>
+
+        <p>In a time when electricity costs are rising and environmental challenges are growing, every unit of electricity saved becomes a contribution to your family's future and our nation's progress. Beyond energy savings, Vidhyut Saathi is creating a powerful Pan-India network of entrepreneurs through its exclusive district franchise model, enabling individuals to build successful businesses and create lasting financial freedom.</p>
+      </div>
+
+      <!-- 5D Interactive Card Showcase Side -->
+      <div class="company-info-image reveal-up active">
+        <div class="card-5d-stage" id="card5dStage">
+          
+          <!-- Floating Top Badge -->
+          <div class="card-float-badge card-float-badge-top">
+            <span>⚡</span>
+            <span>US-GERMAN NANOTECH | <span class="highlight">20,000 IONS</span></span>
+          </div>
+
+          <!-- 5D Card Main Wrapper -->
+          <div class="card-5d-wrapper">
+            <img src="{{ 'vidhyut-power-saver-card.jpg' | asset_url }}" class="card-5d-image" alt="Vidhyut Saathi 5D Electric Power Saving Card" loading="lazy" width="900" height="570">
+
+            <!-- Glare Effect Overlay -->
+            <div class="card-5d-glare" id="card5dGlare"></div>
+          </div>
+
+          <!-- Floating Bottom Badge -->
+          <div class="card-float-badge card-float-badge-bottom">
+            <span>🏆</span>
+            <span><span class="highlight">ISO-CERTIFIED</span> | 20%-30% SAVINGS</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Full-Width Feature & Tagline Banner (Below Section 2 2-Column Grid) -->
+    <div class="company-bottom-banner reveal-up active">
+      
+      <!-- Lucrative Tagline Pill -->
+      <div class="company-tagline-pill">
+        <span>Save Electricity</span> • <span>Save Money</span> • <span>Protect Nature</span> • <span>Empower India</span> • <span>Build Your Future</span>
+      </div>
+
+      <!-- Lucrative Feature Grid (4-Column Full-Width Grid) -->
+      <div class="company-feature-grid-banner">
+        <div class="company-feature-item">
+          <div class="company-feature-icon">💰</div>
+          <div class="company-feature-text">
+            <h4>20% - 30% Bill Savings</h4>
+            <p>Instant reduction on monthly electricity bills</p>
+          </div>
+        </div>
+
+        <div class="company-feature-item">
+          <div class="company-feature-icon">⚡</div>
+          <div class="company-feature-text">
+            <h4>20,000 Negative Ions</h4>
+            <p>US-German Terahertz Nano-Tech</p>
+          </div>
+        </div>
+
+        <div class="company-feature-item">
+          <div class="company-feature-icon">📜</div>
+          <div class="company-feature-text">
+            <h4>100% Legal &amp; Certified</h4>
+            <p>ISO-Certified &amp; Govt. Compliant</p>
+          </div>
+        </div>
+
+        <div class="company-feature-item">
+          <div class="company-feature-icon">🌱</div>
+          <div class="company-feature-text">
+            <h4>Ozone &amp; Eco Friendly</h4>
+            <p>Zero maintenance &amp; protects environment</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lucrative CTAs -->
+      <div class="company-cta-group-center">
+        <a href="/products/vidhyut-saathi-electric-power-saver-card" class="company-btn-primary">
+          <span>🛒 Order Saver Card</span>
+          <span style="font-size: 1.2rem;">→</span>
+        </a>
+        <a href="/pages/b2c" class="company-btn-secondary">
+          <span>📊 Calculate Your Savings</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Mission / Vision 3-Column Section -->
+  <section class="mission-vision-section">
+    <div class="mv-container">
+      
+      <!-- Card 1 -->
+      <div class="mv-card reveal-up active">
+        <div>
+          <div class="mv-icon">⚙️</div>
+          <h2>What We Do</h2>
+          <p>At Vidhyut Saathi, we transform everyday electricity consumption into an opportunity for savings and growth. Through our innovative Vidhyut Saathi Card, we help homes, shops, offices, commercial establishments, and industries unlock the power of smarter energy utilization and save 20–30% on their monthly electricity bills while enabling aspiring entrepreneurs to build profitable district-level ventures.</p>
+        </div>
+        <div class="mv-badge">
+          <span>⚡ Less Wastage. More Savings.</span>
+        </div>
+      </div>
+      
+      <!-- Card 2 -->
+      <div class="mv-card reveal-up active">
+        <div>
+          <div class="mv-icon">👁️</div>
+          <h2>Our Vision</h2>
+          <p>To create a future where every Indian family pays less for electricity, every entrepreneur has the opportunity to build wealth, and every unit of energy is used wisely for the benefit of our nation and future generations. We envision advanced technology being accessible to every citizen, protecting the environment and reducing economic strain.</p>
+        </div>
+        <div class="mv-badge">
+          <span>🌍 Smarter Power Consumption</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="mv-card reveal-up active">
+        <div>
+          <div class="mv-icon">🎯</div>
+          <h2>Our Mission</h2>
+          <p>To help millions of Indians reduce their electricity expenses through innovative energy-saving technology while creating life-changing business opportunities through our exclusive district franchise network. By saving electricity, creating entrepreneurs, generating employment, and promoting environmental awareness, we are creating a legacy of savings, success, and sustainability.</p>
+        </div>
+        <div class="mv-badge">
+          <span>🛡️ Savings, Success &amp; Sustainability</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Mobile Slider Dots (Mobile Only) -->
+    <div class="mv-slider-dots">
+      <span class="mv-dot active" data-index="0"></span>
+      <span class="mv-dot" data-index="1"></span>
+      <span class="mv-dot" data-index="2"></span>
+    </div>
+  </section>
+
+  <!-- Who We Are Section (Masterclass Equal Height Showcase) -->
+  <section class="who-we-are-section">
+    <div class="wwa-container">
+      
+      <!-- Left Side Image Showcase -->
+      <div class="wwa-image reveal-up active">
+        <div class="wwa-image-wrapper">
+          <div class="wwa-img-badge wwa-img-badge-top">
+            <span>🏆</span>
+            <span>ISO 9001:2015 CERTIFIED</span>
+          </div>
+
+          {%- if section.settings.who_we_are_image != blank -%}
+            {{ section.settings.who_we_are_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: 'Vidhyut Saathi Technology Showcase' }}
+          {%- else -%}
+            <img src="{{ 'vidhyut-power-saver-card.jpg' | asset_url }}" alt="Vidhyut Saathi Technology" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+          {%- endif -%}
+
+          <div class="wwa-img-badge wwa-img-badge-bottom">
+            <span>⚡</span>
+            <span>20 LAKHS+ HAPPY USERS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side Content -->
+      <div class="wwa-content reveal-up active">
+        <div>
+          <div class="wwa-subtitle">🌱 WHO WE ARE | SAVINGS &amp; SUSTAINABILITY</div>
+          <h3 class="wwa-title">When Electricity is Saved, <span>Everyone Wins</span></h3>
+          <p class="wwa-text">We are believers in a simple idea: when electricity is saved, everyone wins. At Vidhyut Saathi, we don't measure success by products sold—we measure it by electricity saved, money retained by families, businesses created by entrepreneurs, and the positive difference we make in people's lives.</p>
+          
+          <!-- Key Metrics Boxes -->
+          <div class="wwa-metrics-row">
+            <div class="wwa-metric-box">
+              <h4>20%-30%</h4>
+              <p>Bill Savings</p>
+            </div>
+            <div class="wwa-metric-box">
+              <h4>20,000</h4>
+              <p>Negative Ions</p>
+            </div>
+            <div class="wwa-metric-box">
+              <h4>100%</h4>
+              <p>Legal &amp; Certified</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="wwa-bottom-row">
+          <div class="wwa-ceo">
+            {%- if section.settings.ceo_image != blank -%}
+              {{ section.settings.ceo_image | image_url: width: 150 | image_tag: loading: 'lazy', alt: 'Jyoti Bajaj' }}
+            {%- else -%}
+              <div style="width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #ec5c0a, #007b3e); color: white; display:flex; align-items:center; justify-content:center; font-size: 1.4rem;">👤</div>
+            {%- endif -%}
+            <div class="wwa-ceo-info">
+              <h4>Jyoti Bajaj</h4>
+              <span>CEO, Vidhyut Saathi</span>
+            </div>
+          </div>
+          
+          <ul class="wwa-features">
+            <li>20%-30% Bill Savings</li>
+            <li>100% Legal &amp; Govt Certified</li>
+            <li>Zero Maintenance Cost</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Core Services / Benefits (Equal Height 3-Card Glass Showcase) -->
+  <section class="services-section">
+    <div class="services-container">
+      
+      <!-- Card 1 -->
+      <div class="service-card reveal-up active">
+        <div>
+          <div class="service-icon-wrapper">
+            {%- if section.settings.service_1_icon != blank -%}
+              {{ section.settings.service_1_icon | image_url: width: 200 | image_tag: loading: 'lazy' }}
+            {%- else -%}
+              ⚡
+            {%- endif -%}
+          </div>
+          <h3>Save Electricity</h3>
+          <p>Electricity is a vital driver of India's economy. Vidhyut Saathi cards eliminate line losses, stabilize current flow, and stop power wastage for homes, shops &amp; factories.</p>
+        </div>
+        <div class="service-badge">
+          <span>⚡ Zero Electrical Leakage</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card reveal-up active">
+        <div>
+          <div class="service-icon-wrapper" style="background: linear-gradient(135deg, rgba(0,123,62,0.15), rgba(0,163,255,0.15));">
+            {%- if section.settings.service_2_icon != blank -%}
+              {{ section.settings.service_2_icon | image_url: width: 200 | image_tag: loading: 'lazy' }}
+            {%- else -%}
+              🌍
+            {%- endif -%}
+          </div>
+          <h3>Save Ozone Layer</h3>
+          <p>The ozone layer protects human health and the planet. Our eco-certified nanotechnology reduces harmful heat radiation and CFC footprint to safeguard mother nature.</p>
+        </div>
+        <div class="service-badge">
+          <span>🌱 100% CFC-Free Eco Tech</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card reveal-up active">
+        <div>
+          <div class="service-icon-wrapper" style="background: linear-gradient(135deg, rgba(0,163,255,0.15), rgba(236,92,10,0.15));">
+            {%- if section.settings.service_3_icon != blank -%}
+              {{ section.settings.service_3_icon | image_url: width: 200 | image_tag: loading: 'lazy' }}
+            {%- else -%}
+              💰
+            {%- endif -%}
+          </div>
+          <h3>Save Money</h3>
+          <p>Cutting electricity waste directly translates into cash savings. Enjoy a guaranteed 20% to 30% reduction on monthly power bills with 0 maintenance overhead.</p>
+        </div>
+        <div class="service-badge">
+          <span>💰 20%-30% Monthly Savings</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Mobile Slider Dots (Mobile Only) -->
+    <div class="services-slider-dots">
+      <span class="services-dot active" data-index="0"></span>
+      <span class="services-dot" data-index="1"></span>
+      <span class="services-dot" data-index="2"></span>
+    </div>
+  </section>
+
+  <!-- Section 6: Trust, Live Customer Growth & US-German Nano-Tech Showcase -->
+  <section class="trust-achievements-section">
+    <div class="trust-achievements-container">
+      
+      <!-- Section Header -->
+      <div class="trust-header reveal-up active">
+        <div class="trust-top-badge">
+          <span class="pulse-dot"></span>
+          <span>LAUNCHING 1ST TIME IN INDIA • US-GERMAN NANO TECHNOLOGY</span>
+        </div>
+        <h2 class="trust-title">
+          Trusted by Over <span class="highlight-gradient">20 Lakh+ (2 Million+)</span> Active Card Users
+        </h2>
+        <p class="trust-subtitle">
+          Vidhyut Saathi is revolutionary ION:20,000 negative ION technology designed to protect your ozone layer, optimize power flow, and cut down electricity bills with 100% guaranteed results.
+        </p>
+      </div>
+
+      <!-- 4-Card Achievements Grid (Equal Height Glassmorphic Grid) -->
+      <div class="trust-grid">
+        
+        <!-- Card 1 -->
+        <div class="trust-card reveal-up active">
+          <div>
+            <div class="trust-icon-box">👥</div>
+            <div class="trust-number">20 Lakh<span>+</span></div>
+            <div class="trust-card-title">Happy Card Users</div>
+            <p class="trust-card-desc">Rapidly expanding customer base across residential, commercial &amp; industrial sectors Pan-India.</p>
+          </div>
+          <div class="trust-card-badge">
+            <span>⚡ Pan-India Reach</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="trust-card reveal-up active">
+          <div>
+            <div class="trust-icon-box">🔬</div>
+            <div class="trust-number">ION<span>:20,000</span></div>
+            <div class="trust-card-title">US-German Nano Tech</div>
+            <p class="trust-card-desc">Advanced eco-friendly negative ION energy saver engineered for zero power leakage.</p>
+          </div>
+          <div class="trust-card-badge">
+            <span>🔬 Terahertz Technology</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="trust-card reveal-up active">
+          <div>
+            <div class="trust-icon-box">⭐</div>
+            <div class="trust-number">100<span>%</span></div>
+            <div class="trust-card-title">Positive Results</div>
+            <p class="trust-card-desc">Verified 20% to 30% reduction in electricity bills with legal &amp; ISO certified technology.</p>
+          </div>
+          <div class="trust-card-badge">
+            <a href="/pages/iso-certification" style="text-decoration: none; color: inherit;"><span>📜 ISO 9001 Certified</span></a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="trust-card reveal-up active">
+          <div>
+            <div class="trust-icon-box">🤝</div>
+            <div class="trust-number">100<span>%</span></div>
+            <div class="trust-card-title">Client Satisfaction</div>
+            <p class="trust-card-desc">Dedicated 24/7 customer support ensuring smooth installation and guaranteed peace of mind.</p>
+          </div>
+          <div class="trust-card-badge">
+            <span>📞 24/7 Support Care</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Mobile Slider Dots (Mobile Only) -->
+      <div class="trust-slider-dots">
+        <span class="trust-dot active" data-index="0"></span>
+        <span class="trust-dot" data-index="1"></span>
+        <span class="trust-dot" data-index="2"></span>
+        <span class="trust-dot" data-index="3"></span>
+      </div>
+
+      <!-- Dynamic Live Growth Ticker Bar -->
+      <div class="trust-live-bar">
+        <div class="trust-live-info">
+          <div class="trust-live-badge">
+            <span class="pulse-dot" style="background:#003311; box-shadow:none;"></span>
+            LIVE GROWTH PACE
+          </div>
+          <div class="trust-live-text">
+            Our Customer Base is Growing <span>Every Second</span> With Remarkable Momentum!
+          </div>
+        </div>
+
+        <div class="trust-features-pills">
+          <div class="trust-pill">🏆 Excellent Performance</div>
+          <div class="trust-pill">🛡️ 100% Legal & Certified</div>
+          <div class="trust-pill">⚡ Zero Maintenance Cost</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 7: White & Brand-Orange Shimmering Executive Leadership -->
+  <section class="our-team-section">
+    <div class="our-team-container">
+      
+      <!-- Section Header -->
+      <div class="our-team-header reveal-up active">
+        <div class="our-team-badge">
+          <span class="pulse-dot"></span>
+          <span>🚀 OUR EXPERTS</span>
+        </div>
+        <h2 class="our-team-title">
+          The Experts Behind <span>Vidhyut Saathi</span>
+        </h2>
+      </div>
+
+      <!-- 4-Card White & Brand-Orange Leadership Grid -->
+      <div class="team-grid">
+        
+        {%- assign team_blocks = section.blocks | where: 'type', 'team_member' -%}
+        {%- if team_blocks.size > 0 -%}
+          {%- for block in team_blocks -%}
+            <div class="team-card reveal-up active" {{ block.shopify_attributes }}>
+              <div class="team-img-wrapper">
+                {%- if block.settings.photo != blank -%}
+                  {{ block.settings.photo | image_url: width: 600 | image_tag: loading: 'lazy', alt: block.settings.name }}
+                {%- else -%}
+                  <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #fff3eb, #e8f5e9); font-size: 3.5rem;">👤</div>
+                {%- endif -%}
+                <span class="team-status-indicator" title="Active Executive"></span>
+              </div>
+              <div class="team-info">
+                <div class="team-role-tag" style="background: linear-gradient(135deg, #ec5c0a, #ff6b00); color: #ffffff;">{{ block.settings.role | default: "Leadership Team" }}</div>
+                <h3 class="team-name">{{ block.settings.name | default: "Team Member" }}</h3>
+                <div class="team-socials">
+                  {%- if block.settings.linkedin != blank -%}
+                    <a href="{{ block.settings.linkedin }}" target="_blank" class="team-social-btn" title="LinkedIn">in</a>
+                  {%- else -%}
+                    <a href="#" class="team-social-btn" title="LinkedIn">in</a>
+                  {%- endif -%}
+                  <a href="mailto:emp.vs04@gmail.com" class="team-social-btn" title="Email">✉</a>
+                  <a href="https://wa.me/919999999999" target="_blank" class="team-social-btn" title="WhatsApp">💬</a>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          
+          <!-- Default Executive Cards in White & Brand-Orange Theme -->
+
+          <!-- Card 1: Founder & CEO -->
+          <div class="team-card reveal-up active">
+            <div class="team-img-wrapper">
+              {%- if section.settings.team_1_image != blank -%}
+                {{ section.settings.team_1_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: 'Jyoti Bajaj' }}
+              {%- elsif section.settings.ceo_image != blank -%}
+                {{ section.settings.ceo_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: 'Jyoti Bajaj' }}
+              {%- else -%}
+                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #fff3eb, #e8f5e9); font-size: 3.5rem;">👤</div>
+              {%- endif -%}
+              <span class="team-status-indicator" title="Active Executive"></span>
+            </div>
+            <div class="team-info">
+              <div class="team-role-tag" style="background: linear-gradient(135deg, #ec5c0a, #ff6b00); color: #ffffff;">CEO</div>
+              <h3 class="team-name">Jyoti Bajaj</h3>
+              <div class="team-socials">
+                <a href="#" class="team-social-btn" title="LinkedIn">in</a>
+                <a href="mailto:emp.vs04@gmail.com" class="team-social-btn" title="Email">✉</a>
+                <a href="#" class="team-social-btn" title="WhatsApp">💬</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Tech & Innovation Lead -->
+          <div class="team-card reveal-up active">
+            <div class="team-img-wrapper">
+              {%- if section.settings.team_2_image != blank -%}
+                {{ section.settings.team_2_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: 'Tech Lead' }}
+              {%- elsif section.settings.who_we_are_image != blank -%}
+                {{ section.settings.who_we_are_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: 'Tech Lead' }}
+              {%- else -%}
+                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #e8f5e9, #e0f7fa); font-size: 3.5rem;">⚡</div>
+              {%- endif -%}
+              <span class="team-status-indicator" title="Active Executive"></span>
+            </div>
+            <div class="team-info">
+              <div class="team-role-tag" style="background: linear-gradient(135deg, #ff9a00, #ec5c0a); color: #ffffff;">Chief Tech Officer</div>
+              <h3 class="team-name">Innovation &amp; R&amp;D Team</h3>
+              <div class="team-socials">
+                <a href="#" class="team-social-btn" title="LinkedIn">in</a>
+                <a href="mailto:emp.vs04@gmail.com" class="team-social-btn" title="Email">✉</a>
+                <a href="#" class="team-social-btn" title="WhatsApp">💬</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Operations & Channel Head -->
+          <div class="team-card reveal-up active">
+            <div class="team-img-wrapper">
+              {%- if section.settings.team_3_image != blank -%}
+                {{ section.settings.team_3_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: 'Operations Head' }}
+              {%- elsif section.settings.company_info_image != blank -%}
+                {{ section.settings.company_info_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: 'Operations Head' }}
+              {%- else -%}
+                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #fff3eb, #fefae0); font-size: 3.5rem;">💼</div>
+              {%- endif -%}
+              <span class="team-status-indicator" title="Active Executive"></span>
+            </div>
+            <div class="team-info">
+              <div class="team-role-tag" style="background: linear-gradient(135deg, #007b3e, #00a854); color: #ffffff;">Head of Operations</div>
+              <h3 class="team-name">Franchise &amp; B2B Team</h3>
+              <div class="team-socials">
+                <a href="#" class="team-social-btn" title="LinkedIn">in</a>
+                <a href="mailto:emp.vs04@gmail.com" class="team-social-btn" title="Email">✉</a>
+                <a href="#" class="team-social-btn" title="WhatsApp">💬</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Customer Success Lead -->
+          <div class="team-card reveal-up active">
+            <div class="team-img-wrapper">
+              {%- if section.settings.team_4_image != blank -%}
+                {{ section.settings.team_4_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: 'Customer Success' }}
+              {%- elsif section.settings.ceo_image != blank -%}
+                {{ section.settings.ceo_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: 'Customer Success' }}
+              {%- else -%}
+                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f0f4f8, #e8f5e9); font-size: 3.5rem;">🤝</div>
+              {%- endif -%}
+              <span class="team-status-indicator" title="Active Executive"></span>
+            </div>
+            <div class="team-info">
+              <div class="team-role-tag" style="background: linear-gradient(135deg, #ec5c0a, #ffaa00); color: #ffffff;">Customer Support Lead</div>
+              <h3 class="team-name">Client Success Team</h3>
+              <div class="team-socials">
+                <a href="#" class="team-social-btn" title="LinkedIn">in</a>
+                <a href="mailto:emp.vs04@gmail.com" class="team-social-btn" title="Email">✉</a>
+                <a href="#" class="team-social-btn" title="WhatsApp">💬</a>
+              </div>
+            </div>
+          </div>
+
+        {%- endif -%}
+
+      </div>
+
+      <!-- Mobile Slider Dots (Mobile Only) -->
+      <div class="team-slider-dots">
+        <span class="team-dot active" data-index="0"></span>
+        <span class="team-dot" data-index="1"></span>
+        <span class="team-dot" data-index="2"></span>
+        <span class="team-dot" data-index="3"></span>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const cardStage = document.getElementById('card5dStage');
+    const cardGlare = document.getElementById('card5dGlare');
+
+    if (cardStage) {
+      cardStage.addEventListener('mousemove', function(e) {
+        const rect = cardStage.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((y - centerY) / centerY) * -22;
+        const rotateY = ((x - centerX) / centerX) * 22;
+
+        cardStage.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.06, 1.06, 1.06)`;
+        
+        if (cardGlare) {
+          cardGlare.style.opacity = '1';
+          const glareX = (x / rect.width) * 100;
+          const glareY = (y / rect.height) * 100;
+          cardGlare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 70%)`;
+        }
+      });
+
+      cardStage.addEventListener('mouseleave', function() {
+        cardStage.style.transform = '';
+        cardStage.style.transition = 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        if (cardGlare) {
+          cardGlare.style.opacity = '0';
+        }
+      });
+
+      cardStage.addEventListener('mouseenter', function() {
+        cardStage.style.transition = 'transform 0.1s ease-out';
+      });
+    }
+
+    // =========================================================================
+    // Mobile-Only Viewport-Triggered Auto Sliders (Starts from Card 1 on Scroll)
+    // For Section 3, Section 5, Section 6, and Section 7
+    // =========================================================================
+    function createMobileSlider(containerSelector, cardSelector, dotSelector) {
+      const container = document.querySelector(containerSelector);
+      const cards = document.querySelectorAll(cardSelector);
+      const dots = document.querySelectorAll(dotSelector);
+      if (!container || cards.length === 0) return;
+
+      const parentSection = container.closest('section') || container;
+
+      let currentIndex = 0;
+      let autoInterval = null;
+      let isVisibleInViewport = false;
+
+      function isMobile() {
+        return window.innerWidth <= 768;
+      }
+
+      function goToSlide(index, smooth = true) {
+        if (!isMobile()) return;
+        currentIndex = (index + cards.length) % cards.length;
+        const slideWidth = container.clientWidth;
+        container.scrollTo({
+          left: slideWidth * currentIndex,
+          behavior: smooth ? 'smooth' : 'auto'
+        });
+        updateDots(currentIndex);
+      }
+
+      function updateDots(index) {
+        dots.forEach((dot, i) => {
+          if (i === index) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      }
+
+      function startAutoSlide() {
+        stopAutoSlide();
+        if (isMobile() && isVisibleInViewport) {
+          autoInterval = setInterval(function() {
+            goToSlide(currentIndex + 1);
+          }, 3000); // Auto rotate every 3 seconds
+        }
+      }
+
+      function stopAutoSlide() {
+        if (autoInterval) {
+          clearInterval(autoInterval);
+          autoInterval = null;
+        }
+      }
+
+      // IntersectionObserver: Trigger 3s timer ONLY when section scrolls into mobile viewport
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              isVisibleInViewport = true;
+              if (isMobile()) {
+                goToSlide(0, false); // Always start from Card 1 when user reaches section
+                startAutoSlide();
+              }
+            } else {
+              isVisibleInViewport = false;
+              stopAutoSlide(); // Pause when scrolled off-screen
+            }
+          });
+        }, {
+          threshold: 0.2
+        });
+
+        observer.observe(parentSection);
+      } else {
+        isVisibleInViewport = true;
+        if (isMobile()) startAutoSlide();
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', function() {
+          goToSlide(index);
+          startAutoSlide();
+        });
+      });
+
+      container.addEventListener('touchstart', stopAutoSlide, { passive: true });
+      container.addEventListener('touchend', function() {
+        if (isVisibleInViewport) {
+          setTimeout(startAutoSlide, 2000);
+        }
+      }, { passive: true });
+
+      container.addEventListener('scroll', function() {
+        if (!isMobile()) return;
+        const slideWidth = container.clientWidth;
+        if (slideWidth > 0) {
+          const newIndex = Math.round(container.scrollLeft / slideWidth);
+          if (newIndex !== currentIndex && newIndex >= 0 && newIndex < cards.length) {
+            currentIndex = newIndex;
+            updateDots(currentIndex);
+          }
+        }
+      });
+
+      window.addEventListener('resize', function() {
+        if (isMobile()) {
+          if (isVisibleInViewport) startAutoSlide();
+        } else {
+          stopAutoSlide();
+        }
+      });
+    }
+
+    createMobileSlider('.mv-container', '.mv-card', '.mv-dot');
+    createMobileSlider('.services-container', '.service-card', '.services-dot');
+    createMobileSlider('.trust-grid', '.trust-card', '.trust-dot');
+    createMobileSlider('.team-grid', '.team-card', '.team-dot');
+  });
+</script>
+
+{% schema %}
+{
+  "name": "About Us Layout",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_bg_image",
+      "label": "Hero 3D Background Image",
+      "info": "Upload a 3D background image. It will have a parallax scroll effect."
+    },
+    {
+      "type": "image_picker",
+      "id": "company_info_image",
+      "label": "Right Side About Image",
+      "info": "Upload the image for the right side of the About Company section."
+    },
+    {
+      "type": "image_picker",
+      "id": "who_we_are_image",
+      "label": "Who We Are Image",
+      "info": "Upload the image for the left side video/image block."
+    },
+    {
+      "type": "image_picker",
+      "id": "ceo_image",
+      "label": "CEO Profile Picture"
+    },
+    {
+      "type": "header",
+      "content": "Our Awesome Team Photo Pickers"
+    },
+    {
+      "type": "image_picker",
+      "id": "team_1_image",
+      "label": "Team Member 1 Photo (Founder & CEO)"
+    },
+    {
+      "type": "image_picker",
+      "id": "team_2_image",
+      "label": "Team Member 2 Photo (Tech Lead)"
+    },
+    {
+      "type": "image_picker",
+      "id": "team_3_image",
+      "label": "Team Member 3 Photo (Operations)"
+    },
+    {
+      "type": "image_picker",
+      "id": "team_4_image",
+      "label": "Team Member 4 Photo (Customer Care)"
+    },
+    {
+      "type": "header",
+      "content": "Service Card Icons"
+    },
+    {
+      "type": "image_picker",
+      "id": "service_1_icon",
+      "label": "Save Electricity Icon",
+      "info": "Upload an icon image (transparent PNG recommended)."
+    },
+    {
+      "type": "image_picker",
+      "id": "service_2_icon",
+      "label": "Save Ozone Icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "service_3_icon",
+      "label": "Save Money Icon"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero_background",
+      "name": "Top Header Photo (Hero)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Upload Top Header Photo"
+        }
+      ]
+    },
+    {
+      "type": "team_member",
+      "name": "Custom Team Member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Member Photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Member Name",
+          "default": "Team Member Name"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Member Role / Designation",
+          "default": "Energy Saver Expert"
+        },
+        {
+          "type": "text",
+          "id": "bio",
+          "label": "Short Description / Quote",
+          "default": "Dedicated to driving energy-saving innovation and sustainable growth across India."
+        },
+        {
+          "type": "text",
+          "id": "linkedin",
+          "label": "LinkedIn Profile URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Us Layout"
+    }
+  ]
+}
+{% endschema %}
