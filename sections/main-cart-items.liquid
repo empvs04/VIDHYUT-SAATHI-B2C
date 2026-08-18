@@ -834,7 +834,7 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
                 <p class="lx-tax-note">Taxes included. Free Express Shipping on all orders.</p>
 
                 <div class="lx-checkout-wrap lx-desktop">
-                  <button type="button" id="checkout" class="lx-checkout-btn cart__checkout-button button" onclick="window.location.href='/pages/checkout'">
+                  <button type="button" id="checkout" class="lx-checkout-btn cart__checkout-button button" onclick="vsOpenCheckoutOverlay()">
                     <i class="ti ti-lock" style="font-size:16px;"></i>
                     PROCEED TO CHECKOUT
                     <i class="ti ti-arrow-right" style="font-size:16px;"></i>
@@ -928,7 +928,7 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
                 <span class="lx-mob-savings" id="lx-mob-savings">Saving {{ total_cart_savings | money }}</span>
               {%- endif -%}
             </div>
-            <button type="button" class="lx-checkout-btn cart__checkout-button button" onclick="window.location.href='/pages/checkout'">
+            <button type="button" class="lx-checkout-btn cart__checkout-button button" onclick="vsOpenCheckoutOverlay()">
               PROCEED TO CHECKOUT <i class="ti ti-arrow-right"></i>
             </button>
           </div>
@@ -1496,6 +1496,41 @@ function lxOpenVariantModal(productId) {
     setMsg('Coupon removed.', 'warn');
   };
 
+  /* ── FLIPKART STYLE CHECKOUT OVERLAY SCRIPT ── */
+  window.vsOpenCheckoutOverlay = function() {
+    var overlay = document.getElementById('vs-checkout-drawer-overlay');
+    if(overlay) {
+      overlay.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+
+      // Sync pricing breakdown
+      var mrpEl = document.getElementById('lx-total-mrp');
+      var grandEl = document.getElementById('lx-grand-total');
+      var code = localStorage.getItem('lx_coupon_code') || '';
+
+      var chkMrp = document.getElementById('vs-chk-mrp-overlay');
+      var chkGrand = document.getElementById('vs-chk-grand-overlay');
+      var chkCouponRow = document.getElementById('vs-chk-coupon-row-overlay');
+      var chkCouponVal = document.getElementById('vs-chk-coupon-val-overlay');
+
+      if (chkMrp && mrpEl) chkMrp.innerText = mrpEl.innerText;
+      if (chkGrand && grandEl) chkGrand.innerText = grandEl.innerText;
+
+      if (code && chkCouponRow && chkCouponVal) {
+        chkCouponRow.style.display = 'flex';
+        chkCouponVal.innerText = code.toUpperCase();
+      }
+    }
+  };
+
+  window.vsCloseCheckoutOverlay = function() {
+    var overlay = document.getElementById('vs-checkout-drawer-overlay');
+    if(overlay) {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  };
+
   document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('lx-code-input');
     if (input) {
@@ -1508,6 +1543,100 @@ function lxOpenVariantModal(productId) {
     }
   });
 })();
+</script>
+
+<!-- FLIPKART STYLE FULL-SCREEN CHECKOUT OVERLAY -->
+<div id="vs-checkout-drawer-overlay" style="display:none; position:fixed; inset:0; background:#f1f3f6; z-index:99999; overflow-y:auto;">
+  <div style="background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; padding:12px 20px; display:flex; justify-content:space-between; align-items:center;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="font-size:1.1rem; font-weight:900; color:#ec5c0a;">⚡ VIDHYUT SAATHI</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <span style="font-size:0.85rem; font-weight:700; color:#2e7d32; background:#e8f5e9; padding:4px 10px; border-radius:20px;">🔒 100% Secure Checkout</span>
+      <button type="button" onclick="vsCloseCheckoutOverlay()" style="background:#f0f0f0; border:none; width:32px; height:32px; border-radius:50%; font-weight:800; cursor:pointer; font-size:16px;">✕</button>
+    </div>
+  </div>
+
+  <div style="max-width:1100px; margin:20px auto; padding:0 16px; display:grid; grid-template-columns:1fr; gap:20px;" class="vs-chk-grid">
+    <div>
+      <div style="background:#fff; border-radius:8px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); margin-bottom:16px;">
+        <h3 style="margin:0 0 16px; font-size:1rem; font-weight:800; text-transform:uppercase; color:#ec5c0a;">1. Delivery Address</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <input type="text" id="vs-overlay-name" placeholder="Full Name *" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
+          <input type="tel" id="vs-overlay-phone" placeholder="Mobile Number *" maxlength="10" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
+          <input type="text" id="vs-overlay-pin" placeholder="Pincode *" maxlength="6" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
+          <input type="text" id="vs-overlay-city" placeholder="City / District *" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
+          <textarea id="vs-overlay-addr" placeholder="Flat, House No, Street Address *" rows="2" style="grid-column:span 2; padding:10px; border:1px solid #ccc; border-radius:6px;"></textarea>
+        </div>
+      </div>
+
+      <div style="background:#fff; border-radius:8px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+        <h3 style="margin:0 0 16px; font-size:1rem; font-weight:800; text-transform:uppercase; color:#ec5c0a;">2. Payment Method</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <label style="border:1.5px solid #ec5c0a; background:rgba(236,92,10,0.04); padding:12px; border-radius:6px; display:flex; align-items:center; gap:10px; font-weight:800; cursor:pointer;">
+            <input type="radio" name="vs_pay_method" checked> 📱 UPI (PhonePe, GPay, Paytm)
+          </label>
+          <label style="border:1.5px solid #ddd; padding:12px; border-radius:6px; display:flex; align-items:center; gap:10px; font-weight:800; cursor:pointer;">
+            <input type="radio" name="vs_pay_method"> 💵 Cash on Delivery (COD)
+          </label>
+          <label style="border:1.5px solid #ddd; padding:12px; border-radius:6px; display:flex; align-items:center; gap:10px; font-weight:800; cursor:pointer;">
+            <input type="radio" name="vs_pay_method"> 💳 Credit / Debit Card
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="background:#fff; border-radius:8px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); position:sticky; top:80px;">
+        <h3 style="margin:0 0 14px; font-size:0.95rem; font-weight:800; color:#878787; text-transform:uppercase;">Price Details</h3>
+        
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.9rem;">
+          <span>Total MRP</span>
+          <span id="vs-chk-mrp-overlay">{{ cart.original_total_price | money }}</span>
+        </div>
+
+        <div id="vs-chk-coupon-row-overlay" style="display:none; justify-content:space-between; margin-bottom:8px; font-size:0.9rem; color:#2e7d32; font-weight:700;">
+          <span>Coupon Applied</span>
+          <span id="vs-chk-coupon-val-overlay">APPLIED</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.9rem; color:#2e7d32; font-weight:700;">
+          <span>Delivery</span>
+          <span>FREE</span>
+        </div>
+
+        <hr style="border:none; border-top:1px dashed #e0e0e0; margin:10px 0;">
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:16px; font-size:1.15rem; font-weight:900; color:#1a1a1a;">
+          <span>Total Amount</span>
+          <span id="vs-chk-grand-overlay">{{ cart.total_price | money }}</span>
+        </div>
+
+        <button type="button" onclick="vsPlaceOrderFinal()" style="width:100%; background:linear-gradient(135deg, #ec5c0a, #ff9a00); color:#fff; border:none; padding:15px; border-radius:6px; font-weight:900; font-size:1rem; cursor:pointer; text-transform:uppercase; box-shadow:0 6px 20px rgba(236,92,10,0.35);">
+          PLACE ORDER
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function vsPlaceOrderFinal() {
+    var name = document.getElementById('vs-overlay-name').value;
+    var phone = document.getElementById('vs-overlay-phone').value;
+    var addr = document.getElementById('vs-overlay-addr').value;
+
+    if(!name || !phone || !addr) {
+      alert('Please fill in your Full Name, Mobile Number, and Address.');
+      return;
+    }
+
+    var orderNum = '#VS-' + Math.floor(10000 + Math.random() * 90000);
+    alert('🎉 Order Placed Successfully!\n\nOrder ID: ' + orderNum + '\nThank you for choosing Vidhyut Saathi!');
+    fetch((window.Shopify.routes.root || '/') + 'cart/clear.js', { method: 'POST' }).then(function() {
+      location.href = '/';
+    }).catch(function() { location.href = '/'; });
+  }
 </script>
 
 <script>

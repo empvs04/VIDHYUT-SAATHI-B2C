@@ -1,8 +1,8 @@
-﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 {%- assign marquee_font = section.settings.marquee_font -%}
 {%- assign marquee_speed = section.settings.marquee_speed | default: 30 -%}
-{%- assign marquee_direction = section.settings.marquee_direction | default: 'normal' -%}
+{%- assign marquee_direction = section.settings.marquee_direction | default: 'reverse' -%}
 
 {%- style -%}
   {{ marquee_font | font_face: font_display: 'swap' }}
@@ -103,27 +103,16 @@
 
 {% if section.settings.enable_marquee %}
   <div class="marquee-ticker-{{ section.id }}">
-    {%- capture marquee_items -%}
-      {% for block in section.blocks %}
-        {% if block.type == 'ticker_text' %}
-          <div class="marquee-item" {{ block.shopify_attributes }}>
-            {% if block.settings.icon != blank %}<i class="{{ block.settings.icon }}"></i>{% endif %}
-            <span>{{ block.settings.text }}</span>
-          </div>
-        {% endif %}
-      {% endfor %}
-    {%- endcapture -%}
-
-    {%- capture fallback_items -%}
-      <div class="marquee-item"><i class="fas fa-sack-dollar"></i><span>EARN â‚¹5-6 LAKHS P.M.</span></div>
-      <div class="marquee-item"><i class="fas fa-shipping-fast"></i><span>FREE SHIPPING</span></div>
+    {%- capture default_items -%}
+      <div class="marquee-item"><i class="fas fa-truck-fast"></i><span>FREE SHIPPING</span></div>
       <div class="marquee-item"><i class="fas fa-shield-halved"></i><span>100% RESULT GUARANTEED</span></div>
+      <div class="marquee-item"><i class="fas fa-bolt"></i><span>SAVE 20-30% ELECTRICITY BILL</span></div>
     {%- endcapture -%}
 
     {% for track_loop in (1..4) %}
       <div class="marquee-track" {% if track_loop > 1 %}aria-hidden="true"{% endif %}>
         <div class="marquee-content">
-          {% if section.blocks.size > 0 %}{{ marquee_items }}{% else %}{{ fallback_items }}{% endif %}
+          {{ default_items }}
         </div>
       </div>
     {% endfor %}

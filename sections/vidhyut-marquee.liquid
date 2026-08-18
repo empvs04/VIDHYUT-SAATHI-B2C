@@ -84,18 +84,14 @@
 {%- endcapture -%}
 
 {%- capture default_content -%}
-  <span class="vs-marquee-item"><i class="fas fa-sack-dollar"></i> EARN ₹5-6 LAKHS P.M.</span>
-  <span class="vs-marquee-item"><i class="fas fa-shipping-fast"></i> FREE SHIPPING</span>
-  <span class="vs-marquee-item"><i class="fas fa-shield-halved"></i> 100% RESULT GUARANTEED WITH MONEY BACK</span>
+  <span class="vs-marquee-item"><i class="fas fa-truck-fast"></i> FREE SHIPPING</span>
+  <span class="vs-marquee-item"><i class="fas fa-shield-halved"></i> 100% RESULT GUARANTEED</span>
+  <span class="vs-marquee-item"><i class="fas fa-bolt"></i> SAVE 20-30% ELECTRICITY BILL</span>
 {%- endcapture -%}
 
 <div class="vs-marquee-wrapper">
   <div class="vs-marquee-track">
-    {% if section.blocks.size > 0 %}
-      {{ marquee_content }}{{ marquee_content }}{{ marquee_content }}{{ marquee_content }}
-    {% else %}
-      {{ default_content }}{{ default_content }}{{ default_content }}{{ default_content }}
-    {% endif %}
+    {{ default_content }}{{ default_content }}{{ default_content }}{{ default_content }}
   </div>
 </div>
 
