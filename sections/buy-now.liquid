@@ -63,9 +63,14 @@
     }
     .by-desktop-layout {
       display: grid;
-      grid-template-columns: 48% 48%;
-      gap: 4%;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 36px !important;
       align-items: start;
+      width: 100% !important;
+    }
+    .by-media-gallery, .by-content-wrapper {
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
   }
 
