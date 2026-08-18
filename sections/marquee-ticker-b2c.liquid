@@ -19,8 +19,8 @@
   }
 
   .marquee-ticker-{{ section.id }} {
-    background: linear-gradient(135deg, {{ section.settings.marquee_bg }} 0%, rgba(0,0,0,0.02) 100%);
-    color: {{ section.settings.marquee_text_color }};
+    background: #ec5c0a;
+    color: #ffffff;
     padding: {{ section.settings.marquee_padding_y }}px 0;
     overflow: hidden;
     position: relative;
@@ -28,8 +28,8 @@
     align-items: center;
     width: 100%;
     font-family: {{ marquee_font.family }}, {{ marquee_font.fallback_families }};
-    border-bottom: 1px solid {{ section.settings.marquee_border_color }};
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    border-bottom: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   }
 
   .marquee-ticker-{{ section.id }} .marquee-track {
@@ -65,13 +65,13 @@
     font-weight: {% if section.settings.marquee_bold %}700{% else %}500{% endif %};
     text-transform: {% if section.settings.marquee_uppercase %}uppercase{% else %}none{% endif %};
     letter-spacing: 0.8px;
-    color: {{ section.settings.marquee_text_color }};
+    color: #ffffff;
     flex-shrink: 0;
   }
 
   .marquee-ticker-{{ section.id }} .marquee-item i {
     font-size: calc({{ section.settings.marquee_font_desktop }}px * 1.1);
-    color: {{ section.settings.marquee_icon_color }};
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
