@@ -69,7 +69,7 @@
     }
   }
 
-  /* --- MEDIA GALLERY (AMAZON / FLIPKART STYLE) --- */
+  /* --- MEDIA GALLERY --- */
   .by-media-gallery {
     width: 100%;
     display: flex;
@@ -249,7 +249,7 @@
   .by-share-btn:hover { background: #e0e0e0; transform: scale(1.05); }
   .by-share-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-  /* --- PRICING BOX (AMAZON / FLIPKART STYLE) --- */
+  /* --- PRICING BOX --- */
   .by-price-card {
     background: linear-gradient(135deg, #fffcf9 0%, #ffffff 100%);
     border: 1px solid rgba(236, 92, 10, 0.15);
@@ -389,7 +389,7 @@
     box-shadow: 0 4px 10px rgba(236, 92, 10, 0.25); white-space: nowrap;
   }
 
-  /* --- COMBO PACK SELECTION --- */
+  /* --- COMBO PACK SELECTION & VARIANT CARD TYPOGRAPHY STYLING --- */
   .by-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
   .by-section-title { font-weight: 900; font-size: 1.2rem; color: #1a1a1a; }
   
@@ -439,8 +439,18 @@
   .by-combo-card.active .by-combo-radio { border-color: #ec5c0a; border-width: 5px; box-shadow: 0 0 8px rgba(236,92,10,0.3); }
   
   .by-combo-info { display: flex; flex-direction: column; gap: 4px; }
-  .by-combo-title { font-weight: 900; font-size: 1.15rem; color: #1a1a1a; transition: color 0.2s ease; line-height: 1.2; }
-  .by-combo-card.active .by-combo-title { color: #ec5c0a; }
+
+  /* PURE TYPOGRAPHY STYLING FOR VARIANT TITLES */
+  .by-combo-title { 
+    font-weight: 900 !important; 
+    font-size: 1.25rem !important; 
+    color: #1a1a1a !important; 
+    letter-spacing: 0.3px !important;
+    text-transform: capitalize !important;
+    line-height: 1.2 !important; 
+    transition: color 0.2s ease !important;
+  }
+  .by-combo-card.active .by-combo-title { color: #ec5c0a !important; }
   
   .by-combo-badges-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
   .by-save-pill { background: #ffebee; color: #d32f2f; font-size: 0.68rem; font-weight: 900; padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(211,47,47,0.2); line-height:1; }
@@ -746,7 +756,7 @@
       min-width: 0 !important;
     }
     .by-combo-title {
-      font-size: 0.98rem !important;
+      font-size: 1.05rem !important;
       word-break: break-word !important;
       white-space: normal !important;
     }
@@ -963,23 +973,7 @@
                   {%- endif -%}
                 {%- endfor -%}
 
-                {%- assign display_title = variant.title -%}
                 {%- assign downcase_title = variant.title | downcase -%}
-
-                {%- if downcase_title contains 'single' or downcase_title contains 'one' or downcase_title contains '1' -%}
-                  {%- assign display_title = 'Single Pack (1 Card)' -%}
-                  {%- if creative_card_label == blank -%}{%- assign creative_card_label = '1 Card' -%}{%- endif -%}
-                  {%- if custom_subtitle == blank -%}{%- assign custom_subtitle = 'Ideal for Single Meter & Small Homes' -%}{%- endif -%}
-                {%- elsif downcase_title contains 'trio' or downcase_title contains 'three' or downcase_title contains '3' -%}
-                  {%- assign display_title = 'Trio Pack (3 Cards)' -%}
-                  {%- if creative_card_label == blank -%}{%- assign creative_card_label = '3 Cards' -%}{%- endif -%}
-                  {%- if custom_subtitle == blank -%}{%- assign custom_subtitle = 'Most Popular - Recommended for Full Family Homes' -%}{%- endif -%}
-                {%- elsif downcase_title contains 'penta' or downcase_title contains 'five' or downcase_title contains '5' -%}
-                  {%- assign display_title = 'Penta Pack (5 Cards)' -%}
-                  {%- if creative_card_label == blank -%}{%- assign creative_card_label = '5 Cards' -%}{%- endif -%}
-                  {%- if custom_subtitle == blank -%}{%- assign custom_subtitle = 'Best Value - Maximum Savings for Big Homes & Offices' -%}{%- endif -%}
-                {%- endif -%}
-
                 {%- assign is_popular = false -%}
                 {%- assign is_best_value = false -%}
                 {%- if downcase_title contains 'trio' or forloop.index == 2 -%}
@@ -1004,15 +998,18 @@
                     <div class="by-combo-left">
                       <div class="by-combo-radio"></div>
                       <div class="by-combo-info">
-                        <span class="by-combo-title">{{ display_title }}</span>
+                        <!-- EXACT SHOPIFY VARIANT TITLE WITH PURE CSS STYLING -->
+                        <span class="by-combo-title">{{ variant.title }}</span>
                         <div class="by-combo-badges-row">
                           {%- if save_percent > 0 -%}
                             <span class="by-save-pill">SAVE {{ save_percent }}%</span>
                           {%- endif -%}
-                          <span class="by-combo-card-label">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-                            {{ creative_card_label }}
-                          </span>
+                          {%- if creative_card_label != blank -%}
+                            <span class="by-combo-card-label">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                              {{ creative_card_label }}
+                            </span>
+                          {%- endif -%}
                         </div>
                         {%- if custom_subtitle != blank -%}
                           <span class="by-combo-desc" style="font-size: 0.8rem; color: #666; margin-top: 2px;">{{ custom_subtitle }}</span>
@@ -1161,7 +1158,7 @@
       });
     });
 
-    // 2. Quantity & Dynamic Price/Offer Recalculation Engine
+    // 2. Quantity & Dynamic Price Engine
     const mainVariantInput = document.getElementById('SelectedVariantID-{{ section.id }}');
     const formQtyInput = document.getElementById('FormQtyInput-{{ section.id }}');
     const qtyPicker = document.getElementById('QuantityPicker-{{ section.id }}');
@@ -1171,7 +1168,6 @@
     const topPrice = document.getElementById('TopPrice-{{ section.id }}');
     const topCompare = document.getElementById('TopComparePrice-{{ section.id }}');
     const topSaveBadge = document.getElementById('TopSaveBadge-{{ section.id }}');
-    const priceWrapper = document.getElementById('MainPriceWrapper-{{ section.id }}');
 
     function formatMoney(cents) {
       if (window.Shopify && window.Shopify.formatMoney) {
@@ -1253,14 +1249,25 @@
       });
     }
 
-    // 3. Coupon Engine & Auto-Apply
+    // 3. Coupon Engine: Save & Apply to Cart Session
     const copyBtns = document.querySelectorAll('.by-offer-copy');
     copyBtns.forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.stopPropagation();
-        const code = this.getAttribute('data-code');
+        const code = (this.getAttribute('data-code') || '').trim().toUpperCase();
         activeCouponCode = code;
-        try { sessionStorage.setItem('lx_applied_coupon', code); } catch(err){}
+
+        try {
+          localStorage.setItem('lx_coupon_code', code);
+          sessionStorage.setItem('lx_applied_coupon', code);
+        } catch(err){}
+
+        // Trigger instant cart session update for discount
+        fetch((window.Shopify.routes.root || '/') + 'cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ discount_code: code, discount: code })
+        }).catch(function(err){ console.error(err); });
 
         copyBtns.forEach(b => {
           b.classList.remove('applied');
@@ -1278,34 +1285,42 @@
       });
     });
 
-    // 4. Buy Now & Add to Cart Action Dispatchers
-    function doBuyNow() {
-      const variantId = mainVariantInput ? mainVariantInput.value : '';
-      const qty = qtyPicker ? qtyPicker.value : 1;
-      let checkoutUrl = '/cart/' + variantId + ':' + qty;
-      if(activeCouponCode) {
-        checkoutUrl += '?discount=' + encodeURIComponent(activeCouponCode);
+    // 4. BOTH ADD TO CART & BUY NOW REDIRECT DIRECTLY TO CART PAGE (/cart)
+    function redirectToCart(code) {
+      let targetUrl = '/cart';
+      if (code && code.trim()) {
+        targetUrl = '/cart?discount=' + encodeURIComponent(code.trim());
       }
-      window.location.href = checkoutUrl;
+      window.location.href = targetUrl;
     }
 
-    function doAddToCart() {
+    function doAddToCartOrBuyNow() {
       const variantId = mainVariantInput ? mainVariantInput.value : '';
-      const qty = qtyPicker ? qtyPicker.value : 1;
+      const qty = qtyPicker ? (parseInt(qtyPicker.value) || 1) : 1;
+      const code = activeCouponCode || localStorage.getItem('lx_coupon_code') || '';
+
       fetch((window.Shopify.routes.root || '/') + 'cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: variantId, quantity: parseInt(qty) })
+        body: JSON.stringify({ id: variantId, quantity: qty })
       })
       .then(r => r.json())
       .then(data => {
-        let cartUrl = '/cart';
-        if(activeCouponCode) cartUrl += '?discount=' + encodeURIComponent(activeCouponCode);
-        window.location.href = cartUrl;
+        if(code && code.trim()) {
+          fetch((window.Shopify.routes.root || '/') + 'cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ discount_code: code.trim(), discount: code.trim() })
+          })
+          .then(function() { redirectToCart(code); })
+          .catch(function() { redirectToCart(code); });
+        } else {
+          redirectToCart('');
+        }
       })
       .catch(err => {
-        console.error('Add to cart error:', err);
-        window.location.href = '/cart';
+        console.error('Cart add error:', err);
+        redirectToCart(code);
       });
     }
 
@@ -1314,10 +1329,10 @@
     const submitBtnDesktop = document.getElementById('SubmitBtnDesktop-{{ section.id }}');
     const submitBtnMobile = document.getElementById('SubmitBtnMobile-{{ section.id }}');
 
-    if(buyBtnDesktop) buyBtnDesktop.addEventListener('click', doBuyNow);
-    if(buyBtnMobile) buyBtnMobile.addEventListener('click', doBuyNow);
-    if(submitBtnDesktop) submitBtnDesktop.addEventListener('click', doAddToCart);
-    if(submitBtnMobile) submitBtnMobile.addEventListener('click', doAddToCart);
+    if(buyBtnDesktop) buyBtnDesktop.addEventListener('click', doAddToCartOrBuyNow);
+    if(buyBtnMobile) buyBtnMobile.addEventListener('click', doAddToCartOrBuyNow);
+    if(submitBtnDesktop) submitBtnDesktop.addEventListener('click', doAddToCartOrBuyNow);
+    if(submitBtnMobile) submitBtnMobile.addEventListener('click', doAddToCartOrBuyNow);
 
     // 5. Pincode Availability Checker
     const pinInput = document.getElementById('DeliveryPincodeInput-{{ section.id }}');

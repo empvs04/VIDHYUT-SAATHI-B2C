@@ -1281,8 +1281,22 @@ function lxOpenVariantModal(productId) {
   const STORAGE_TIME = 'lx_coupon_time';
 
   document.addEventListener('DOMContentLoaded', function () {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) showAppliedState(saved);
+    var urlParams = new URLSearchParams(window.location.search);
+    var discountParam = urlParams.get('discount');
+    var saved = discountParam || localStorage.getItem(STORAGE_KEY);
+    if (saved && saved.trim()) {
+      var code = saved.trim().toUpperCase();
+      localStorage.setItem(STORAGE_KEY, code);
+      showAppliedState(code);
+      if (!window._lxCouponApplied) {
+        window._lxCouponApplied = true;
+        fetch((window.Shopify.routes.root || '/') + 'cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ discount_code: code, discount: code })
+        }).catch(function(e){ console.error(e); });
+      }
+    }
   });
 
   function showAppliedState(code) {
