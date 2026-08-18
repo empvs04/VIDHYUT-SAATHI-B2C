@@ -1,1470 +1,704 @@
-{%- liquid
-  assign current_variant = product.selected_or_first_available_variant
-  if section.settings.product != blank
-    assign product = section.settings.product
-    assign current_variant = product.selected_or_first_available_variant
-  endif
-  assign product_form_id = 'product-form-' | append: section.id
--%}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+{%- assign main_font = section.settings.main_font -%}
 
 {%- style -%}
-  {{ section.settings.heading_font | font_face: font_display: 'swap' }}
-  {{ section.settings.body_font | font_face: font_display: 'swap' }}
+  {{ main_font | font_face: font_display: 'swap' }}
 
-  .by-product-{{ section.id }} {
-    --bg-color: {{ section.settings.bg_color }};
-    --text-color: {{ section.settings.text_color }};
-    --text-light: {{ section.settings.text_color | color_modify: 'alpha', 0.6 }};
-    --primary-btn: {{ section.settings.primary_button_color }};
-    --primary-btn-text: {{ section.settings.primary_button_text }};
-    --border-color: {{ section.settings.border_color }};
-    
-    /* Swipeable Offer Section Colors & Sizes */
-    --offer-section-bg: {{ section.settings.offer_section_bg }};
-    --offer-icon-bg: {{ section.settings.offer_icon_bg }};
-    --offer-link-color: {{ section.settings.offer_link_color }};
-    --offer-badge-bg: {{ section.settings.offer_badge_bg }};
-    --offer-copy-color: {{ section.settings.offer_copy_color }};
-    --offer-card-height: {{ section.settings.offer_card_height }}px;
-    
-    --font-heading: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
-    --font-body: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
-
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: var(--font-body);
-    width: 100%;
-    margin: 0 auto;
-    padding-bottom: 100px;
-  }
-
-  .by-product-{{ section.id }} * { box-sizing: border-box; }
-
-  /* Desktop Container Layout (Amazon / Flipkart Style) */
-  .by-container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 16px;
-  }
-
-  .by-desktop-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  @media (min-width: 992px) {
-    .by-product-{{ section.id }} {
-      padding-bottom: 40px;
-    }
-    .by-container {
-      max-width: 1320px;
-      padding: 32px 24px;
-    }
-    .by-desktop-layout {
-      display: grid;
-      grid-template-columns: 48% 48%;
-      gap: 4%;
-      align-items: start;
-    }
-  }
-
-  /* --- MEDIA GALLERY (AMAZON / FLIPKART STYLE) --- */
-  .by-media-gallery {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  @media (min-width: 992px) {
-    .by-media-gallery {
-      position: sticky;
-      top: 90px;
-      flex-direction: row;
-      align-items: flex-start;
-    }
-  }
-
-  .by-thumbnails {
-    display: flex;
-    gap: 10px;
-    padding: 4px 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .by-thumbnails::-webkit-scrollbar { display: none; }
-
-  @media (min-width: 992px) {
-    .by-thumbnails {
-      flex-direction: column;
-      overflow-y: auto;
-      max-height: 500px;
-      padding-right: 6px;
-      flex-shrink: 0;
-    }
-  }
-
-  .by-thumb {
-    width: 65px;
-    height: 75px;
-    border-radius: 8px;
-    border: 2px solid var(--border-color);
-    overflow: hidden;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: #fff;
-  }
-  .by-thumb:hover, .by-thumb.active {
-    border-color: #ec5c0a;
-    box-shadow: 0 4px 12px rgba(236, 92, 10, 0.25);
-    transform: translateY(-2px);
-  }
-  .by-thumb img { width: 100%; height: 100%; object-fit: cover; }
-
-  .by-main-image-wrap {
-    width: 100%;
-    aspect-ratio: 4/5;
-    overflow: hidden;
+  .vidhyut-header-wrapper-{{ section.id }} {
+    font-family: {{ main_font.family }}, {{ main_font.fallback_families }} !important;
     position: relative;
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    background: #fdfdfd;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-  }
-  .by-main-image-wrap img {
+    z-index: 999;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease, opacity 0.2s ease;
   }
-  .by-main-image-wrap img:hover {
-    transform: scale(1.05);
-  }
-
-  .by-image-badge {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    background: rgba(26, 26, 26, 0.85);
-    backdrop-filter: blur(8px);
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 800;
-    padding: 6px 14px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    letter-spacing: 0.5px;
-    z-index: 5;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  }
-  .by-image-badge svg { fill: #ffb703; width: 14px; height: 14px; }
-
-  /* --- CONTENT AREA --- */
-  .by-content-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .by-breadcrumbs {
-    font-size: 0.8rem;
-    color: #777;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 500;
-  }
-  .by-breadcrumbs a { color: #555; text-decoration: none; }
-  .by-breadcrumbs a:hover { color: #ec5c0a; }
-
-  .by-title-row {
+  
+  /* =========================================================
+     TOP BAR STYLES
+     ========================================================= */
+  .vidhyut-top-bar-{{ section.id }} {
+    background: linear-gradient(90deg, {{ section.settings.top_bar_bg }} 0%, rgba(0,0,0,0.01) 100%);
+    color: {{ section.settings.top_bar_text_color }};
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 8px;
-  }
-  .by-title-row h1 {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    margin: 0;
-    font-weight: 800;
-    color: var(--text-color);
-    line-height: 1.3;
-    letter-spacing: -0.3px;
-  }
-  @media (min-width: 992px) {
-    .by-title-row h1 { font-size: 1.9rem; }
-  }
-
-  /* --- RATING & TRUST ROW --- */
-  .by-rating-trust-row {
-    display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-  .by-rating-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: #007b3e;
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 4px;
-  }
-  .by-rating-count {
-    font-size: 0.85rem;
-    color: #666;
+    padding: 10px 5%;
+    font-size: {{ section.settings.top_bar_font_size }}px;
     font-weight: 600;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-bottom: 1px solid {{ section.settings.border_color }};
   }
-  .by-stock-tag {
-    font-size: 0.8rem;
-    color: #2e7d32;
-    background: #e8f5e9;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 4px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+  
+  .vidhyut-top-bar-{{ section.id }} .top-bar-left {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .by-stock-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #2e7d32;
+  
+  .vidhyut-top-bar-{{ section.id }} a {
+    color: {{ section.settings.top_bar_text_color }};
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-block;
   }
-
-  .by-share-btn {
-    background: #f0f0f0;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    transition: all 0.2s ease;
-    color: #333;
-  }
-  .by-share-btn:hover { background: #e0e0e0; transform: scale(1.05); }
-  .by-share-btn svg { width: 18px; height: 18px; fill: currentColor; }
-
-  /* --- PRICING BOX (AMAZON / FLIPKART STYLE) --- */
-  .by-price-card {
-    background: linear-gradient(135deg, #fffcf9 0%, #ffffff 100%);
-    border: 1px solid rgba(236, 92, 10, 0.15);
-    border-radius: 14px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-  }
-  .by-price-wrapper {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    flex-wrap: wrap;
-    transition: opacity 0.2s ease;
-  }
-  .by-current-price {
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: #1a1a1a;
-    letter-spacing: -0.5px;
-  }
-  @media (min-width: 992px) {
-    .by-current-price { font-size: 2.2rem; }
-  }
-  .by-compare-price {
-    font-size: 1.15rem;
-    color: #888;
-    text-decoration: line-through;
-    font-weight: 600;
-  }
-  .by-save-badge {
-    background: linear-gradient(135deg, #007b3e, #00a854);
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: 900;
-    padding: 4px 10px;
-    border-radius: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .by-tax-info {
-    font-size: 0.8rem;
-    color: #666;
-    margin-top: 4px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  /* --- OFFERS SECTION --- */
-  .by-offers-section {
-    background: linear-gradient(135deg, rgba(236, 92, 10, 0.05) 0%, rgba(0, 123, 62, 0.05) 100%);
-    border: 1.5px solid rgba(236, 92, 10, 0.15);
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 24px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
-  }
-  .by-offers-header {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
-  }
-  .by-offers-title {
-    display: flex; align-items: center; gap: 10px;
-    font-weight: 900; font-size: 1.05rem; color: #1a1a1a;
-  }
-  .by-offer-icon {
-    background: linear-gradient(135deg, #ec5c0a, #ff9a00); color: #fff;
-    width: 26px; height: 26px; border-radius: 50%;
-    display: flex; justify-content: center; align-items: center;
-    font-weight: 900; font-size: 0.85rem;
-    box-shadow: 0 4px 10px rgba(236, 92, 10, 0.3);
-  }
-  .by-offers-link {
-    color: #ec5c0a; font-size: 0.82rem;
-    font-weight: 800; text-decoration: none;
-    padding: 5px 12px; border-radius: 20px;
-    background: rgba(236, 92, 10, 0.1);
-    transition: all 0.3s ease;
-  }
-  .by-offers-link:hover {
-    background: #ec5c0a; color: #fff;
-  }
-
-  .by-offers-grid {
-    display: flex;
-    overflow-x: auto;
-    gap: 14px;
-    scrollbar-width: none;
-    padding-bottom: 8px;
-  }
-  .by-offers-grid::-webkit-scrollbar { display: none; }
-
-  @media (min-width: 992px) {
-    .by-offers-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      overflow-x: visible;
-    }
-  }
-
-  .by-offer-card {
-    min-width: 240px;
-    background: #ffffff;
-    border: 1.5px solid rgba(236, 92, 10, 0.2);
-    border-radius: 12px;
-    padding: 14px 16px;
-    position: relative;
-    display: flex; flex-direction: column; justify-content: space-between;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    transition: all 0.3s ease;
-  }
-  .by-offer-card:hover {
-    border-color: #ec5c0a;
+  
+  .vidhyut-top-bar-{{ section.id }} a:hover { 
+    opacity: 0.85;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(236, 92, 10, 0.12);
   }
-  .by-offer-card strong { display: block; font-size: 0.95rem; margin-bottom: 4px; color: #1a1a1a; font-weight: 800; }
-  .by-offer-card p { font-size: 0.8rem; color: #555; margin: 0 0 12px 0; line-height: 1.4; }
   
-  .by-offer-copy {
-    background: rgba(0, 123, 62, 0.08); border: 1px dashed #007b3e;
-    padding: 6px 10px; border-radius: 6px;
-    color: #007b3e; font-weight: 800; font-size: 0.75rem;
-    display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
-    text-transform: uppercase; margin-top: auto;
-    transition: all 0.2s ease;
+  /* =========================================================
+     MAIN HEADER STYLES
+     ========================================================= */
+  .vidhyut-header-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    border-bottom: 1px solid {{ section.settings.border_color }};
+    line-height: 1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
-  .by-offer-copy:hover { background: #007b3e; color: #fff; }
-  .by-offer-copy svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.5; fill: none; }
   
-  .by-offer-badge {
-    position: absolute; right: 10px; top: -10px;
-    background: linear-gradient(135deg, #ec5c0a, #ff6b00); color: #fff;
-    padding: 3px 8px; border-radius: 6px;
-    font-size: 0.7rem; font-weight: 900; letter-spacing: 0.5px;
-    box-shadow: 0 4px 10px rgba(236, 92, 10, 0.25); white-space: nowrap;
-  }
-
-  /* --- COMBO PACK SELECTION --- */
-  .by-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-  .by-section-title { font-weight: 900; font-size: 1.2rem; color: #1a1a1a; }
-  
-  .by-install-btn {
-    display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 800; color: #1a1a1a;
-    background: #ffffff; padding: 6px 14px; border-radius: 50px; border: 1.5px solid #e0e0e0; text-decoration: none;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: all 0.3s ease; cursor: pointer;
-  }
-  .by-install-btn:hover { border-color: #ec5c0a; color: #ec5c0a; transform: translateY(-2px); }
-  .by-install-btn svg { width: 14px; height: 14px; }
-
-  .by-combo-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; margin-top: 10px; }
-  
-  .by-combo-card {
-    display: flex; flex-direction: column; gap: 12px; 
-    border: 2px solid #e0e0e0; padding: 18px; border-radius: 14px; cursor: pointer; 
-    position: relative; background: #ffffff; transition: all 0.25s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-  }
-  .by-combo-card:hover { border-color: #ec5c0a; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
-  
-  .by-combo-card.active { 
-    border-color: #ec5c0a; 
-    background: linear-gradient(145deg, #fffcf7, #ffffff); 
-    box-shadow: 0 10px 25px rgba(236,92,10,0.18); 
-    z-index: 2;
-  }
-
-  .card-popular { border-color: #ff9a00; }
-  .card-popular.active { border-color: #ec5c0a; border-width: 2.5px; }
-  .card-best-value { border-color: #007b3e; }
-  .card-best-value.active { border-color: #ec5c0a; border-width: 2.5px; }
-  
-  .by-ribbon-tag {
-    position: absolute; top: -12px; right: 20px;
-    color: #fff; font-size: 0.7rem; font-weight: 900; padding: 3px 14px; border-radius: 20px; 
-    text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    z-index: 10;
-  }
-  .popular-tag { background: linear-gradient(135deg, #ec5c0a, #ff9a00); }
-  .value-tag { background: linear-gradient(135deg, #007b3e, #00a854); }
-  
-  .by-combo-main-row { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; gap: 12px; }
-  
-  .by-combo-left { display: flex; align-items: flex-start; gap: 12px; }
-  .by-combo-radio { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #ccc; position: relative; flex-shrink: 0; background: #fff; transition: all 0.2s ease; margin-top: 2px; }
-  .by-combo-card.active .by-combo-radio { border-color: #ec5c0a; border-width: 5px; box-shadow: 0 0 8px rgba(236,92,10,0.3); }
-  
-  .by-combo-info { display: flex; flex-direction: column; gap: 4px; }
-  .by-combo-title { font-weight: 900; font-size: 1.15rem; color: #1a1a1a; transition: color 0.2s ease; line-height: 1.2; }
-  .by-combo-card.active .by-combo-title { color: #ec5c0a; }
-  
-  .by-combo-badges-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
-  .by-save-pill { background: #ffebee; color: #d32f2f; font-size: 0.68rem; font-weight: 900; padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(211,47,47,0.2); line-height:1; }
-  .by-combo-card-label { font-size: 0.68rem; font-weight: 800; color: #007b3e; background: rgba(0, 123, 62, 0.08); padding: 2px 7px; border-radius: 4px; border: 1px dashed rgba(0, 123, 62, 0.3); text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px; line-height:1; }
-  .by-combo-card-label svg { width: 10px; height: 10px; }
-
-  .by-combo-right { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
-  .by-combo-price { font-weight: 900; font-size: 1.25rem; color: #1a1a1a; line-height: 1.1; }
-  .by-combo-compare { font-size: 0.85rem; color: #888; text-decoration: line-through; margin-bottom: 2px; font-weight: 700; line-height: 1.1; }
-  
-  .by-unit-price-bar {
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    background: linear-gradient(90deg, rgba(236,92,10,0.05), rgba(255,154,0,0.1), rgba(236,92,10,0.05));
-    border: 1px dashed rgba(236,92,10,0.3);
-    padding: 8px; border-radius: 8px; margin-top: 4px;
-    font-size: 0.8rem; font-weight: 700; color: #ec5c0a;
-    width: 100%;
-  }
-  .by-unit-price-bar strong { font-weight: 900; }
-
-  /* --- PINCODE DELIVERY CHECKER --- */
-  .by-delivery-wrapper {
-    background: #fbfbfb;
-    border: 1px solid #eaeaea;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 24px;
-  }
-  .by-delivery-title {
-    font-size: 0.9rem;
-    font-weight: 800;
-    color: #1a1a1a;
-    margin-bottom: 10px;
+  .vidhyut-main-header-{{ section.id }} {
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: space-between;
+    padding: 12px 2%;
+    margin: 0;
+    height: auto;
+    gap: 30px;
   }
-  .by-delivery-title svg { width: 16px; height: 16px; fill: #ec5c0a; }
-  .by-delivery-input-group {
+  
+  /* Logo Section */
+  .vidhyut-header-left-{{ section.id }} {
+    flex: 0 0 auto;
     display: flex;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-    background: #fff;
-    transition: border-color 0.2s ease;
-  }
-  .by-delivery-input-group:focus-within { border-color: #ec5c0a; }
-  .by-delivery-input-group input {
-    flex: 1; padding: 12px 14px; border: none; outline: none; font-family: inherit; font-size: 0.9rem; font-weight: 600;
-  }
-  .by-delivery-input-group button {
-    background: #1a1a1a; color: #fff; border: none; padding: 0 20px; font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: background 0.3s ease;
-  }
-  .by-delivery-input-group button:hover { background: #ec5c0a; }
-  .by-delivery-result {
-    margin-top: 10px; font-size: 0.82rem; font-weight: 700; color: #2e7d32; display: none;
-    line-height: 1.4;
-  }
-
-  /* --- AMAZON / FLIPKART TRUST ASSURANCES ROW --- */
-  .by-trust-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 24px;
-    padding: 14px;
-    background: #fdfdfd;
-    border: 1px solid #eeeeee;
-    border-radius: 12px;
-    text-align: center;
-  }
-  .by-trust-item {
-    display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    gap: 6px;
   }
-  .by-trust-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(236, 92, 10, 0.08);
-    color: #ec5c0a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  
+  .vidhyut-header-left-{{ section.id }} a { 
+    display: flex; 
+    align-items: center; 
+    text-decoration: none;
+    transition: opacity 0.3s ease;
   }
-  .by-trust-icon svg { width: 18px; height: 18px; fill: currentColor; }
-  .by-trust-text {
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: #333;
-    line-height: 1.2;
+  
+  .vidhyut-header-left-{{ section.id }} a:hover {
+    opacity: 0.85;
   }
-
-  /* --- ACCORDIONS --- */
-  .by-details-container { margin-bottom: 24px; }
-  .by-accordion { border-bottom: 1px solid #e0e0e0; }
-  .by-accordion:first-of-type { border-top: 1px solid #e0e0e0; }
-  .by-accordion summary { padding: 16px 0; font-weight: 800; font-size: 1rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; color: #1a1a1a; transition: color 0.3s ease; }
-  .by-accordion summary:hover { color: #ec5c0a; }
-  .by-accordion summary::-webkit-details-marker { display: none; }
-  .by-accordion summary::after { content: '+'; font-size: 1.4rem; font-weight: 400; transition: transform 0.3s; color: #ec5c0a; }
-  .by-accordion[open] summary::after { transform: rotate(45deg); }
-  .by-accordion-content { padding-bottom: 16px; font-size: 0.9rem; color: #555; line-height: 1.6; font-weight: 500; }
-
-  /* --- DESKTOP BUYING CTAs vs MOBILE STICKY BAR --- */
-  .by-actions-desktop {
-    display: none;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 24px;
+  
+  .vidhyut-header-left-{{ section.id }} img {
+    max-width: {{ section.settings.logo_width }}px;
+    height: auto;
+    display: block;
+    object-fit: contain;
   }
-  @media (min-width: 992px) {
-    .by-actions-desktop {
-      display: flex;
-    }
-  }
-
-  .by-btn-row {
-    display: flex;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .by-btn-add, .by-btn-buy {
-    flex: 1;
-    padding: 16px;
-    border: none;
-    border-radius: 12px;
+  
+  .vidhyut-header-left-{{ section.id }} h2 {
+    margin: 0;
     font-weight: 900;
-    font-size: 1.05rem;
-    cursor: pointer;
+    font-size: 22px;
+    color: {{ section.settings.text_color }};
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Desktop Navigation */
+  .vidhyut-header-center-{{ section.id }} {
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+  }
+  
+  .vidhyut-desktop-nav-{{ section.id }} {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .vidhyut-desktop-nav-{{ section.id }} > a, 
+  .vidhyut-has-dropdown-{{ section.id }} > a {
+    text-decoration: none;
+    color: {{ section.settings.text_color }};
+    font-weight: 600;
+    font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
-    overflow: hidden;
+    padding: 8px 16px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .vidhyut-desktop-nav-{{ section.id }} > a:hover, 
+  .vidhyut-has-dropdown-{{ section.id }}:hover > a {
+    background-color: rgba(241, 126, 57, 0.08);
+    color: {{ section.settings.accent_color }};
   }
 
-  .by-btn-add {
-    background: linear-gradient(135deg, #ec5c0a, #ff9a00);
-    color: #ffffff;
-    box-shadow: 0 8px 25px rgba(236, 92, 10, 0.35);
+  .vidhyut-has-dropdown-{{ section.id }} > a i {
+    margin-left: 6px;
+    font-size: 0.75em;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .by-btn-add:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(236, 92, 10, 0.45);
-  }
-
-  .by-btn-buy {
-    background: linear-gradient(135deg, #ffb703, #fb8500);
-    color: #1a1a1a;
-    box-shadow: 0 8px 25px rgba(251, 133, 0, 0.3);
-  }
-  .by-btn-buy:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(251, 133, 0, 0.45);
+  
+  .vidhyut-has-dropdown-{{ section.id }}:hover > a i {
+    transform: rotate(180deg);
   }
 
-  /* Mobile Sticky Bottom Bar */
-  .by-sticky-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.96);
-    padding: 12px 16px;
-    box-shadow: 0 -8px 30px rgba(0,0,0,0.12);
-    display: flex;
-    gap: 10px;
-    z-index: 999;
-    border-top: 1px solid rgba(236, 92, 10, 0.15);
+  /* Dropdown Menu */
+  .vidhyut-has-dropdown-{{ section.id }} { 
+    position: relative; 
+    cursor: pointer;
+  }
+  
+  .vidhyut-dropdown-menu-{{ section.id }} {
+    display: none;
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: {{ section.settings.bg_color }};
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    z-index: 100;
+    min-width: 260px;
+    padding: 12px 0;
+    border-radius: 10px;
+    border: 1px solid {{ section.settings.border_color }};
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .vidhyut-has-dropdown-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 12px;
   }
 
-  @media (min-width: 992px) {
-    .by-sticky-bar { display: none; }
+  .vidhyut-has-dropdown-{{ section.id }}:hover .vidhyut-dropdown-menu-{{ section.id }} {
+    display: block;
+    animation: menuFadeInDown-{{ section.id }} 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  @keyframes menuFadeInDown-{{ section.id }} { 
+    from { 
+      opacity: 0; 
+      transform: translateX(-50%) translateY(-8px); 
+    } 
+    to { 
+      opacity: 1; 
+      transform: translateX(-50%) translateY(0); 
+    } 
+  }
+  
+  .vidhyut-dropdown-menu-{{ section.id }} a {
+    display: block;
+    padding: 12px 24px;
+    text-decoration: none;
+    color: {{ section.settings.text_color }};
+    font-weight: 500;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  
+  .vidhyut-dropdown-menu-{{ section.id }} a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: {{ section.settings.accent_color }};
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+  }
+  
+  .vidhyut-dropdown-menu-{{ section.id }} a:hover {
+    background-color: rgba(241, 126, 57, 0.06);
+    padding-left: 30px;
+    color: {{ section.settings.accent_color }};
+  }
+  
+  .vidhyut-dropdown-menu-{{ section.id }} a:hover::before {
+    transform: scaleY(1);
   }
 
-  /* --- MOBILE RESPONSIVE ENHANCEMENTS --- */
-  .by-product-{{ section.id }} {
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow-x: hidden !important;
-    box-sizing: border-box !important;
+  /* Icons & Right Section */
+  .vidhyut-header-right-{{ section.id }} {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+  
+  .vidhyut-icon-{{ section.id }} {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    color: {{ section.settings.icon_color }};
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .vidhyut-icon-{{ section.id }}:hover { 
+    transform: scale(1.2);
+    color: {{ section.settings.accent_color }};
   }
 
-  .by-container {
-    width: 100% !important;
-    box-sizing: border-box !important;
+   /* Mobile Menu Drawer */
+  .vidhyut-mobile-drawer-{{ section.id }} {
+    position: fixed; 
+    top: 0; 
+    left: -100%; 
+    width: 320px; 
+    max-width: 85%; 
+    height: 100vh;
+    background-color: {{ section.settings.bg_color }};
+    z-index: 99999;
+    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 5px 0 30px rgba(0,0,0,0.15);
+    overflow-y: auto; 
+    padding: 25px;
+    text-align: left;
+  }
+  
+  .vidhyut-mobile-drawer-{{ section.id }}.active { 
+    left: 0;
+  }
+  
+  .vidhyut-drawer-close-{{ section.id }} { 
+    display: flex; 
+    justify-content: flex-end; 
+    cursor: pointer; 
+    margin-bottom: 30px; 
+    color: {{ section.settings.text_color }};
+    transition: all 0.3s ease;
+  }
+  
+  .vidhyut-drawer-close-{{ section.id }}:hover {
+    transform: rotate(90deg);
+    color: {{ section.settings.accent_color }};
+  }
+  
+  .vidhyut-drawer-link-{{ section.id }} { 
+    display: block; 
+    padding: 14px 0; 
+    color: {{ section.settings.text_color }}; 
+    text-decoration: none; 
+    font-weight: 600; 
+    font-size: 15px; 
+    border-bottom: 1px solid {{ section.settings.border_color }}; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+  }
+  
+  .vidhyut-drawer-link-{{ section.id }}:hover {
+    color: {{ section.settings.accent_color }};
+    padding-left: 10px;
+  }
+  
+  .vidhyut-drawer-sublink-{{ section.id }} { 
+    display: block; 
+    padding: 10px 0 10px 20px; 
+    color: {{ section.settings.text_color }}; 
+    text-decoration: none; 
+    font-size: 13px; 
+    font-weight: 500; 
+    border-bottom: 1px solid rgba(0,0,0,0.05); 
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+  
+  .vidhyut-drawer-sublink-{{ section.id }}:hover {
+    opacity: 1;
+    color: {{ section.settings.accent_color }};
+    padding-left: 25px;
   }
 
-  @media (max-width: 991px) {
-    .by-product-{{ section.id }} {
-      padding-bottom: 120px;
+  /* =========================================================
+     RESPONSIVE MEDIA QUERIES
+     ========================================================= */
+  @media screen and (min-width: 1025px) { 
+    .vidhyut-hamburger-{{ section.id }} { 
+      display: none !important; 
+    } 
+  }
+  
+  @media screen and (max-width: 1024px) {
+    .vidhyut-header-center-{{ section.id }} { 
+      display: none; 
+    } 
+    .vidhyut-header-left-{{ section.id }} { 
+      flex: 1; 
     }
-    .by-container {
-      padding: 12px 14px;
+    .vidhyut-header-right-{{ section.id }} { 
+      flex: auto; 
+      gap: 16px; 
+      justify-content: flex-end; 
     }
-    .by-desktop-layout {
-      grid-template-columns: 1fr !important;
-      gap: 16px;
+  }
+  
+  @media screen and (max-width: 767px) {
+    .vidhyut-top-bar-{{ section.id }} { 
+      flex-direction: row; 
+      justify-content: space-between; 
+      align-items: center;
+      font-size: 11px;
+      padding: 8px 3%;
+      gap: 10px;
     }
-    .by-media-gallery {
-      gap: 12px;
+    
+    .vidhyut-top-bar-{{ section.id }} .top-bar-left {
+      min-width: 0;
     }
-    .by-thumbnails {
-      order: 2;
-      justify-content: flex-start;
-      gap: 8px;
+    
+    .vidhyut-top-bar-{{ section.id }} .top-bar-right a { 
+      padding: 5px 12px; 
+      font-size: 10px;
+      white-space: nowrap;
     }
-    .by-thumb {
-      width: 54px;
-      height: 54px;
-      border-radius: 8px;
+    
+    .vidhyut-main-header-{{ section.id }} { 
+      padding: 8px 3%;
+      gap: 15px;
     }
-    .by-main-image-wrap {
-      order: 1;
-      aspect-ratio: 1 / 1;
-      border-radius: 14px;
+    
+    .vidhyut-header-left-{{ section.id }} img { 
+      max-width: {{ section.settings.logo_width_mobile }}px !important; 
     }
-    .by-title-row h1 {
-      font-size: 1.25rem;
-      line-height: 1.35;
-      word-break: break-word;
+    
+    .vidhyut-header-right-{{ section.id }} { 
+      gap: 14px; 
     }
-    .by-price-card {
-      padding: 14px;
-      margin-bottom: 16px;
+    
+    .vidhyut-icon-{{ section.id }} { 
+      width: 20px; 
+      height: 20px; 
     }
-    .by-current-price {
-      font-size: 1.6rem;
-    }
-    .by-combo-card {
-      padding: 12px 14px !important;
-      overflow: hidden !important;
-    }
-    .by-combo-main-row {
-      flex-direction: row !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      gap: 8px !important;
-      width: 100% !important;
-    }
-    .by-combo-left {
-      flex: 1 !important;
-      min-width: 0 !important;
-      gap: 8px !important;
-    }
-    .by-combo-info {
-      min-width: 0 !important;
-    }
-    .by-combo-title {
-      font-size: 0.98rem !important;
-      word-break: break-word !important;
-      white-space: normal !important;
-    }
-    .by-combo-right {
-      flex-shrink: 0 !important;
-    }
-    .by-combo-price {
-      font-size: 1.1rem !important;
-    }
-    .by-save-pill, .by-combo-card-label {
-      font-size: 0.62rem !important;
-      padding: 2px 5px !important;
-    }
-    .by-trust-grid {
-      grid-template-columns: repeat(2, 1fr) !important;
-      gap: 8px !important;
-      padding: 10px 8px !important;
-    }
-    .by-trust-item {
-      font-size: 0.72rem !important;
-      text-align: center !important;
-      padding: 8px 4px !important;
-    }
-    .by-offer-card {
-      min-width: 200px !important;
-      max-width: 220px !important;
-      padding: 12px !important;
-    }
-    .by-unit-price-bar {
-      font-size: 0.75rem !important;
-      padding: 6px 8px !important;
-      text-align: center !important;
-      word-break: break-word !important;
-    }
-    .by-sticky-bar {
-      padding: 10px 12px;
-    }
-    .by-sticky-bar .by-btn-add, .by-sticky-bar .by-btn-buy {
-      height: 48px;
-      font-size: 0.9rem;
-      font-weight: 800;
-      border-radius: 10px;
+    
+    .vidhyut-header-left-{{ section.id }} h2 {
+      font-size: 16px;
+      letter-spacing: 0.5px;
     }
   }
 
-  @keyframes shine {
-    0% { left: -100%; }
-    20% { left: 100%; }
-    100% { left: 100%; }
-  }
-  .by-btn-add::before, .by-btn-buy::before {
-    content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
-    transform: skewX(-25deg); animation: shine 3s infinite;
+  @media screen and (max-width: 480px) {
+    .vidhyut-top-bar-{{ section.id }} { 
+      font-size: 9px;
+      padding: 6px 2%;
+    }
+    
+    .vidhyut-main-header-{{ section.id }} { 
+      padding: 6px 2%;
+    }
   }
 {%- endstyle -%}
 
-<div class="by-product-{{ section.id }}">
-  <div class="by-container">
-    
-    <div class="by-breadcrumbs">
-      <a href="/">Home</a> <span>/</span> <span>{{ product.title | escape }}</span>
-    </div>
-
-    {%- if product != blank -%}
-      {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-        <input type="hidden" name="id" id="SelectedVariantID-{{ section.id }}" value="{{ current_variant.id }}">
-        <input type="hidden" name="quantity" value="1">
-
-        <div class="by-desktop-layout">
-          
-          <!-- LEFT COLUMN: MEDIA GALLERY -->
-          <div class="by-media-gallery">
-            {%- if product.media.size > 1 -%}
-              <div class="by-thumbnails">
-                {%- for media in product.media -%}
-                  <div class="by-thumb {% if forloop.first %}active{% endif %}" data-src="{{ media | img_url: '1000x' }}">
-                    <img src="{{ media | img_url: '150x150', crop: 'center' }}" alt="{{ media.alt | escape }}" loading="lazy">
-                  </div>
-                {%- endfor -%}
-              </div>
-            {%- endif -%}
-
-            <div class="by-main-image-wrap">
-              <div class="by-image-badge">
-                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                100% Original & ISO Certified
-              </div>
-              {%- if product.featured_media -%}
-                <img id="MainProductImage-{{ section.id }}" src="{{ product.featured_media | img_url: '1000x' }}" alt="{{ product.title | escape }}">
-              {%- else -%}
-                <div style="width: 100%; height: 100%; background: #e0e0e0; display:flex; align-items:center; justify-content:center; color: #666;">Product Image</div>
-              {%- endif -%}
-            </div>
-          </div>
-
-          <!-- RIGHT COLUMN: PRODUCT DETAILS & BUYING HUB -->
-          <div class="by-content-wrapper">
-            
-            <div class="by-title-row">
-              <h1>{{ product.title | default: 'Premium Modular Pack' }}</h1>
-              <button type="button" class="by-share-btn" id="ShareBtn-{{ section.id }}" aria-label="Share product">
-                <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
-              </button>
-            </div>
-
-            <div class="by-rating-trust-row">
-              <div class="by-rating-pill">
-                ★ 4.9
-              </div>
-              <span class="by-rating-count">1,248 Ratings & Reviews</span>
-              <span class="by-stock-tag">
-                <span class="by-stock-dot"></span> In Stock & Ready to Ship
-              </span>
-            </div>
-
-            <!-- AMAZON / FLIPKART STYLE PRICE CARD -->
-            <div class="by-price-card">
-              <div class="by-price-wrapper" id="MainPriceWrapper-{{ section.id }}">
-                <span class="by-current-price" id="TopPrice-{{ section.id }}">
-                  {{ current_variant.price | default: 199900 | money }}
-                </span>
-                <span class="by-compare-price" id="TopComparePrice-{{ section.id }}" {% unless current_variant.compare_at_price > current_variant.price %}style="display:none;"{% endunless %}>
-                  {{ current_variant.compare_at_price | money }}
-                </span>
-                {%- assign top_save_percent = 0 -%}
-                {%- if current_variant.compare_at_price > current_variant.price -%}
-                  {%- assign top_save_percent = current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round -%}
-                {%- endif -%}
-                <span class="by-save-badge" id="TopSaveBadge-{{ section.id }}" {% if top_save_percent == 0 %}style="display:none;"{% endif %}>
-                  Save {{ top_save_percent }}%
-                </span>
-              </div>
-              <div class="by-tax-info">
-                <span>Inclusive of all taxes</span> • <span>Free Express Shipping</span>
-              </div>
-            </div>
-
-            <!-- OFFERS & DISCOUNTS SECTION -->
-            {%- if section.settings.enable_offers_section -%}
-              <div class="by-offers-section">
-                <div class="by-offers-header">
-                  <div class="by-offers-title">
-                    <span class="by-offer-icon">%</span>
-                    Offers & Discounts
-                  </div>
-                  {%- if section.settings.offer_link_url != blank -%}
-                    <a href="{{ section.settings.offer_link_url }}" class="by-offers-link">{{ section.settings.offer_link_text }}</a>
-                  {%- else -%}
-                    <span class="by-offers-link" style="cursor: pointer;">{{ section.settings.offer_link_text }}</span>
-                  {%- endif -%}
-                </div>
-                
-                <div class="by-offers-grid">
-                  {%- assign has_offers = false -%}
-                  {%- for block in section.blocks -%}
-                    {%- if block.type == 'offer' -%}
-                      {%- assign has_offers = true -%}
-                      <div class="by-offer-card" {{ block.shopify_attributes }}>
-                        <strong>{{ block.settings.title }}</strong>
-                        <p>{{ block.settings.subtitle }}</p>
-                        
-                        <button type="button" class="by-offer-copy" data-code="{{ block.settings.code }}">
-                          <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                          <span>CLICK TO COPY</span>
-                        </button>
-
-                        {%- if block.settings.enable_timer and block.settings.timer_date != blank -%}
-                          <div class="by-offer-badge timer-badge" data-endtime="{{ block.settings.timer_date }}">Loading...</div>
-                        {%- elsif block.settings.badge_text != blank -%}
-                          <div class="by-offer-badge">{{ block.settings.badge_text }}</div>
-                        {%- endif -%}
-                      </div>
-                    {%- endif -%}
-                  {%- endfor -%}
-
-                  {%- if has_offers == false -%}
-                    <div class="by-offer-card">
-                      <strong>Freeship</strong>
-                      <p>Get Free Shipping on all orders</p>
-                      <button type="button" class="by-offer-copy" data-code="FREESHIP">
-                        <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                        <span>CLICK TO COPY</span>
-                      </button>
-                      <div class="by-offer-badge">Limited Time</div>
-                    </div>
-                  {%- endif -%}
-                </div>
-              </div>
-            {%- endif -%}
-
-            <!-- COMBO PACK SELECTION -->
-            <div class="by-section-header">
-              <span class="by-section-title">Select Pack Options</span>
-              {%- if section.settings.install_guide_link != blank or section.settings.install_guide_text != blank -%}
-                <a href="{{ section.settings.install_guide_link | default: '#' }}" class="by-install-btn" {% if section.settings.install_guide_link != blank %}target="_blank"{% endif %}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                  {{ section.settings.install_guide_text | default: "Installation Guide" }}
-                </a>
-              {%- endif -%}
-            </div>
-            
-            <div class="by-combo-grid" id="ComboGrid-{{ section.id }}">
-              {%- for variant in product.variants -%}
-                {%- assign save_percent = 0 -%}
-                {%- if variant.compare_at_price > variant.price -%}
-                  {%- assign save_percent = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round -%}
-                {%- endif -%}
-
-                {%- assign custom_subtitle = '' -%}
-                {%- assign custom_badge = '' -%}
-                {%- assign creative_card_label = '' -%}
-                {%- for block in section.blocks -%}
-                  {%- if block.type == 'variant_meta' and block.settings.variant_title == variant.title -%}
-                    {%- assign custom_subtitle = block.settings.subtitle -%}
-                    {%- assign custom_badge = block.settings.custom_badge -%}
-                    {%- assign creative_card_label = block.settings.card_label -%}
-                  {%- endif -%}
-                {%- endfor -%}
-
-                {%- if creative_card_label == blank -%}
-                  {%- assign downcase_title = variant.title | downcase -%}
-                  {%- if downcase_title contains 'single' or downcase_title contains 'one' or downcase_title contains '1' -%}
-                    {%- assign creative_card_label = 'One Card' -%}
-                  {%- elsif downcase_title contains 'trio' or downcase_title contains 'three' or downcase_title contains '3' -%}
-                    {%- assign creative_card_label = 'Three Cards' -%}
-                  {%- elsif downcase_title contains 'penta' or downcase_title contains 'five' or downcase_title contains '5' -%}
-                    {%- assign creative_card_label = 'Five Cards' -%}
-                  {%- else -%}
-                    {%- assign creative_card_label = 'Combo Pack' -%}
-                  {%- endif -%}
-                {%- endif -%}
-
-                {%- assign is_popular = false -%}
-                {%- assign is_best_value = false -%}
-                {%- if downcase_title contains 'trio' or forloop.index == 2 -%}
-                   {%- assign is_popular = true -%}
-                {%- elsif downcase_title contains 'penta' or downcase_title contains 'five' or forloop.last -%}
-                   {%- assign is_best_value = true -%}
-                {%- endif -%}
-
-                <label class="by-combo-card {% if variant.id == current_variant.id %}active{% endif %} {% if is_popular %}card-popular{% endif %} {% if is_best_value %}card-best-value{% endif %}">
-                  
-                  {%- if custom_badge != blank -%}
-                    <div class="by-ribbon-tag popular-tag">{{ custom_badge }}</div>
-                  {%- elsif is_popular -%}
-                    <div class="by-ribbon-tag popular-tag">MOST POPULAR</div>
-                  {%- elsif is_best_value -%}
-                    <div class="by-ribbon-tag value-tag">BEST VALUE</div>
-                  {%- endif -%}
-                  
-                  <input type="radio" name="combo_selector_radio" value="{{ variant.id }}" {% if variant.id == current_variant.id %}checked{% endif %} data-price="{{ variant.price | money | escape }}" data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | escape }}{% endif %}" data-save="{% if save_percent > 0 %}{{ save_percent }}{% endif %}" style="display:none;">
-                  
-                  <div class="by-combo-main-row">
-                    <div class="by-combo-left">
-                      <div class="by-combo-radio"></div>
-                      <div class="by-combo-info">
-                        <span class="by-combo-title">{{ variant.title }}</span>
-                        <div class="by-combo-badges-row">
-                          {%- if save_percent > 0 -%}
-                            <span class="by-save-pill">SAVE {{ save_percent }}%</span>
-                          {%- endif -%}
-                          <span class="by-combo-card-label">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-                            {{ creative_card_label }}
-                          </span>
-                        </div>
-                        {%- if custom_subtitle != blank -%}
-                          <span class="by-combo-desc" style="font-size: 0.8rem; color: #666; margin-top: 2px;">{{ custom_subtitle }}</span>
-                        {%- endif -%}
-                      </div>
-                    </div>
-                    <div class="by-combo-right">
-                      {%- if variant.compare_at_price > variant.price -%}
-                        <span class="by-combo-compare">{{ variant.compare_at_price | money }}</span>
-                      {%- endif -%}
-                      <span class="by-combo-price">{{ variant.price | money }}</span>
-                    </div>
-                  </div>
-
-                  {%- assign unit_price = variant.price -%}
-                  {%- if downcase_title contains 'trio' or downcase_title contains '3' -%}
-                    {%- assign unit_price = variant.price | divided_by: 3 -%}
-                  {%- elsif downcase_title contains 'penta' or downcase_title contains '5' -%}
-                    {%- assign unit_price = variant.price | divided_by: 5 -%}
-                  {%- elsif downcase_title contains 'couple' or downcase_title contains '2' -%}
-                    {%- assign unit_price = variant.price | divided_by: 2 -%}
-                  {%- endif -%}
-
-                  {%- if unit_price < variant.price -%}
-                    <div class="by-unit-price-bar">
-                      <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-                      Only <strong>{{ unit_price | money }}</strong> / Card
-                    </div>
-                  {%- endif -%}
-
-                </label>
-              {%- endfor -%}
-            </div>
-
-            <!-- PINCODE DELIVERY CHECKER -->
-            {%- if section.settings.enable_delivery_check -%}
-              <div class="by-delivery-wrapper">
-                <div class="by-delivery-title">
-                  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                  Check Delivery Availability
-                </div>
-                <div class="by-delivery-input-group">
-                  <input type="text" id="DeliveryPincodeInput-{{ section.id }}" maxlength="6" placeholder="Enter 6-digit Pincode">
-                  <button type="button" id="DeliveryPincodeBtn-{{ section.id }}">Check</button>
-                </div>
-                <div class="by-delivery-result" id="DeliveryResult-{{ section.id }}"></div>
-              </div>
-            {%- endif -%}
-
-            <!-- AMAZON / FLIPKART TRUST ASSURANCES ROW -->
-            <div class="by-trust-grid">
-              <div class="by-trust-item">
-                <div class="by-trust-icon">
-                  <svg viewBox="0 0 24 24"><path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                </div>
-                <span class="by-trust-text">Free Shipping</span>
-              </div>
-              <div class="by-trust-item">
-                <div class="by-trust-icon">
-                  <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                </div>
-                <span class="by-trust-text">1 Year Warranty</span>
-              </div>
-              <div class="by-trust-item">
-                <div class="by-trust-icon">
-                  <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-                </div>
-                <span class="by-trust-text">7 Days Return</span>
-              </div>
-              <div class="by-trust-item">
-                <div class="by-trust-icon">
-                  <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                </div>
-                <span class="by-trust-text">Pay on Delivery</span>
-              </div>
-            </div>
-
-            <!-- DESKTOP ACTION BUTTONS -->
-            <div class="by-actions-desktop">
-              <div class="by-btn-row">
-                <button class="by-btn-add" type="submit" name="add" id="SubmitBtnDesktop-{{ section.id }}">
-                  <span>Add to Cart</span> 
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
-                </button>
-                <button class="by-btn-buy" type="submit" name="add" id="BuyBtnDesktop-{{ section.id }}">
-                  <span>Buy Now</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- PRODUCT ACCORDIONS -->
-            <div class="by-details-container">
-              <details class="by-accordion" open>
-                <summary>Product Description</summary>
-                <div class="by-accordion-content">{{ product.description | default: 'Experience premium quality.' }}</div>
-              </details>
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- MOBILE STICKY BOTTOM ACTIONS BAR -->
-        <div class="by-sticky-bar">
-          <button class="by-btn-add" type="submit" name="add" id="SubmitBtnMobile-{{ section.id }}">
-            <span>Add to Cart</span>
-          </button>
-          <button class="by-btn-buy" type="submit" name="add" id="BuyBtnMobile-{{ section.id }}">
-            <span>Buy Now</span>
-          </button>
-        </div>
-
-      {%- endform -%}
-    {%- else -%}
-      <div style="text-align: center; padding: 50px;">
-        <h2>Product not found. Please select a product in the section settings.</h2>
+<div class="vidhyut-header-wrapper-{{ section.id }}">
+  
+  {% if section.settings.show_top_bar %}
+    <div class="vidhyut-top-bar-{{ section.id }}">
+      <div class="top-bar-left">{{ section.settings.top_bar_left_text }}</div>
+      <div class="top-bar-right">
+        <a href="{{ section.settings.franchise_link }}" style="background-color: {{ section.settings.accent_color }}; color: #ffffff; padding: 6px 16px; border-radius: 6px; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'">{{ section.settings.franchise_text }}</a>
       </div>
+    </div>
+  {% endif %}
+
+  <header class="vidhyut-header-section-{{ section.id }}">
+    <div class="vidhyut-main-header-{{ section.id }}">
+      
+      <div class="vidhyut-header-left-{{ section.id }}">
+        <a href="{{ routes.root_url }}" title="{{ shop.name }}">
+          {% if section.settings.logo != blank %}
+            <img src="{{ section.settings.logo | img_url: 'master' }}" alt="{{ shop.name }}">
+          {% else %}
+            <h2>{{ shop.name }}</h2>
+          {% endif %}
+        </a>
+      </div>
+
+      <div class="vidhyut-header-center-{{ section.id }}">
+        <nav class="vidhyut-desktop-nav-{{ section.id }}">
+          {%- if section.settings.menu != blank -%}
+            {%- for link in linklists[section.settings.menu].links -%}
+              {%- if link.links != blank -%}
+                <div class="vidhyut-has-dropdown-{{ section.id }}">
+                  <a href="{{ link.url }}">{{ link.title }} <i class="fas fa-chevron-down"></i></a>
+                  <div class="vidhyut-dropdown-menu-{{ section.id }}">
+                    {%- for childlink in link.links -%}
+                      <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- else -%}
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </nav>
+      </div>
+
+      <div class="vidhyut-header-right-{{ section.id }}">
+        <a href="{{ routes.search_url }}" class="vidhyut-icon-{{ section.id }}" aria-label="Search" title="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </a>
+        <a href="{{ routes.cart_url }}" class="vidhyut-icon-{{ section.id }}" aria-label="Cart" title="Shopping Cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        </a>
+        <button type="button" class="vidhyut-icon-{{ section.id }} vidhyut-hamburger-{{ section.id }}" style="background:none;border:none;padding:0;cursor:pointer;" aria-label="Open Menu" title="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <div id="vidhyutMobileMenu{{ section.id }}" class="vidhyut-mobile-drawer-{{ section.id }}">
+    <div class="vidhyut-drawer-close-{{ section.id }}" title="Close Menu">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </div>
+    {%- if section.settings.menu != blank -%}
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}" class="vidhyut-drawer-link-{{ section.id }}">{{ link.title }}</a>
+        {%- if link.links != blank -%}
+          {%- for childlink in link.links -%}
+            <a href="{{ childlink.url }}" class="vidhyut-drawer-sublink-{{ section.id }}">&rarr; {{ childlink.title }}</a>
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
     {%- endif -%}
   </div>
-</div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // 1. Media Gallery Thumbnail Switcher
-    const mainImg = document.getElementById('MainProductImage-{{ section.id }}');
-    const thumbs = document.querySelectorAll('.by-thumb');
-    thumbs.forEach(thumb => {
-      thumb.addEventListener('click', function() {
-        thumbs.forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-        const src = this.getAttribute('data-src');
-        if(mainImg && src) {
-          mainImg.style.opacity = '0.4';
-          setTimeout(() => {
-            mainImg.src = src;
-            mainImg.style.opacity = '1';
-          }, 150);
-        }
-      });
-    });
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const drawer = document.getElementById('vidhyutMobileMenu{{ section.id }}');
+      const hamburger = document.querySelector('.vidhyut-hamburger-{{ section.id }}');
+      const closeBtn = document.querySelector('.vidhyut-drawer-close-{{ section.id }}');
 
-    // 2. Combo Variant Selection Logic
-    const grid = document.getElementById('ComboGrid-{{ section.id }}');
-    const mainVariantInput = document.getElementById('SelectedVariantID-{{ section.id }}');
-    const topPrice = document.getElementById('TopPrice-{{ section.id }}');
-    const topCompare = document.getElementById('TopComparePrice-{{ section.id }}');
-    const topSaveBadge = document.getElementById('TopSaveBadge-{{ section.id }}');
-    const priceWrapper = document.getElementById('MainPriceWrapper-{{ section.id }}');
+      function openMenu() { 
+        if(drawer) drawer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
 
-    if(grid) {
-      const cards = grid.querySelectorAll('.by-combo-card');
-      cards.forEach(card => {
-        card.addEventListener('click', function() {
-          cards.forEach(c => c.classList.remove('active'));
-          this.classList.add('active');
+      function closeMenu() { 
+        if(drawer) drawer.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (hamburger) {
+        hamburger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          openMenu();
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          closeMenu();
+        });
+      }
+
+      document.addEventListener('click', function(event) {
+        if (drawer && drawer.classList.contains('active')) {
+          const clickedInsideDrawer = drawer.contains(event.target);
+          const clickedHamburger = hamburger && hamburger.contains(event.target);
           
-          const radio = this.querySelector('input[type="radio"]');
-          if(radio) {
-            radio.checked = true;
-            if(mainVariantInput) mainVariantInput.value = radio.value;
-            
-            if(priceWrapper) {
-              priceWrapper.style.opacity = '0';
-              setTimeout(() => {
-                if(topPrice && radio.dataset.price) topPrice.innerHTML = radio.dataset.price;
-                if(topCompare) {
-                  if(radio.dataset.compare) {
-                    topCompare.innerHTML = radio.dataset.compare;
-                    topCompare.style.display = 'inline-block';
-                  } else {
-                    topCompare.style.display = 'none';
-                  }
-                }
-                if(topSaveBadge) {
-                  if(radio.dataset.save) {
-                    topSaveBadge.innerHTML = 'Save ' + radio.dataset.save + '%';
-                    topSaveBadge.style.display = 'inline-block';
-                  } else {
-                    topSaveBadge.style.display = 'none';
-                  }
-                }
-                priceWrapper.style.opacity = '1';
-              }, 150);
-            }
+          if (!clickedInsideDrawer && !clickedHamburger) {
+            closeMenu();
           }
-        });
-      });
-    }
-
-    // 3. Pincode Availability Checker
-    const pinInput = document.getElementById('DeliveryPincodeInput-{{ section.id }}');
-    const pinBtn = document.getElementById('DeliveryPincodeBtn-{{ section.id }}');
-    const pinResult = document.getElementById('DeliveryResult-{{ section.id }}');
-    if(pinBtn && pinInput && pinResult) {
-      pinBtn.addEventListener('click', function() {
-        const pin = pinInput.value.trim();
-        if(pin.length === 6 && /^\d+$/.test(pin)) {
-          pinResult.style.display = 'block';
-          pinResult.style.color = '#007b3e';
-          pinResult.innerHTML = '✅ Delivery available for <strong>' + pin + '</strong>! Estimated delivery by <strong>Tomorrow</strong> | Free Express Shipping.';
-        } else {
-          pinResult.style.display = 'block';
-          pinResult.style.color = '#d32f2f';
-          pinResult.innerHTML = '⚠️ Please enter a valid 6-digit Pincode.';
-        }
-      });
-    }
-
-    // 4. Coupon Copy Engine
-    const copyBtns = document.querySelectorAll('.by-offer-copy');
-    copyBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const code = this.getAttribute('data-code');
-        const span = this.querySelector('span');
-        if(navigator.clipboard && window.isSecureContext) {
-          navigator.clipboard.writeText(code).then(() => {
-            if(span) span.innerText = 'COPIED!';
-            setTimeout(() => { if(span) span.innerText = 'CLICK TO COPY'; }, 2000);
-          });
-        } else {
-          const textArea = document.createElement("textarea");
-          textArea.value = code; document.body.appendChild(textArea);
-          textArea.select(); document.execCommand("copy"); textArea.remove();
-          if(span) span.innerText = 'COPIED!';
-          setTimeout(() => { if(span) span.innerText = 'CLICK TO COPY'; }, 2000);
         }
       });
     });
-
-    // 5. Native Share API Engine
-    const shareBtn = document.getElementById('ShareBtn-{{ section.id }}');
-    if(shareBtn) {
-      shareBtn.addEventListener('click', function() {
-        if (navigator.share) {
-          navigator.share({
-            title: '{{ product.title | escape }}',
-            url: window.location.href
-          }).catch(console.error);
-        } else {
-          navigator.clipboard.writeText(window.location.href);
-          alert('Product link copied to clipboard!');
-        }
-      });
-    }
-
-    // 6. Live Countdown Engine
-    const timerBadges = document.querySelectorAll('.timer-badge');
-    if(timerBadges.length > 0) {
-      setInterval(() => {
-        const now = new Date().getTime();
-        timerBadges.forEach(badge => {
-          let targetStr = badge.getAttribute('data-endtime').replace(/-/g, '/');
-          const countDownDate = new Date(targetStr).getTime();
-          const distance = countDownDate - now;
-          if (distance < 0) {
-            badge.innerHTML = "EXPIRED";
-          } else {
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            badge.innerHTML = `Ends in ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
-          }
-        });
-      }, 1000);
-    }
-  });
-</script>
+  </script>
+</div>
 
 {% schema %}
 {
-  "name": "Combo Product Info",
+  "name": "B2C Vidhyut Header",
   "settings": [
-    {
-      "type": "product",
-      "id": "product",
-      "label": "Select Product"
-    },
-    {
-      "type": "header",
-      "content": "Base Colors"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#111111"
-    },
-    {
-      "type": "color",
-      "id": "border_color",
-      "label": "Border Color",
-      "default": "#EAEAEA"
-    },
-    {
-      "type": "color",
-      "id": "primary_button_color",
-      "label": "Add To Cart / Accent Color",
-      "default": "#D4A373"
-    },
-    {
-      "type": "color",
-      "id": "primary_button_text",
-      "label": "Button Text Color",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "header",
-      "content": "Swipeable Offers Section"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_offers_section",
-      "label": "Enable Offers Section",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "offer_card_height",
-      "min": 80,
-      "max": 200,
-      "step": 5,
-      "unit": "px",
-      "label": "Adjust Offer Box Height",
-      "default": 110
-    },
-    {
-      "type": "color",
-      "id": "offer_section_bg",
-      "label": "Section Background",
-      "default": "#E8F5E9"
-    },
-    {
-      "type": "color",
-      "id": "offer_icon_bg",
-      "label": "Header Icon Background",
-      "default": "#D4A373"
-    },
-    {
-      "type": "color",
-      "id": "offer_link_color",
-      "label": "View All Link Color",
-      "default": "#A67B5B"
-    },
-    {
-      "type": "color",
-      "id": "offer_copy_color",
-      "label": "Click to Copy Color",
-      "default": "#4C7B8B"
-    },
-    {
-      "type": "color",
-      "id": "offer_badge_bg",
-      "label": "Countdown Badge Background",
-      "default": "#F27A33"
-    },
-    {
-      "type": "text",
-      "id": "offer_link_text",
-      "label": "Header Link Text",
-      "default": "View all Offers"
-    },
-    {
-      "type": "url",
-      "id": "offer_link_url",
-      "label": "Header Link URL (Optional)"
-    },
     {
       "type": "header",
       "content": "Typography"
     },
     {
       "type": "font_picker",
-      "id": "heading_font",
-      "label": "Heading Font",
-      "default": "work_sans_n7"
+      "id": "main_font",
+      "label": "Font Family",
+      "default": "work_sans_n6"
     },
-    {
-      "type": "font_picker",
-      "id": "body_font",
-      "label": "Body Font",
-      "default": "work_sans_n4"
-    },
+    
     {
       "type": "header",
-      "content": "Installation Guide Button"
-    },
-    {
-      "type": "text",
-      "id": "install_guide_text",
-      "label": "Button Text",
-      "default": "Installation Guide"
-    },
-    {
-      "type": "url",
-      "id": "install_guide_link",
-      "label": "Guide URL"
-    },
-    {
-      "type": "header",
-      "content": "Other Settings"
+      "content": "Top Bar Settings"
     },
     {
       "type": "checkbox",
-      "id": "enable_delivery_check",
-      "label": "Enable Pincode/Delivery Check",
+      "id": "show_top_bar",
+      "label": "Show Top Bar",
       "default": true
-    }
-  ],
-  "blocks": [
-    {
-      "type": "offer",
-      "name": "Offer Card",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Offer Title",
-          "default": "Freeship"
-        },
-        {
-          "type": "text",
-          "id": "subtitle",
-          "label": "Offer Description",
-          "default": "Get Free Shipping on all orders"
-        },
-        {
-          "type": "text",
-          "id": "code",
-          "label": "Coupon Code (For Clipboard)",
-          "default": "FREESHIP"
-        },
-        {
-          "type": "checkbox",
-          "id": "enable_timer",
-          "label": "Enable Live Countdown Timer",
-          "default": true
-        },
-        {
-          "type": "text",
-          "id": "timer_date",
-          "label": "Countdown End Date",
-          "info": "Format: YYYY/MM/DD HH:MM:SS (e.g. 2026/12/31 23:59:00)",
-          "default": "2026/12/31 23:59:00"
-        }
-      ]
     },
     {
-      "type": "variant_meta",
-      "name": "Variant Text Add-on",
-      "settings": [
-        {
-          "type": "text",
-          "id": "variant_title",
-          "label": "Link to Variant Title",
-          "info": "Must exactly match the variant name in Shopify Admin (e.g. 'Single', 'Trio', 'Penta')."
-        },
-        {
-          "type": "text",
-          "id": "card_label",
-          "label": "Creative Highlight Text",
-          "info": "E.g. 'One Card', 'Three Cards', 'Five Cards'."
-        },
-        {
-          "type": "text",
-          "id": "subtitle",
-          "label": "Subtitle Description"
-        },
-        {
-          "type": "text",
-          "id": "custom_badge",
-          "label": "Custom Corner Badge (Optional)"
-        }
-      ]
+      "type": "text",
+      "id": "top_bar_left_text",
+      "label": "Left Text",
+      "default": "4.8⭐ Rating | 5M+ HAPPY USERS"
+    },
+    {
+      "type": "text",
+      "id": "franchise_text",
+      "label": "Button Text",
+      "default": "GET FRANCHISE"
+    },
+    {
+      "type": "url",
+      "id": "franchise_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "top_bar_bg",
+      "label": "Top Bar Background",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color",
+      "id": "top_bar_text_color",
+      "label": "Top Bar Text Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "top_bar_font_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 13
+    },
+    
+    {
+      "type": "header",
+      "content": "Logo Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 60,
+      "max": 280,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo Width (Desktop)",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "min": 50,
+      "max": 180,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo Width (Mobile)",
+      "default": 100
+    },
+    
+    {
+      "type": "header",
+      "content": "Navigation Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu"
+    },
+    
+    {
+      "type": "header",
+      "content": "Colors & Spacing"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Header Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Menu Text Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color (Hover)",
+      "default": "#F17E39"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#e8e8e8"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Header Top Padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Header Bottom Padding",
+      "default": 0
     }
   ],
   "presets": [
     {
-      "name": "Combo Product Info"
+      "name": "B2C Vidhyut Header"
     }
   ]
 }
 {% endschema %}
+
