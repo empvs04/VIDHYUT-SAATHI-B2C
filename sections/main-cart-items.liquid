@@ -353,10 +353,10 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
 
   <div class="cart__warnings">
     <i class="ti ti-shopping-cart-off lx-empty-icon"></i>
-    <h1 class="lx-empty-title">{{ 'sections.cart.empty' | t }}</h1>
+    <h1 class="lx-empty-title">Your Cart is Empty</h1>
     <p class="lx-empty-sub">Looks like you haven't added anything yet.</p>
     <a href="/" class="lx-empty-btn" style="margin-bottom: 30px;">
-      {{ 'general.continue_shopping' | t }}
+      Continue Shopping
     </a>
 
     <!-- Suggestions for Empty Cart -->
@@ -936,7 +936,7 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
     </div>
     
     <p class="visually-hidden" id="cart-live-region-text" aria-live="polite" role="status"></p>
-    <p class="visually-hidden" id="shopping-cart-line-item-status" aria-live="polite" aria-hidden="true" role="status">{{ 'accessibility.loading' | t }}</p>
+    <p class="visually-hidden" id="shopping-cart-line-item-status" aria-live="polite" aria-hidden="true" role="status">Loading</p>
   </form>
 
   <div id="main-cart-footer" data-id="fake-footer-id-do-not-remove" style="display:none;"></div>
@@ -952,41 +952,27 @@ function lxQtyAdjust(btn, delta) {
   var wrapper = btn.closest('.lx-qty-control');
   var input = wrapper.querySelector('input.lx-qty-input');
   var line = input.dataset.index;
-  var currentVal = parseInt(input.value) || 0;
+  var currentVal = parseInt(input.value) || 1;
   var newVal = currentVal + delta;
   
-  if (newVal <= 0) {
-    lxSetLoading(line, true);
-    fetch(window.Shopify.routes.root + 'cart/change.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ line: parseInt(line), quantity: 0 })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function() { location.reload(); })
-    .catch(function() { lxSetLoading(line, false); });
-  } else {
-    input.value = newVal;
-    lxUpdateCartLine(line, newVal);
+  if (newVal < 1) {
+    newVal = 1;
+    input.value = 1;
+    return;
   }
+  input.value = newVal;
+  lxUpdateCartLine(line, newVal);
 }
 
 function lxQtyInputChange(input) {
   var line = input.dataset.index;
-  var newVal = parseInt(input.value) || 0;
-  if (newVal <= 0) {
-    lxSetLoading(line, true);
-    fetch(window.Shopify.routes.root + 'cart/change.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ line: parseInt(line), quantity: 0 })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function() { location.reload(); })
-    .catch(function() { lxSetLoading(line, false); });
-  } else {
-    lxUpdateCartLine(line, newVal);
+  var newVal = parseInt(input.value) || 1;
+  if (newVal < 1) {
+    newVal = 1;
+    input.value = 1;
   }
+  input.value = newVal;
+  lxUpdateCartLine(line, newVal);
 }
 
 function lxUpdateCartLine(line, quantity) {
