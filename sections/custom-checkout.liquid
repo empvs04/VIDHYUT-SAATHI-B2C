@@ -1,0 +1,835 @@
+{%- liquid
+  assign cart_total = cart.total_price
+  assign total_mrp_discount = 0
+  for item in cart.items
+    assign item_compare = item.variant.compare_at_price | default: item.variant.price
+    assign item_discount = item_compare | minus: item.variant.price | times: item.quantity
+    assign total_mrp_discount = total_mrp_discount | plus: item_discount
+  endfor
+-%}
+
+{%- style -%}
+  .vs-checkout-page {
+    background: #f1f3f6;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #212121;
+    padding-bottom: 60px;
+  }
+  .vs-checkout-page * { box-sizing: border-box; }
+
+  /* --- HEADER --- */
+  .vs-checkout-header {
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .vs-checkout-header-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .vs-checkout-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .vs-checkout-logo img {
+    height: 42px;
+    object-fit: contain;
+  }
+  .vs-checkout-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #ec5c0a;
+    letter-spacing: -0.3px;
+  }
+  .vs-secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #2e7d32;
+    background: #e8f5e9;
+    padding: 6px 14px;
+    border-radius: 20px;
+  }
+
+  /* --- MAIN CONTAINER LAYOUT --- */
+  .vs-checkout-container {
+    max-width: 1240px;
+    margin: 24px auto;
+    padding: 0 16px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 992px) {
+    .vs-checkout-container {
+      grid-template-columns: 1.6fr 1fr;
+      gap: 24px;
+    }
+  }
+
+  /* --- LEFT COLUMN: ACCORDION / STEPS --- */
+  .vs-step-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .vs-step-header {
+    background: #ffffff;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .vs-step-num {
+    background: #f0f0f0;
+    color: #878787;
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+  .vs-step-card.active .vs-step-num {
+    background: #ec5c0a;
+    color: #ffffff;
+  }
+  .vs-step-title {
+    font-weight: 800;
+    font-size: 1rem;
+    color: #212121;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .vs-step-content {
+    padding: 20px;
+  }
+
+  /* Address Form Inputs */
+  .vs-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 768px) {
+    .vs-form-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .vs-form-full {
+      grid-column: span 2;
+    }
+  }
+  .vs-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .vs-input-group label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #878787;
+    text-transform: uppercase;
+  }
+  .vs-input-group input, .vs-input-group select, .vs-input-group textarea {
+    padding: 12px 14px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #212121;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .vs-input-group input:focus, .vs-input-group select:focus, .vs-input-group textarea:focus {
+    border-color: #ec5c0a;
+    box-shadow: 0 0 0 3px rgba(236, 92, 10, 0.1);
+  }
+
+  .vs-radio-types {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .vs-radio-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s ease;
+  }
+  .vs-radio-btn.active {
+    border-color: #ec5c0a;
+    background: rgba(236, 92, 10, 0.06);
+    color: #ec5c0a;
+  }
+
+  .vs-btn-deliver {
+    background: linear-gradient(135deg, #ec5c0a, #ff9a00);
+    color: #ffffff;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 800;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 16px;
+    box-shadow: 0 4px 15px rgba(236, 92, 10, 0.3);
+    transition: transform 0.2s ease;
+  }
+  .vs-btn-deliver:hover {
+    transform: translateY(-2px);
+  }
+
+  /* --- PAYMENT METHODS (FLIPKART STYLE) --- */
+  .vs-payment-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) {
+    .vs-payment-layout {
+      grid-template-columns: 220px 1fr;
+    }
+  }
+  .vs-payment-nav {
+    background: #f8f9fa;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+  }
+  .vs-pay-tab {
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #212121;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s ease;
+  }
+  .vs-pay-tab:hover, .vs-pay-tab.active {
+    background: #ffffff;
+    color: #ec5c0a;
+    border-left: 4px solid #ec5c0a;
+  }
+  .vs-pay-tab-tag {
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: auto;
+  }
+
+  .vs-payment-content {
+    padding: 20px;
+    background: #ffffff;
+  }
+  .vs-pay-panel {
+    display: none;
+  }
+  .vs-pay-panel.active {
+    display: block;
+  }
+
+  /* UPI Box */
+  .vs-upi-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .vs-upi-card {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+  .vs-upi-card:hover, .vs-upi-card.selected {
+    border-color: #ec5c0a;
+    background: rgba(236, 92, 10, 0.03);
+  }
+
+  /* --- RIGHT COLUMN: ORDER SUMMARY & PRICE DETAILS --- */
+  .vs-summary-box {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 90px;
+  }
+  .vs-summary-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 800;
+    font-size: 1rem;
+    color: #878787;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .vs-cart-items-preview {
+    padding: 16px 20px;
+    border-bottom: 1px dashed #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 240px;
+    overflow-y: auto;
+  }
+  .vs-preview-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .vs-preview-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #eee;
+  }
+  .vs-preview-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .vs-preview-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #212121;
+  }
+  .vs-preview-qty {
+    font-size: 0.75rem;
+    color: #777;
+  }
+  .vs-preview-price {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #212121;
+  }
+
+  .vs-price-table {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .vs-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    color: #212121;
+  }
+  .vs-price-row.discount {
+    color: #388e3c;
+    font-weight: 700;
+  }
+  .vs-price-divider {
+    border: none;
+    border-top: 1px dashed #e0e0e0;
+    margin: 4px 0;
+  }
+  .vs-price-row.grand-total {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #212121;
+    padding-top: 4px;
+  }
+  .vs-savings-note {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    border-radius: 6px;
+    margin: 0 20px 16px;
+    text-align: center;
+  }
+
+  .vs-btn-place-order {
+    width: calc(100% - 40px);
+    margin: 0 20px 20px;
+    background: linear-gradient(135deg, #ec5c0a, #ff9a00);
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 900;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 6px 20px rgba(236, 92, 10, 0.35);
+    transition: transform 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+  .vs-btn-place-order:hover {
+    transform: translateY(-2px);
+  }
+
+  /* ORDER SUCCESS MODAL */
+  .vs-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .vs-modal-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    animation: vsPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes vsPop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  .vs-success-icon {
+    width: 70px;
+    height: 70px;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 2.2rem;
+  }
+  .vs-modal-card h2 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin: 0 0 8px;
+    color: #1a1a1a;
+  }
+  .vs-modal-card p {
+    font-size: 0.95rem;
+    color: #666;
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
+  .vs-order-id-badge {
+    background: #f5f5f5;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #ec5c0a;
+    display: inline-block;
+    margin-bottom: 24px;
+  }
+  .vs-btn-home {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-block;
+  }
+{%- endstyle -%}
+
+<div class="vs-checkout-page">
+  
+  <!-- TOP HEADER BAR -->
+  <header class="vs-checkout-header">
+    <div class="vs-checkout-header-inner">
+      <a href="/" class="vs-checkout-logo">
+        <span class="vs-checkout-title">⚡ VIDHYUT SAATHI</span>
+      </a>
+      <div class="vs-secure-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        100% Secure Checkout
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <div class="vs-checkout-container">
+    
+    <!-- LEFT COLUMN: ADDRESS & PAYMENT -->
+    <div class="vs-checkout-left">
+      
+      <!-- STEP 1: SHIPPING & DELIVERY ADDRESS -->
+      <div class="vs-step-card active">
+        <div class="vs-step-header">
+          <div class="vs-step-num">1</div>
+          <div class="vs-step-title">Delivery Address</div>
+        </div>
+        <div class="vs-step-content">
+          <form id="vs-address-form" onsubmit="event.preventDefault(); vsProceedToPayment();">
+            <div class="vs-form-grid">
+              
+              <div class="vs-input-group">
+                <label>Full Name *</label>
+                <input type="text" id="vs-name" placeholder="Enter your full name" required>
+              </div>
+
+              <div class="vs-input-group">
+                <label>Mobile Number *</label>
+                <input type="tel" id="vs-phone" maxlength="10" placeholder="10-digit mobile number" required>
+              </div>
+
+              <div class="vs-input-group">
+                <label>Pincode *</label>
+                <input type="text" id="vs-pincode" maxlength="6" placeholder="6-digit pincode" required onchange="vsCheckPincode(this.value)">
+              </div>
+
+              <div class="vs-input-group">
+                <label>Locality / Area / Landmark</label>
+                <input type="text" id="vs-locality" placeholder="e.g. Near Bus Stand / Main Market">
+              </div>
+
+              <div class="vs-input-group vs-form-full">
+                <label>Flat, House no., Building, Company, Apartment *</label>
+                <textarea id="vs-address" rows="2" placeholder="House no, Street Name, Sector" required></textarea>
+              </div>
+
+              <div class="vs-input-group">
+                <label>City / District *</label>
+                <input type="text" id="vs-city" placeholder="City" required>
+              </div>
+
+              <div class="vs-input-group">
+                <label>State *</label>
+                <select id="vs-state" required>
+                  <option value="">Select State</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="Haryana">Haryana</option>
+                  <option value="Punjab">Punjab</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="West Bengal">West Bengal</option>                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="vs-input-group vs-form-full">
+                <label>Address Type</label>
+                <div class="vs-radio-types">
+                  <div class="vs-radio-btn active" onclick="vsSelectAddrType(this)">Home (All day delivery)</div>
+                  <div class="vs-radio-btn" onclick="vsSelectAddrType(this)">Work (Delivery 9 AM - 6 PM)</div>
+                </div>
+              </div>
+
+            </div>
+
+            <button type="submit" class="vs-btn-deliver">Save & Deliver Here</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- STEP 2: PAYMENT OPTIONS (FLIPKART STYLE) -->
+      <div class="vs-step-card active" id="vs-payment-step" style="margin-top: 20px;">
+        <div class="vs-step-header">
+          <div class="vs-step-num">2</div>
+          <div class="vs-step-title">Payment Options</div>
+        </div>
+        <div class="vs-step-content">
+          <div class="vs-payment-layout">
+            
+            <!-- Payment Tabs Navigation -->
+            <div class="vs-payment-nav">
+              <div class="vs-pay-tab active" onclick="vsSwitchPayTab(this, 'panel-upi')">
+                <span>📱 UPI</span>
+                <span class="vs-pay-tab-tag">RECOMMENDED</span>
+              </div>
+              <div class="vs-pay-tab" onclick="vsSwitchPayTab(this, 'panel-cod')">
+                <span>💵 Cash on Delivery</span>
+              </div>
+              <div class="vs-pay-tab" onclick="vsSwitchPayTab(this, 'panel-card')">
+                <span>💳 Credit / Debit Card</span>
+              </div>
+              <div class="vs-pay-tab" onclick="vsSwitchPayTab(this, 'panel-net')">
+                <span>🏦 Net Banking</span>
+              </div>
+            </div>
+
+            <!-- Payment Panels -->
+            <div class="vs-payment-content">
+              
+              <!-- PANEL 1: UPI -->
+              <div class="vs-pay-panel active" id="panel-upi">
+                <h4 style="margin:0 0 12px; font-weight:800; font-size:0.95rem;">Pay via UPI (Instant & Fast)</h4>
+                <div class="vs-upi-options">
+                  <label class="vs-upi-card selected">
+                    <input type="radio" name="upi_opt" checked>
+                    <span style="font-weight:800; font-size:0.9rem;">Google Pay / PhonePe / Paytm</span>
+                  </label>
+                  <label class="vs-upi-card">
+                    <input type="radio" name="upi_opt">
+                    <span style="font-weight:800; font-size:0.9rem;">Enter UPI ID (e.g. mobile@upi)</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- PANEL 2: COD -->
+              <div class="vs-pay-panel" id="panel-cod">
+                <h4 style="margin:0 0 8px; font-weight:800; font-size:0.95rem; color:#1a1a1a;">Cash on Delivery</h4>
+                <p style="font-size:0.85rem; color:#666; margin:0 0 14px;">Pay cash at the time of delivery to your doorstep.</p>
+                <div style="background:#e8f5e9; border:1px solid #a5d6a7; padding:10px 14px; border-radius:6px; font-size:0.82rem; font-weight:700; color:#2e7d32;">
+                  ✅ Free Express Shipping & Verified Cash on Delivery
+                </div>
+              </div>
+
+              <!-- PANEL 3: CARD -->
+              <div class="vs-pay-panel" id="panel-card">
+                <h4 style="margin:0 0 12px; font-weight:800; font-size:0.95rem;">Enter Card Details</h4>
+                <div class="vs-form-grid">
+                  <div class="vs-input-group vs-form-full">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="xxxx xxxx xxxx xxxx" maxlength="19">
+                  </div>
+                  <div class="vs-input-group">
+                    <label>Valid Thru</label>
+                    <input type="text" placeholder="MM/YY" maxlength="5">
+                  </div>
+                  <div class="vs-input-group">
+                    <label>CVV</label>
+                    <input type="password" placeholder="CVV" maxlength="4">
+                  </div>
+                </div>
+              </div>
+
+              <!-- PANEL 4: NET BANKING -->
+              <div class="vs-pay-panel" id="panel-net">
+                <h4 style="margin:0 0 12px; font-weight:800; font-size:0.95rem;">Select Bank</h4>
+                <select style="width:100%; padding:12px; border:1.5px solid #e0e0e0; border-radius:6px; font-weight:700;">
+                  <option>State Bank of India (SBI)</option>
+                  <option>HDFC Bank</option>
+                  <option>ICICI Bank</option>
+                  <option>Axis Bank</option>
+                  <option>Kotak Mahindra Bank</option>
+                </select>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: ORDER SUMMARY & PRICE DETAILS -->
+    <div class="vs-checkout-right">
+      <div class="vs-summary-box">
+        <div class="vs-summary-header">Price Details</div>
+        
+        <!-- Cart Items List Preview -->
+        <div class="vs-cart-items-preview" id="vs-checkout-items">
+          {%- for item in cart.items -%}
+            <div class="vs-preview-item">
+              <img src="{{ item.image | img_url: '100x100' }}" alt="{{ item.product.title | escape }}">
+              <div class="vs-preview-info">
+                <span class="vs-preview-title">{{ item.product.title }}</span>
+                <span class="vs-preview-qty">Variant: {{ item.variant.title }} | Qty: {{ item.quantity }}</span>
+              </div>
+              <span class="vs-preview-price">{{ item.final_line_price | money }}</span>
+            </div>
+          {%- else -%}
+            <div style="padding:10px; font-size:0.85rem; color:#777;">No items in cart.</div>
+          {%- endfor -%}
+        </div>
+
+        <!-- Price Breakdown -->
+        <div class="vs-price-table">
+          <div class="vs-price-row">
+            <span>Price ({{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %})</span>
+            <span id="vs-chk-mrp">{{ cart.original_total_price | money }}</span>
+          </div>
+
+          {%- if total_mrp_discount > 0 -%}
+            <div class="vs-price-row discount" id="vs-chk-discount-row">
+              <span>Discount on MRP</span>
+              <span id="vs-chk-discount-val">-{{ total_mrp_discount | money }}</span>
+            </div>
+          {%- endif -%}
+
+          <div class="vs-price-row discount" id="vs-chk-coupon-row" style="display:none;">
+            <span id="vs-chk-coupon-lbl">Coupon Discount</span>
+            <span id="vs-chk-coupon-val">-₹0.00</span>
+          </div>
+
+          <div class="vs-price-row">
+            <span>Delivery Charges</span>
+            <span style="color:#2e7d32; font-weight:800;">FREE</span>
+          </div>
+
+          <hr class="vs-price-divider">
+
+          <div class="vs-price-row grand-total">
+            <span>Total Amount</span>
+            <span id="vs-chk-grand">{{ cart.total_price | money }}</span>
+          </div>
+        </div>
+
+        <div class="vs-savings-note" id="vs-chk-savings-banner">
+          🎉 You will save <span id="vs-chk-savings-val">{{ total_mrp_discount | money }}</span> on this order!
+        </div>
+
+        <button type="button" class="vs-btn-place-order" onclick="vsSubmitFinalOrder()">
+          <span>PLACE ORDER</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ORDER CONFIRMATION MODAL -->
+<div class="vs-modal-overlay" id="vs-success-modal">
+  <div class="vs-modal-card">
+    <div class="vs-success-icon">✓</div>
+    <h2>Order Placed Successfully!</h2>
+    <p>Thank you for choosing Vidhyut Saathi! Your order has been registered and is being processed for fast dispatch.</p>
+    <div class="vs-order-id-badge" id="vs-order-id-display">Order ID: #VS-89241</div>
+    <div>
+      <a href="/" class="vs-btn-home">Continue Shopping</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function vsSelectAddrType(el) {
+    document.querySelectorAll('.vs-radio-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function vsSwitchPayTab(tabEl, panelId) {
+    document.querySelectorAll('.vs-pay-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.vs-pay-panel').forEach(p => p.classList.remove('active'));
+    tabEl.classList.add('active');
+    const target = document.getElementById(panelId);
+    if(target) target.classList.add('active');
+  }
+
+  function vsCheckPincode(pin) {
+    if(pin.length === 6 && /^\d+$/.test(pin)) {
+      const city = document.getElementById('vs-city');
+      const state = document.getElementById('vs-state');
+      if(city && !city.value) city.value = 'Local District';
+      if(state && !state.value) state.value = 'Delhi';
+    }
+  }
+
+  function vsProceedToPayment() {
+    const payStep = document.getElementById('vs-payment-step');
+    if(payStep) {
+      payStep.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function vsSubmitFinalOrder() {
+    const name = document.getElementById('vs-name').value;
+    const phone = document.getElementById('vs-phone').value;
+    const addr = document.getElementById('vs-address').value;
+
+    if(!name || !phone || !addr) {
+      alert('Please fill in your Delivery Address details before placing the order.');
+      const form = document.getElementById('vs-address-form');
+      if(form) form.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+
+    const randomId = '#VS-' + Math.floor(10000 + Math.random() * 90000);
+    document.getElementById('vs-order-id-display').innerText = 'Order ID: ' + randomId;
+    
+    // Clear cart session
+    fetch((window.Shopify.routes.root || '/') + 'cart/clear.js', { method: 'POST' }).catch(console.error);
+    
+    document.getElementById('vs-success-modal').style.display = 'flex';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Dynamic recalculation of applied coupon in checkout summary
+    const code = localStorage.getItem('lx_coupon_code') || '';
+    const subtotal = {{ cart.items_subtotal_price | default: cart.total_price | default: 0 }};
+    let mrpDiscount = {{ total_mrp_discount | default: 0 }};
+    
+    if (code) {
+      const codeUpper = code.toUpperCase();
+      const numMatch = codeUpper.match(/\d+/);
+      const pct = numMatch ? parseInt(numMatch[0]) : 10;
+      const couponDisc = Math.round(subtotal * (pct / 100));
+      
+      const couponRow = document.getElementById('vs-chk-coupon-row');
+      const couponLbl = document.getElementById('vs-chk-coupon-lbl');
+      const couponVal = document.getElementById('vs-chk-coupon-val');
+      const grandEl = document.getElementById('vs-chk-grand');
+      const savingsVal = document.getElementById('vs-chk-savings-val');
+
+      if (couponRow && couponVal) {
+        couponRow.style.display = 'flex';
+        if (couponLbl) couponLbl.innerText = 'Coupon Discount (' + codeUpper + ')';
+        couponVal.innerText = '-₹' + (couponDisc / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+      }
+
+      const finalPayable = Math.max(0, subtotal - couponDisc);
+      const totalSavings = mrpDiscount + couponDisc;
+
+      if (grandEl) grandEl.innerText = '₹' + (finalPayable / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+      if (savingsVal) savingsVal.innerText = '₹' + (totalSavings / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Checkout",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Custom Checkout"
+    }
+  ]
+}
+{% endschema %}
