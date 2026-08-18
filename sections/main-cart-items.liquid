@@ -432,11 +432,20 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
           <div class="lx-container">
             
             <div class="lx-cart-main">
-              <div class="lx-cart-header">
-                <h1 class="lx-cart-title">
-                  Shopping Cart
-                  <span class="lx-cart-count">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</span>
-                </h1>
+              <div class="lx-cart-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom: 24px;">
+                <div style="display:flex; align-items:center; gap:16px;">
+                  <a href="{{ routes.root_url }}" title="{{ shop.name }}" style="display:inline-block;">
+                    {% if settings.logo != blank %}
+                      <img src="{{ settings.logo | img_url: 'master' }}" alt="{{ shop.name }}" style="height: 48px; width: auto; max-width: 180px; object-fit: contain; display: block;">
+                    {% else %}
+                      <img src="https://cdn.shopify.com/s/files/1/0904/0979/5884/files/Vidhyut_Saathi_Logo224x224.png" alt="Vidhyut Saathi" style="height: 48px; width: auto; max-width: 180px; object-fit: contain; display: block;" onerror="this.src='{{ 'vidhyut-saathi-logo.png' | asset_url }}'">
+                    {% endif %}
+                  </a>
+                  <h1 class="lx-cart-title" style="margin:0; font-size: 1.5rem; font-weight: 800;">
+                    Shopping Cart
+                    <span class="lx-cart-count">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</span>
+                  </h1>
+                </div>
                 <a href="/products/vidhyut-saathi-electric-power-saver-card" class="lx-continue lx-desktop">
                   <i class="ti ti-arrow-left" style="font-size:13px;"></i> Continue Shopping
                 </a>
