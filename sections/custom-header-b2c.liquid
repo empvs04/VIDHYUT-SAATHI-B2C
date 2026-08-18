@@ -90,11 +90,31 @@
     opacity: 0.85;
   }
   
+  @keyframes vidhyutLogoPulse-{{ section.id }} {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+      filter: drop-shadow(0 0 10px rgba(241, 126, 57, 0.45));
+    }
+    50% {
+      opacity: 0.15;
+      transform: scale(0.96);
+      filter: drop-shadow(0 0 0px rgba(241, 126, 57, 0));
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+      filter: drop-shadow(0 0 10px rgba(241, 126, 57, 0.45));
+    }
+  }
+
   .vidhyut-header-left-{{ section.id }} img {
     max-width: {{ section.settings.logo_width }}px;
     height: auto;
     display: block;
     object-fit: contain;
+    animation: vidhyutLogoPulse-{{ section.id }} 2s ease-in-out infinite;
+    transition: all 0.3s ease;
   }
   
   .vidhyut-header-left-{{ section.id }} h2 {
