@@ -1555,16 +1555,10 @@ function lxOpenVariantModal(productId) {
 </script>
 
 <!-- FLIPKART STYLE FULL-SCREEN CHECKOUT OVERLAY -->
-<div id="vs-checkout-drawer-overlay" style="display:none; position:fixed; inset:0; background:#f1f3f6; z-index:99999; overflow-y:auto;">
+<div id="vs-checkout-drawer-overlay" style="display:none; position:fixed; inset:0; background:#f1f3f6; z-index:99999; overflow-y:auto; padding-bottom:80px;">
   <div style="background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; padding:12px 20px; display:flex; justify-content:space-between; align-items:center;">
     <div style="display:flex; align-items:center; gap:10px;">
-      <a href="{{ routes.root_url }}" title="{{ shop.name }}" style="display:inline-block;">
-        {% if settings.logo != blank %}
-          <img src="{{ settings.logo | img_url: 'master' }}" alt="{{ shop.name }}" style="height: 42px; width: auto; max-width: 160px; object-fit: contain; display: block;">
-        {% else %}
-          <img src="{{ 'vidhyut-saathi-logo.png' | asset_url }}" alt="{{ shop.name }}" style="height: 42px; width: auto; max-width: 160px; object-fit: contain; display: block;">
-        {% endif %}
-      </a>
+      <img src="{{ 'vidhyut-logo-official.png' | asset_url }}" alt="Vidhyut Saathi" style="height: 52px; width: auto; max-width: 220px; object-fit: contain; display: block; pointer-events: none;">
     </div>
     <div style="display:flex; align-items:center; gap:14px;">
       <span style="font-size:0.85rem; font-weight:700; color:#2e7d32; background:#e8f5e9; padding:4px 10px; border-radius:20px;">🔒 100% Secure Checkout</span>
@@ -1572,7 +1566,15 @@ function lxOpenVariantModal(productId) {
     </div>
   </div>
 
-  <div style="max-width:1100px; margin:20px auto; padding:0 16px; display:grid; grid-template-columns:1fr; gap:20px;" class="vs-chk-grid">
+  <style>
+    @media (min-width: 992px) {
+      .vs-chk-grid-container {
+        grid-template-columns: 1.6fr 1fr !important;
+      }
+    }
+  </style>
+
+  <div style="max-width:1100px; margin:20px auto; padding:0 16px 60px 16px; display:grid; grid-template-columns:1fr; gap:20px;" class="vs-chk-grid-container">
     <div>
       <div style="background:#fff; border-radius:8px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); margin-bottom:16px;">
         <h3 style="margin:0 0 16px; font-size:1rem; font-weight:800; text-transform:uppercase; color:#ec5c0a;">1. Delivery Address</h3>
@@ -1585,24 +1587,87 @@ function lxOpenVariantModal(productId) {
         </div>
       </div>
 
-      <div style="background:#fff; border-radius:8px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+      <div style="background:#fff; border-radius:8px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); margin-bottom:20px;">
         <h3 style="margin:0 0 16px; font-size:1rem; font-weight:800; text-transform:uppercase; color:#ec5c0a;">2. Payment Method</h3>
-        <div style="display:flex; flex-direction:column; gap:10px;">
-          <label style="border:1.5px solid #ec5c0a; background:rgba(236,92,10,0.04); padding:12px; border-radius:6px; display:flex; align-items:center; gap:10px; font-weight:800; cursor:pointer;">
-            <input type="radio" name="vs_pay_method" checked> 📱 UPI (PhonePe, GPay, Paytm)
-          </label>
-          <label style="border:1.5px solid #ddd; padding:12px; border-radius:6px; display:flex; align-items:center; gap:10px; font-weight:800; cursor:pointer;">
-            <input type="radio" name="vs_pay_method"> 💵 Cash on Delivery (COD)
-          </label>
-          <label style="border:1.5px solid #ddd; padding:12px; border-radius:6px; display:flex; align-items:center; gap:10px; font-weight:800; cursor:pointer;">
-            <input type="radio" name="vs_pay_method"> 💳 Credit / Debit Card
-          </label>
+        
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          
+          <!-- UPI OPTION -->
+          <div style="border:1.5px solid #ec5c0a; background:rgba(236,92,10,0.03); border-radius:8px; padding:12px;" id="vs-pm-box-upi">
+            <label style="display:flex; align-items:center; gap:10px; font-weight:800; cursor:pointer;" onclick="vsTogglePayMethod('upi')">
+              <input type="radio" name="vs_pay_method" id="vs-radio-upi" value="upi" checked> 
+              <span>📱 UPI (PhonePe, GPay, Paytm, BHIM)</span>
+            </label>
+            
+            <div id="vs-fields-upi" style="margin-top:12px; padding-top:12px; border-top:1px dashed #e0e0e0;">
+              <p style="font-size:0.8rem; color:#666; margin:0 0 8px;">Enter your VPA / UPI ID to receive a payment request on your UPI app:</p>
+              <div style="display:flex; gap:8px;">
+                <input type="text" id="vs-upi-id" placeholder="e.g. 9876543210@ybl / user@gpay" style="flex:1; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:0.9rem;">
+              </div>
+              <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;">
+                <button type="button" onclick="vsSetUpiSuffix('@ybl')" style="background:#fff; border:1px solid #ddd; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">@ybl</button>
+                <button type="button" onclick="vsSetUpiSuffix('@gpay')" style="background:#fff; border:1px solid #ddd; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">@gpay</button>
+                <button type="button" onclick="vsSetUpiSuffix('@paytm')" style="background:#fff; border:1px solid #ddd; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">@paytm</button>
+                <button type="button" onclick="vsSetUpiSuffix('@upi')" style="background:#fff; border:1px solid #ddd; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">@upi</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CASH ON DELIVERY OPTION -->
+          <div style="border:1.5px solid #ddd; border-radius:8px; padding:12px;" id="vs-pm-box-cod">
+            <label style="display:flex; align-items:center; gap:10px; font-weight:800; cursor:pointer;" onclick="vsTogglePayMethod('cod')">
+              <input type="radio" name="vs_pay_method" id="vs-radio-cod" value="cod"> 
+              <span>💵 Cash on Delivery (COD)</span>
+            </label>
+            
+            <div id="vs-fields-cod" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed #e0e0e0;">
+              <p style="font-size:0.82rem; color:#2e7d32; font-weight:700; margin:0;">
+                ✓ Pay with Cash or UPI QR Code when your parcel is delivered to your doorstep. No advance payment required!
+              </p>
+            </div>
+          </div>
+
+          <!-- CREDIT / DEBIT CARD OPTION -->
+          <div style="border:1.5px solid #ddd; border-radius:8px; padding:12px;" id="vs-pm-box-card">
+            <label style="display:flex; align-items:center; gap:10px; font-weight:800; cursor:pointer;" onclick="vsTogglePayMethod('card')">
+              <input type="radio" name="vs_pay_method" id="vs-radio-card" value="card"> 
+              <span>💳 Credit / Debit / ATM Card</span>
+            </label>
+            
+            <div id="vs-fields-card" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed #e0e0e0; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <input type="text" id="vs-card-num" placeholder="Card Number (16 digits) *" maxlength="19" style="grid-column:span 2; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:0.9rem;">
+              <input type="text" id="vs-card-exp" placeholder="MM / YY *" maxlength="5" style="padding:10px; border:1px solid #ccc; border-radius:6px; font-size:0.9rem;">
+              <input type="password" id="vs-card-cvv" placeholder="CVV *" maxlength="4" style="padding:10px; border:1px solid #ccc; border-radius:6px; font-size:0.9rem;">
+              <input type="text" id="vs-card-name" placeholder="Name on Card *" style="grid-column:span 2; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:0.9rem;">
+            </div>
+          </div>
+
+          <!-- NET BANKING OPTION -->
+          <div style="border:1.5px solid #ddd; border-radius:8px; padding:12px;" id="vs-pm-box-nb">
+            <label style="display:flex; align-items:center; gap:10px; font-weight:800; cursor:pointer;" onclick="vsTogglePayMethod('nb')">
+              <input type="radio" name="vs_pay_method" id="vs-radio-nb" value="nb"> 
+              <span>🏦 Net Banking</span>
+            </label>
+            
+            <div id="vs-fields-nb" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed #e0e0e0;">
+              <select id="vs-nb-bank" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:0.9rem;">
+                <option value="">Select Popular Bank</option>
+                <option value="SBI">State Bank of India (SBI)</option>
+                <option value="HDFC">HDFC Bank</option>
+                <option value="ICICI">ICICI Bank</option>
+                <option value="AXIS">Axis Bank</option>
+                <option value="PNB">Punjab National Bank</option>
+                <option value="KOTAK">Kotak Mahindra Bank</option>
+              </select>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
 
     <div>
-      <div style="background:#fff; border-radius:8px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); position:sticky; top:80px;">
+      <div style="background:#fff; border-radius:8px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); margin-bottom:60px;">
         <h3 style="margin:0 0 14px; font-size:0.95rem; font-weight:800; color:#878787; text-transform:uppercase;">Price Details</h3>
         
         <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.9rem;">
@@ -1636,18 +1701,72 @@ function lxOpenVariantModal(productId) {
 </div>
 
 <script>
+  function vsTogglePayMethod(method) {
+    var methods = ['upi', 'cod', 'card', 'nb'];
+    methods.forEach(function(m) {
+      var box = document.getElementById('vs-pm-box-' + m);
+      var fields = document.getElementById('vs-fields-' + m);
+      var radio = document.getElementById('vs-radio-' + m);
+      if (m === method) {
+        if(radio) radio.checked = true;
+        if(box) {
+          box.style.borderColor = '#ec5c0a';
+          box.style.background = 'rgba(236,92,10,0.03)';
+        }
+        if(fields) fields.style.display = (m === 'card' ? 'grid' : 'block');
+      } else {
+        if(box) {
+          box.style.borderColor = '#ddd';
+          box.style.background = '#fff';
+        }
+        if(fields) fields.style.display = 'none';
+      }
+    });
+  }
+
+  function vsSetUpiSuffix(suffix) {
+    var inp = document.getElementById('vs-upi-id');
+    if(!inp) return;
+    var val = inp.value.trim();
+    if(val.indexOf('@') > -1) {
+      val = val.split('@')[0];
+    }
+    inp.value = val + suffix;
+  }
+
   function vsPlaceOrderFinal() {
-    var name = document.getElementById('vs-overlay-name').value;
-    var phone = document.getElementById('vs-overlay-phone').value;
-    var addr = document.getElementById('vs-overlay-addr').value;
+    var name = document.getElementById('vs-overlay-name').value.trim();
+    var phone = document.getElementById('vs-overlay-phone').value.trim();
+    var addr = document.getElementById('vs-overlay-addr').value.trim();
 
     if(!name || !phone || !addr) {
       alert('Please fill in your Full Name, Mobile Number, and Address.');
       return;
     }
 
+    var selectedMethod = 'upi';
+    var radios = document.getElementsByName('vs_pay_method');
+    for(var i=0; i<radios.length; i++) {
+      if(radios[i].checked) { selectedMethod = radios[i].value; break; }
+    }
+
+    if(selectedMethod === 'upi') {
+      var upiId = document.getElementById('vs-upi-id').value.trim();
+      if(!upiId || upiId.indexOf('@') === -1) {
+        alert('Please enter a valid UPI ID (e.g. 9876543210@ybl).');
+        return;
+      }
+    } else if(selectedMethod === 'card') {
+      var cardNum = document.getElementById('vs-card-num').value.trim();
+      var cardCvv = document.getElementById('vs-card-cvv').value.trim();
+      if(!cardNum || cardNum.length < 15 || !cardCvv) {
+        alert('Please enter valid Card Number and CVV.');
+        return;
+      }
+    }
+
     var orderNum = '#VS-' + Math.floor(10000 + Math.random() * 90000);
-    alert('🎉 Order Placed Successfully!\n\nOrder ID: ' + orderNum + '\nThank you for choosing Vidhyut Saathi!');
+    alert('🎉 Order Placed Successfully!\n\nOrder ID: ' + orderNum + '\nPayment Method: ' + selectedMethod.toUpperCase() + '\nThank you for choosing Vidhyut Saathi!');
     fetch((window.Shopify.routes.root || '/') + 'cart/clear.js', { method: 'POST' }).then(function() {
       location.href = '/products/vidhyut-saathi-electric-power-saver-card';
     }).catch(function() { location.href = '/products/vidhyut-saathi-electric-power-saver-card'; });
