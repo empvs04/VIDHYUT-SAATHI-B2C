@@ -9,57 +9,349 @@
  */
 {
   "sections": {
-    "vidhyut_marquee_drkhKQ": {
-      "type": "vidhyut-marquee",
+    "main": {
+      "type": "main-page",
       "blocks": {
-        "ticker_text_47NddD": {
-          "type": "ticker_text",
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "page-content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "slideshow_bb7Qbb": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_acB3tt": {
+          "type": "_slide",
           "settings": {
-            "icon": "fas fa-sack-dollar",
-            "text": "EARN ₹5-6 LAKHS P.M."
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.14_AM.jpg",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-6",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 48,
+            "padding-block-end": 48,
+            "padding-inline-start": 48,
+            "padding-inline-end": 48
+          },
+          "blocks": {
+            "text_AJnPHq": {
+              "type": "text",
+              "settings": {
+                "text": "",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_AJnPHq"
+          ]
+        },
+        "slide_HUGK8i": {
+          "type": "_slide",
+          "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.15_AM_1.jpg",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-6",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 48,
+            "padding-block-end": 48,
+            "padding-inline-start": 48,
+            "padding-inline-end": 48
+          },
+          "blocks": {
+            "text_qJkee8": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_dhKHWP": {
+              "type": "text",
+              "settings": {
+                "text": "",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_qJkee8",
+            "text_dhKHWP"
+          ]
+        },
+        "slide_Uhbb6i": {
+          "type": "_slide",
+          "name": "t:names.slide",
+          "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.15_AM.jpg",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-6",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 48,
+            "padding-block-end": 48,
+            "padding-inline-start": 48,
+            "padding-inline-end": 48
+          },
+          "blocks": {}
+        },
+        "slide_rFTVDJ": {
+          "type": "_slide",
+          "name": "t:names.slide",
+          "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.16_AM.jpg",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-6",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 48,
+            "padding-block-end": 48,
+            "padding-inline-start": 48,
+            "padding-inline-end": 48
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "slide_acB3tt",
+        "slide_HUGK8i",
+        "slide_Uhbb6i",
+        "slide_rFTVDJ"
+      ],
+      "name": "t:names.slideshow_full_frame",
+      "settings": {
+        "display_mode": "full_frame",
+        "section_width": "full-width",
+        "full_frame_on_mobile": false,
+        "slideshow_gap": 12,
+        "corner_radius": 0,
+        "slide_height": "medium",
+        "content_position": "on-media",
+        "color_scheme": "",
+        "icons_style": "chevron",
+        "icons_shape": "none",
+        "slideshow_controls_style": "dots",
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "vidhyut_tech_usage_pGXxky": {
+      "type": "vidhyut-tech-usage",
+      "blocks": {
+        "category_VNiMBf": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.16_AM.jpg",
+            "title": "COLLECTION",
+            "link": ""
           }
         },
-        "ticker_text_DRfrjF": {
-          "type": "ticker_text",
+        "category_Cz9KnK": {
+          "type": "category",
           "settings": {
-            "icon": "fas fa-truck-fast",
-            "text": "FREE SHIPPING"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.14_AM.jpg",
+            "title": "Residential use",
+            "link": ""
           }
         },
-        "ticker_text_fx3rpC": {
-          "type": "ticker_text",
+        "category_hfLRPU": {
+          "type": "category",
           "settings": {
-            "icon": "fas fa-shield-halved",
-            "text": "100% RESULT GUARANTEED WITH MONEY BACK"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.15_AM_1.jpg",
+            "title": "Commercial use",
+            "link": ""
+          }
+        },
+        "category_mrydR9": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-07_at_11.56.15_AM.jpg",
+            "title": "industrial use",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "ticker_text_47NddD",
-        "ticker_text_DRfrjF",
-        "ticker_text_fx3rpC"
+        "category_VNiMBf",
+        "category_Cz9KnK",
+        "category_hfLRPU",
+        "category_mrydR9"
       ],
-      "name": "Vidhyut Marquee Ticker",
+      "name": "Luxe Category Arches",
       "settings": {
-        "marquee_font": "work_sans_n7",
-        "font_size": 14,
-        "gap_size": 50,
-        "direction": "normal",
-        "speed": 20,
-        "pause_on_hover": true,
-        "bg_color": "#1a1a1a",
-        "text_color": "#fafafa",
-        "icon_color": "#f1721b",
-        "padding_y": 4
+        "bg_color": "#fff8ef",
+        "text_color": "#f17e39",
+        "accent_color": "#ec6a1c",
+        "font_size_desktop": 12,
+        "font_size_mobile": 11,
+        "letter_spacing": 1,
+        "text_transform": "uppercase",
+        "padding_vertical": 10,
+        "enable_autoplay": true,
+        "autoplay_speed": 4
       }
     },
-    "32d_card_ahxbQk": {
-      "type": "32d-card",
-      "name": "2Vidhyut 3D Hero",
+    "marquee_ticker_CjTmQC": {
+      "type": "marquee-ticker",
+      "name": "Marquee Ticker",
       "settings": {
-        "main_font": "work_sans_n4",
+        "enable_marquee": true,
+        "marquee_font": "work_sans_n7",
+        "marquee_bg": "#ec5c0a",
+        "marquee_text_color": "#282424",
+        "marquee_icon_color": "#4f9f6f",
+        "marquee_border_color": "#00000014",
+        "marquee_font_desktop": 14,
+        "marquee_font_mobile": 11,
+        "marquee_bold": true,
+        "marquee_uppercase": true,
+        "marquee_speed": 15,
+        "marquee_direction": "normal",
+        "marquee_padding_y": 12
+      }
+    },
+    "vidhyut_expert_video_ppwEB7": {
+      "type": "vidhyut-expert-video",
+      "name": "Vidhyut Video 9:16",
+      "settings": {
+        "max_width": 1200,
+        "headline_text": "WE ARE THE EXPERT YOU EXACTLY NEED",
+        "headline_font": "poppins_n7",
+        "enable_shimmer": true,
+        "headline_color": "#111111",
+        "headline_glow_color": "#f17e39",
+        "headline_size_desktop": 44,
+        "headline_size_mobile": 30,
+        "headline_margin_bottom": 40,
+        "bg_color": "#fff8ef",
+        "accent_color": "#f17e39",
+        "secondary_color": "#007b3e",
+        "thumbnail": "shopify://shop_images/file_00000000714c7206a34d95fc7b046fb2.png",
+        "video_url": ""
+      }
+    },
+    "vidhyut_hero_v2_girecJ": {
+      "type": "vidhyut-hero-v2",
+      "name": "Vidhyut NEW 3D Hero",
+      "settings": {
+        "main_font": "poppins_n4",
         "heading_size_desk": 64,
-        "heading_size_mob": 26,
+        "heading_size_mob": 34,
         "subheading_size_desk": 18,
         "subheading_size_mob": 16,
         "height_desk": 500,
@@ -67,10 +359,10 @@
         "bg_color": "#fff8ef",
         "primary_color": "#ec5c0a",
         "text_color": "#1a1a1a",
-        "title": "INDIA'S NO 1 <br><span>ELECTRIC SAVER CARD</span>",
+        "title": "INDIA'S NO 1 <br><span>ELECTRIC SAVER</span> CARD",
         "subtitle": "लगाएगा INDIA तो बचाएगा INDIA. Lower your electricity bills instantly.",
         "btn1_text": "BUY NOW",
-        "btn1_link": "shopify://products/vidhyut-saathi-electric-power-saver-card",
+        "btn1_link": "shopify://collections/vidhyut-saathi-electric-saver-card-3-cards-combos",
         "btn2_text": "GET FRANCHISE",
         "btn2_link": "",
         "card_image": "shopify://shop_images/VS_Card_Final_Design_Golden_1.png",
@@ -78,637 +370,172 @@
         "mouse_sense": 5
       }
     },
-    "vidhyut_expert_video_BJnKxL": {
-      "type": "vidhyut-expert-video",
-      "name": "Vidhyut Expert Video",
-      "settings": {
-        "max_width": 1200,
-        "headline_text": "WE ARE THE EXPERT YOU EXACTLY NEED",
-        "headline_font": "work_sans_n7",
-        "enable_shimmer": true,
-        "headline_color": "#f17e39",
-        "headline_glow_color": "#137446",
-        "headline_size_desktop": 40,
-        "headline_size_mobile": 20,
-        "headline_margin_bottom": 30,
-        "bg_color": "#fff8ef",
-        "accent_color": "#f17e39",
-        "secondary_color": "#007b3e",
-        "thumbnail": "shopify://shop_images/WhatsApp_Image_2026-04-27_at_14.55.38.jpg",
-        "video_url": "https://youtu.be/eNPX8I7iRV8"
-      }
-    },
-    "franchise_section_updated_pze9FB": {
-      "type": "franchise-section-updated",
+    "vidhyut_saathi_crisis_U6gFD9": {
+      "type": "vidhyut-saathi-crisis",
       "blocks": {
-        "timeline_item_tHLEpL": {
-          "type": "timeline_item",
-          "settings": {
-            "custom_icon_svg": "<svg viewbox=\"0 0 24 24\"><path d=\"M12 2L3 7v10l9 5 9-5V7l-9-5z\"></path></svg>",
-            "title": "Based On US-German Nano Technology",
-            "text": "Advanced US‑German nano technology designed for optimized electricity efficiency, stable performance and smarter energy management."
-          }
-        },
-        "timeline_item_pVfpHy": {
-          "type": "timeline_item",
-          "settings": {
-            "custom_icon_svg": "<svg viewbox=\"0 0 24 24\"><path d=\"M13 2L4 14h6v8l9-12h-6z\"></path></svg>",
-            "title": "Made With Terahertz Chip & 20,000+ Negative Ions",
-            "text": "Built with advanced terahertz chip technology and 20,000+ negative ions for smart energy optimization and efficient electrical performance."
-          }
-        },
-        "timeline_item_ikzgUY": {
-          "type": "timeline_item",
-          "settings": {
-            "custom_icon_svg": "<svg viewbox=\"0 0 24 24\"><path d=\"M12 2l8 4v6c0 5-3 10-8 12-5-2-8-7-8-12V6z\"></path></svg>",
-            "title": "100% Legal & ISO Certified",
-            "text": "Completely legal, reliable and designed to follow quality standards for safe and trusted usage."
-          }
-        }
-      },
-      "block_order": [
-        "timeline_item_tHLEpL",
-        "timeline_item_pVfpHy",
-        "timeline_item_ikzgUY"
-      ],
-      "name": "Premium Timeline",
-      "settings": {
-        "heading_top": "WHY CHOOSE",
-        "heading_bottom": "VIDHYUT SAATHI?",
-        "heading_sub": "India’s Premium Energy‑Tech Innovation for Smarter Electricity Optimization",
-        "bg_color_top": "#fffdf8",
-        "bg_color_mid": "#fff8ef",
-        "bg_color_bottom": "#ffffff",
-        "grid_heading": "APPLICATIONS OVERVIEW",
-        "hover_speed": 0.5,
-        "overlay_hover_color": "#ffbc00",
-        "img1": "shopify://shop_images/1779474155022.png",
-        "lbl1": "Residential Use",
-        "img2": "shopify://shop_images/1779474531151.png",
-        "lbl2": "Commercial Use",
-        "img3": "shopify://shop_images/1779473779170.png",
-        "lbl3": "Industrial Use",
-        "img4": "shopify://shop_images/1779475053698.png",
-        "lbl4": "Institutional Use"
-      }
-    },
-    "vidhyut_tech_usage_HxTYjH": {
-      "type": "vidhyut-tech-usage",
-      "disabled": true,
-      "name": "Tech Specs & Usage Grid",
-      "settings": {
-        "bg_color": "#ffffff",
-        "text_color": "#4b5563",
-        "accent_color": "#c5a059",
-        "font_size_desktop": 12,
-        "font_size_mobile": 11,
-        "letter_spacing": 2,
-        "text_transform": "uppercase",
-        "padding_vertical": 40,
-        "enable_autoplay": true,
-        "autoplay_speed": 4
-      }
-    },
-    "video_slider_U4tzGq": {
-      "type": "video-slider",
-      "blocks": {
-        "video_slide_CNWnAf": {
-          "type": "video_slide",
-          "settings": {
-            "thumbnail": "shopify://shop_images/VS_Card_Final_Design_Golden_1.png",
-            "video_url": "https://youtu.be/9zjz1_Kuvsw?si=fqnCawnCij7LyK5a",
-            "title": "About Vidhyut Saathi",
-            "text": "Attach safely near your main MCB board to instantly stabilize electrical flow."
-          }
-        },
-        "video_slide_UQm3xd": {
-          "type": "video_slide",
-          "settings": {
-            "thumbnail": "shopify://shop_images/electronics-minimal-1.jpg",
-            "video_url": "https://www.youtube.com/shorts/azUqn0T3Urk",
-            "title": "Benefits VS Card",
-            "text": "Attach safely near your main MCB board to instantly stabilize electrical flow."
-          }
-        },
-        "video_slide_nxWbUG": {
-          "type": "video_slide",
-          "settings": {
-            "thumbnail": "shopify://shop_images/electronics-and-accessories-products-3.jpg",
-            "video_url": "https://youtu.be/9zjz1_Kuvsw?si=fqnCawnCij7LyK5a",
-            "title": "Checking Leakage Current",
-            "text": "Attach safely near your main MCB board to instantly stabilize electrical flow."
-          }
-        },
-        "video_slide_Wi4ncA": {
-          "type": "video_slide",
-          "settings": {
-            "thumbnail": "shopify://shop_images/electronics-and-accessories-products-4.jpg",
-            "video_url": "https://youtu.be/9zjz1_Kuvsw?si=fqnCawnCij7LyK5a",
-            "title": "No. Of Cards Required",
-            "text": "Attach safely near your main MCB board to instantly stabilize electrical flow."
-          }
-        },
-        "video_slide_MFFdYd": {
-          "type": "video_slide",
-          "settings": {
-            "thumbnail": "shopify://shop_images/Vidhyut_Saathi_Logo.jpg_1.jpg",
-            "video_url": "https://youtu.be/9zjz1_Kuvsw?si=fqnCawnCij7LyK5a",
-            "title": "Installation Process",
-            "text": "Attach safely near your main MCB board to instantly stabilize electrical flow."
-          }
-        },
-        "video_slide_9VDyQn": {
-          "type": "video_slide",
-          "settings": {
-            "video_url": "",
-            "title": "Earn 5-6 Lakh Per Month",
-            "text": "Attach safely near your main MCB board to instantly stabilize electrical flow."
-          }
-        }
-      },
-      "block_order": [
-        "video_slide_CNWnAf",
-        "video_slide_UQm3xd",
-        "video_slide_nxWbUG",
-        "video_slide_Wi4ncA",
-        "video_slide_MFFdYd",
-        "video_slide_9VDyQn"
-      ],
-      "name": "YouTube Review Slider",
-      "settings": {
-        "bg_color": "#fff8ef",
-        "text_color": "#f17e39",
-        "accent_color": "#007b3e",
-        "secondary_color": "#f17e39",
-        "heading": "Things to know about vidhyut saathi",
-        "heading_font": "work_sans_n7",
-        "enable_shimmer": true,
-        "heading_glow_color": "#007b3e",
-        "subtext": "",
-        "video_heading_position": "below",
-        "auto_swipe": true,
-        "swipe_speed": 3
-      }
-    },
-    "vidhyut_features_iz4fmw": {
-      "type": "vidhyut-features",
-      "blocks": {
-        "feature_4d6dUa": {
-          "type": "feature",
-          "settings": {
-            "icon_class": "",
-            "title": "US-German Nanotechnology",
-            "text": "Powered by advanced US-German nanotechnology, utilizing 20,000 negative ions to effectively stop electricity leakage.",
-            "link": ""
-          }
-        },
-        "feature_rqdibE": {
-          "type": "feature",
-          "settings": {
-            "icon_class": "",
-            "title": "Benefits of VS Card",
-            "text": "Lowers electricity bills by 20% to 30%. It is 100% eco-friendly, waterproof, completely legal, and requires zero maintenance.",
-            "link": ""
-          }
-        },
-        "feature_RrNFB3": {
-          "type": "feature",
-          "settings": {
-            "icon_class": "",
-            "title": "Check Leakage Current",
-            "text": "Test your home or factory's phase and neutral lines using a digital clamp meter to identify unseen electricity wastage.",
-            "link": ""
-          }
-        },
-        "feature_9rV4gr": {
-          "type": "feature",
-          "settings": {
-            "icon_class": "",
-            "title": "No. of Cards Required",
-            "text": "Requirements scale with load: 1 card for 1-6KW, 2 cards for 7-12KW, 3 for 13-18KW, 4 for 19-24KW, and 5 cards for 25-30KW.",
-            "link": ""
-          }
-        },
-        "feature_9fzYWJ": {
-          "type": "feature",
-          "settings": {
-            "icon_class": "",
-            "title": "How to Install",
-            "text": "Extremely simple to install. No illegal wire cutting required—just attach it safely near your main MCB or distribution board.",
-            "link": ""
-          }
-        },
-        "feature_ANNjmq": {
-          "type": "feature",
-          "settings": {
-            "icon_class": "",
-            "title": "Earn ₹5-6 Lakhs/Month",
-            "text": "Join our Franchise model! Become a business partner and tap into a highly profitable, fast-growing energy-saving market.",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "feature_4d6dUa",
-        "feature_rqdibE",
-        "feature_RrNFB3",
-        "feature_9rV4gr",
-        "feature_9fzYWJ",
-        "feature_ANNjmq"
-      ],
-      "disabled": true,
-      "name": "Vidhyut Features Grid",
-      "settings": {
-        "bg_color": "#f8fafc",
-        "primary_color": "#00a859",
-        "secondary_color": "#007b3e",
-        "title": "WHY VIDHYUT SAATHI?"
-      }
-    },
-    "image_3Bw49x": {
-      "type": "image",
-      "name": "Clickable Banner 16:4",
-      "settings": {
-        "section_bg_color": "#fff8ef",
-        "heading_text": "Vidhyut Saathi",
-        "button_text": "Be our Partner Franchise",
-        "button_link": "shopify://pages/b2c-card",
-        "button_bg_color": "#f58220",
-        "button_text_color": "#ffffff",
-        "icon_color": "#f58220",
-        "animation_speed": 0.5
-      }
-    },
-    "premiuim_calculator_aJhCqg": {
-      "type": "premiuim-calculator",
-      "blocks": {
-        "trust_item_VMQXxw": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "⚡",
-            "text": "Save Upto 30%"
-          }
-        },
-        "trust_item_9qBKC7": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "🌿",
-            "text": "Eco Friendly"
-          }
-        },
-        "trust_item_iaRz9n": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "⚙️",
-            "text": "Smart Technology"
-          }
-        },
-        "trust_item_BTdgGX": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "🏆",
-            "text": "Trusted Choice"
-          }
-        }
-      },
-      "block_order": [
-        "trust_item_VMQXxw",
-        "trust_item_9qBKC7",
-        "trust_item_iaRz9n",
-        "trust_item_BTdgGX"
-      ],
-      "name": "Premium Calculator",
-      "settings": {
-        "heading_font": "work_sans_n9",
-        "body_font": "work_sans_n4",
-        "color_green": "#148c3a",
-        "color_green2": "#20b14b",
-        "color_orange": "#f58220",
-        "color_text": "#1f2937",
-        "color_muted": "#6b7280",
-        "calc_price": 3498,
-        "pct_base": 25,
-        "pct_mid": 27,
-        "pct_high": 30,
-        "slider_min": 500,
-        "slider_max": 300000,
-        "slider_step": 500,
-        "slider_default": 4000,
-        "tag_text": "Smart Savings Calculator",
-        "heading_text": "Calculate Your",
-        "heading_highlight": "Electricity Savings",
-        "subheading_text": "Move the slider to estimate how much you can save every month with Vidhyut Saathi Smart Energy Saving Technology.",
-        "slider_label": "📄 Your Current Monthly Bill",
-        "label_monthly": "Monthly Saving",
-        "label_yearly": "Yearly Saving",
-        "label_newbill": "New Bill",
-        "label_roi": "ROI",
-        "disclaimer_text": "Savings of 25–30% are estimated. Actual savings may vary based on usage patterns."
-      }
-    },
-    "vs_ratecalc_rCrpNb": {
-      "type": "VS-Ratecalc",
-      "disabled": true,
-      "name": "Vidhyut Savings Calculator",
-      "settings": {
-        "heading": "See How Much You Can Save",
-        "description": "Enter your average monthly electricity bill below to discover your estimated monthly, quarterly, and long-term savings by switching to Vidhyut Saathi.",
-        "savings_percentage": 20,
-        "calc_font": "work_sans_n4",
-        "bg_color": "#f4f7f6",
-        "text_color": "#111111",
-        "primary_color": "#f17e39",
-        "secondary_color": "#007b3e"
-      }
-    },
-    "vs_ratecalc_ar7qmh": {
-      "type": "VS-Ratecalc",
-      "disabled": true,
-      "name": "Vidhyut Savings Calculator",
-      "settings": {
-        "heading": "See How Much You Can Save",
-        "description": "Enter your average monthly electricity bill below to discover your estimated monthly, quarterly, and long-term savings by switching to Vidhyut Saathi.",
-        "savings_percentage": 20,
-        "calc_font": "carlito_n4",
-        "bg_color": "#f4f7f6",
-        "text_color": "#111111",
-        "primary_color": "#f17e39",
-        "secondary_color": "#007b3e"
-      }
-    },
-    "vidhyut_services_cta_gaTbqj": {
-      "type": "vidhyut-services-cta",
-      "disabled": true,
-      "name": "Franchise CTA & 9 Grid",
-      "settings": {}
-    },
-    "vidhyut_live_stats_JJhyG9": {
-      "type": "vidhyut-live-stats",
-      "blocks": {
-        "stat_item_mGCPrR": {
-          "type": "stat_item",
-          "settings": {
-            "icon_class": "fas fa-city",
-            "target_number": 200,
-            "label": "DISTRICT FRANCHISE"
-          }
-        },
-        "stat_item_3gkPgy": {
-          "type": "stat_item",
-          "settings": {
-            "icon_class": "fas fa-map",
-            "target_number": 20,
-            "label": "STATES LIVE"
-          }
-        },
-        "stat_item_TJxXk8": {
-          "type": "stat_item",
-          "settings": {
-            "icon_class": "fas fa-globe-asia",
-            "target_number": 10,
-            "label": "2M+ Happy Customers"
-          }
-        },
-        "marquee_order_bEhXzY": {
-          "type": "marquee_order",
-          "settings": {
-            "order_text": "LIVE ORDER: NEW DELHI"
-          }
-        },
-        "marquee_order_zqFAiD": {
-          "type": "marquee_order",
-          "settings": {
-            "order_text": "LIVE ORDER: MUMBAI"
-          }
-        },
-        "marquee_order_9rWDQg": {
-          "type": "marquee_order",
-          "settings": {
-            "order_text": "LIVE ORDER: BANGALORE"
-          }
-        },
-        "marquee_order_wUyjiK": {
-          "type": "marquee_order",
-          "settings": {
-            "order_text": "LIVE ORDER: HYDERABAD"
-          }
-        },
-        "marquee_order_z7KWUG": {
-          "type": "marquee_order",
-          "settings": {
-            "order_text": "LIVE ORDER: AHMEDABAD"
-          }
-        },
-        "marquee_order_bVCWRk": {
-          "type": "marquee_order",
-          "settings": {
-            "order_text": "LIVE ORDER: CHENNAI"
-          }
-        },
-        "marquee_order_jEzRcg": {
-          "type": "marquee_order",
-          "settings": {
-            "order_text": "LIVE ORDER: KOLKATA"
-          }
-        },
-        "marquee_order_XtTF7f": {
-          "type": "marquee_order",
-          "settings": {
-            "order_text": "LIVE ORDER: SURAT"
-          }
-        }
-      },
-      "block_order": [
-        "stat_item_mGCPrR",
-        "stat_item_3gkPgy",
-        "stat_item_TJxXk8",
-        "marquee_order_bEhXzY",
-        "marquee_order_zqFAiD",
-        "marquee_order_9rWDQg",
-        "marquee_order_wUyjiK",
-        "marquee_order_z7KWUG",
-        "marquee_order_bVCWRk",
-        "marquee_order_jEzRcg",
-        "marquee_order_XtTF7f"
-      ],
-      "name": "Espon Network",
-      "settings": {
-        "subtitle": "INDIA'S BIGGEST B2B FRANCHISE OPPORTUNITY",
-        "title_part_1": "Trusted by",
-        "main_counter_target": 5000,
-        "title_part_2": "Franchise Holder",
-        "bg_color": "#fff8ef",
-        "text_color_main": "#148c3a",
-        "accent_color": "#f58220",
-        "grid_bg_color": "#f8fafc",
-        "grid_border_color": "#e2e8f0",
-        "text_color_muted": "#64748b",
-        "marquee_bg_color": "#000000",
-        "marquee_text_color": "#ffffff",
-        "marquee_dot_color": "#22c55e",
-        "marquee_speed": 30,
-        "padding_top": 80,
-        "padding_top_mobile": 40
-      }
-    },
-    "business_models_gR6JYd": {
-      "type": "business-models",
-      "blocks": {
-        "franchise_card_fejPAw": {
-          "type": "franchise_card",
-          "settings": {
-            "theme_color": "green",
-            "badge_text": "Growth Entry",
-            "icon_emoji": "💼",
-            "card_title": "Non-Exclusive<br>District Franchise",
-            "amount_label": "Capital Requirement",
-            "amount_value": "₹1,50,000",
-            "point_1": "Optimized Low-Capital Entry",
-            "point_2": "Flexible Operational Scalability",
-            "point_3": "Direct High-Yield Revenue Model",
-            "point_4": "Full Corporate Ecosystem Onboarding",
-            "point_5": "",
-            "button_text": "BOOK FRANCHISE NOW",
-            "button_link": ""
-          }
-        },
-        "franchise_card_CccrXY": {
-          "type": "franchise_card",
-          "settings": {
-            "theme_color": "blue",
-            "badge_text": "Market Dominance",
-            "icon_emoji": "🛡️",
-            "card_title": "Standard Exclusive<br>District Franchise",
-            "amount_label": "Capital Requirement",
-            "amount_value": "₹2,50,000",
-            "point_1": "100% Monopolized District Rights",
-            "point_2": "Accelerated Profit Margins",
-            "point_3": "Sponsored Meta Ad Launch (Worth ₹30K)",
-            "point_4": "Premium Turnkey Marketing Kit Included",
-            "point_5": "",
-            "button_text": "BOOK FRANCHISE NOW",
-            "button_link": ""
-          }
-        },
-        "franchise_card_c86eLV": {
-          "type": "franchise_card",
-          "settings": {
-            "theme_color": "gold",
-            "badge_text": "Institutional / Flagship",
-            "icon_emoji": "👑",
-            "card_title": "Premium Exclusive<br>District Franchise",
-            "amount_label": "Capital Requirement",
-            "amount_value": "₹6,0,000",
-            "point_1": "Absolute Regional Sovereignty",
-            "point_2": "Multi-Tier Revenue: 100+ Sub-Franchises",
-            "point_3": "3-Month High-Impact Meta Campaign (Worth ₹100K)",
-            "point_4": "Priority Corporate Board Support",
-            "point_5": "End-to-End Elite Branding Suite",
-            "button_text": "BOOK FRANCHISE NOW",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "franchise_card_fejPAw",
-        "franchise_card_CccrXY",
-        "franchise_card_c86eLV"
-      ],
-      "name": "Franchise Models",
-      "settings": {
-        "heading": "BUSINESS<br>WITH US"
-      }
-    },
-    "crisis_UhdB9c": {
-      "type": "crisis",
-      "blocks": {
-        "stat_card_bNpQ6e": {
+        "stat_card_CTQ963": {
           "type": "stat_card",
           "settings": {
-            "icon_svg": "<svg viewbox=\"0 0 34 34\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><text x=\"50%\" y=\"56%\" dominant-baseline=\"middle\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"900\" fill=\"currentColor\" font-family=\"sans-serif\">₹</text></svg>",
             "stat_value": "₹1.5 Lakh Cr",
-            "stat_desc": "Annual household electricity spending across India",
-            "card_style": "orange"
+            "stat_desc": "Annual household electricity spending across India"
           }
         },
-        "stat_card_ycm9cJ": {
+        "stat_card_CMtTTf": {
           "type": "stat_card",
           "settings": {
-            "icon_svg": "<svg viewbox=\"0 0 34 34\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"19,5 11,18 17,18 15,29 23,16 17,16\" fill=\"currentColor\"></polygon></svg>",
             "stat_value": "30%",
-            "stat_desc": "Electricity wasted due to voltage fluctuations & reactive loads",
-            "card_style": "green"
+            "stat_desc": "Electricity wasted due to voltage fluctuations & reactive loads"
           }
         },
-        "stat_card_F6bXcn": {
+        "stat_card_PD8NgX": {
           "type": "stat_card",
           "settings": {
-            "icon_svg": "<svg viewbox=\"0 0 34 34\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"12\" cy=\"13\" r=\"4\" fill=\"currentColor\" opacity=\".7\"></circle><circle cx=\"22\" cy=\"13\" r=\"4\" fill=\"currentColor\" opacity=\".7\"></circle><circle cx=\"17\" cy=\"10\" r=\"4\" fill=\"currentColor\"></circle><path d=\"M6 26c0-4.5 4.9-7 11-7s11 2.5 11 7\" fill=\"currentColor\" opacity=\".5\"></path></svg>",
             "stat_value": "800M+",
-            "stat_desc": "Indians facing high electricity bills with no effective solution",
-            "card_style": "orange"
+            "stat_desc": "Indians facing high electricity bills with no effective solution"
           }
         }
       },
       "block_order": [
-        "stat_card_bNpQ6e",
-        "stat_card_ycm9cJ",
-        "stat_card_F6bXcn"
+        "stat_card_CTQ963",
+        "stat_card_CMtTTf",
+        "stat_card_PD8NgX"
       ],
-      "name": "Vidhyut Saathi Landing",
+      "name": "Vidhyut Saathi – Crisis",
       "settings": {
-        "color_bg": "#fafaf7",
-        "color_card_bg": "#ffffff",
-        "color_dark": "#111111",
-        "color_text": "#222222",
-        "color_muted": "#777777",
-        "color_orange": "#f7941d",
-        "color_orange_dark": "#e07810",
-        "color_orange_light": "#fdb44b",
-        "color_green": "#3ead47",
-        "color_green_dark": "#2e7d32",
-        "color_green_light": "#6dd47a",
-        "hero_label": "The Problem",
-        "hero_heading": "India's",
-        "hero_heading_highlight": "Electricity",
-        "hero_heading_suffix": "Crisis",
-        "hero_bg_svg": "<svg viewbox=\"0 0 200 280\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"100\" y1=\"0\" x2=\"100\" y2=\"280\" stroke=\"currentColor\" stroke-width=\"4\"></line><line x1=\"100\" y1=\"40\" x2=\"20\" y2=\"100\" stroke=\"currentColor\" stroke-width=\"3\"></line><line x1=\"100\" y1=\"40\" x2=\"180\" y2=\"100\" stroke=\"currentColor\" stroke-width=\"3\"></line><line x1=\"100\" y1=\"100\" x2=\"30\" y2=\"150\" stroke=\"currentColor\" stroke-width=\"2.5\"></line><line x1=\"100\" y1=\"100\" x2=\"170\" y2=\"150\" stroke=\"currentColor\" stroke-width=\"2.5\"></line><line x1=\"100\" y1=\"160\" x2=\"50\" y2=\"200\" stroke=\"currentColor\" stroke-width=\"2\"></line><line x1=\"100\" y1=\"160\" x2=\"150\" y2=\"200\" stroke=\"currentColor\" stroke-width=\"2\"></line><line x1=\"20\" y1=\"100\" x2=\"30\" y2=\"150\" stroke=\"currentColor\" stroke-width=\"2\"></line><line x1=\"180\" y1=\"100\" x2=\"170\" y2=\"150\" stroke=\"currentColor\" stroke-width=\"2\"></line><circle cx=\"100\" cy=\"40\" r=\"6\" fill=\"currentColor\"></circle><circle cx=\"100\" cy=\"100\" r=\"6\" fill=\"currentColor\"></circle><circle cx=\"100\" cy=\"160\" r=\"6\" fill=\"currentColor\"></circle></svg>",
-        "banner_label": "The Need is Clear.",
-        "banner_text": "India needs a smart, affordable and effective solution to save electricity and reduce bills significantly across every household.",
+        "badge_label": "The Problem",
+        "hero_title_prefix": "India's",
+        "hero_title_accent": "Electricity",
+        "hero_title_suffix": "Crisis",
+        "need_label": "The Need is Clear.",
+        "need_label_size": 22,
+        "need_text": "",
+        "need_text_size": 15,
         "break_text": "Introducing the Solution",
-        "solution_heading": "Meet",
-        "solution_highlight": "Vidhyut Saathi Card",
+        "solution_title_prefix": "Meet",
+        "solution_title_accent": "Vidhyut Saathi Card",
         "solution_subtitle": "India's #1 Smart Electricity Saver — Engineered for Every Home",
-        "cta_heading": "Start Saving on Your",
-        "cta_highlight": "Electricity Bill",
-        "cta_suffix": "Today",
+        "cta_title_prefix": "Start Saving on Your",
+        "cta_title_accent": "Electricity Bill",
+        "cta_title_suffix": "Today",
         "cta_subtitle": "Join 20 Lakh+ Indian families already saving with Vidhyut Saathi Card",
-        "cta_proof_text": "households trust us",
-        "cta_proof_highlight": "20 Lakh+",
-        "avatar_1": "R",
-        "avatar_2": "S",
-        "avatar_3": "A",
-        "btn_text": "Get Franchise Now",
-        "btn_link": "",
-        "btn_note": "Free Consultation Available"
+        "proof_count": "20 Lakh+",
+        "proof_label": "households trust us",
+        "cta_button_text": "Get Franchise Now",
+        "cta_link": "",
+        "cta_note": "Free Consultation Available"
+      }
+    },
+    "b2c_image_carousel": {
+      "type": "b2c-image-carousel",
+      "blocks": {
+        "banner_card_nJDJXm": {
+          "type": "banner_card",
+          "settings": {
+            "image": "shopify://shop_images/DOC-20260616-WA0003.png",
+            "title": "",
+            "subtitle": "",
+            "badge": "",
+            "bottom_label": "",
+            "link": ""
+          }
+        },
+        "banner_card_bbQ8A8": {
+          "type": "banner_card",
+          "settings": {
+            "image": "shopify://shop_images/DOC-20260616-WA0005.png",
+            "title": "",
+            "subtitle": "",
+            "badge": "",
+            "bottom_label": "",
+            "link": ""
+          }
+        },
+        "banner_card_n3Dtkp": {
+          "type": "banner_card",
+          "settings": {
+            "image": "shopify://shop_images/DOC-20260616-WA0007.png",
+            "title": "",
+            "subtitle": "",
+            "badge": "",
+            "bottom_label": "",
+            "link": ""
+          }
+        },
+        "banner_card_BiWiPp": {
+          "type": "banner_card",
+          "settings": {
+            "image": "shopify://shop_images/DOC-20260616-WA0009__jpeg.png",
+            "title": "",
+            "subtitle": "",
+            "badge": "",
+            "bottom_label": "",
+            "link": ""
+          }
+        },
+        "banner_card_xyLHwy": {
+          "type": "banner_card",
+          "settings": {
+            "image": "shopify://shop_images/DOC-20260616-WA0011__jpeg.png",
+            "title": "",
+            "subtitle": "",
+            "badge": "",
+            "bottom_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "banner_card_nJDJXm",
+        "banner_card_bbQ8A8",
+        "banner_card_n3Dtkp",
+        "banner_card_BiWiPp",
+        "banner_card_xyLHwy"
+      ],
+      "settings": {
+        "section_title": "Benifits Of Vidhyut Saathi Card",
+        "section_subtitle": "Handpicked dynamic collections for you",
+        "section_title_font": "rounded",
+        "header_alignment": "left",
+        "section_title_color": "#f7941d",
+        "section_title_size": 21,
+        "section_title_weight": "800",
+        "section_title_transform": "none",
+        "section_subtitle_color": "#3ead47",
+        "section_subtitle_size": 14,
+        "header_margin_bottom": 16,
+        "card_width_mobile": 75,
+        "card_width_desktop": 30,
+        "card_aspect_ratio_mobile": "5/ 9",
+        "card_aspect_ratio_desktop": "4 / 5",
+        "card_border_radius": 14,
+        "card_gap": 10,
+        "edge_padding": 12,
+        "section_padding_vertical": 8,
+        "card_title_font": "inherit",
+        "card_text_padding": 14,
+        "overlay_top_opacity": 0,
+        "overlay_bottom_opacity": 0,
+        "title_font_size": 25,
+        "title_color": "#ffffff",
+        "subtitle_font_size": 14,
+        "subtitle_color": "#eeeeee",
+        "badge_font_size": 11,
+        "badge_background": "#ff9900",
+        "badge_color": "#111111",
+        "section_background": "#fff6e7",
+        "autoplay_speed": 1,
+        "accessibility_info": "Promotional banners carousel"
       }
     }
   },
   "order": [
-    "vidhyut_marquee_drkhKQ",
-    "32d_card_ahxbQk",
-    "vidhyut_expert_video_BJnKxL",
-    "franchise_section_updated_pze9FB",
-    "vidhyut_tech_usage_HxTYjH",
-    "video_slider_U4tzGq",
-    "vidhyut_features_iz4fmw",
-    "image_3Bw49x",
-    "premiuim_calculator_aJhCqg",
-    "vs_ratecalc_rCrpNb",
-    "vs_ratecalc_ar7qmh",
-    "vidhyut_services_cta_gaTbqj",
-    "vidhyut_live_stats_JJhyG9",
-    "business_models_gR6JYd",
-    "crisis_UhdB9c"
+    "main",
+    "slideshow_bb7Qbb",
+    "vidhyut_tech_usage_pGXxky",
+    "marquee_ticker_CjTmQC",
+    "vidhyut_expert_video_ppwEB7",
+    "vidhyut_hero_v2_girecJ",
+    "vidhyut_saathi_crisis_U6gFD9",
+    "b2c_image_carousel"
   ]
 }
