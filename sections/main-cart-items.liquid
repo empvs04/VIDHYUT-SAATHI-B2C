@@ -815,15 +815,7 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
                 </div>
                 {% endif %}
 
-                <p class="lx-tax-note">
-                  {%- if cart.duties_included and cart.taxes_included -%}
-                    {%- if shop.shipping_policy.body == blank -%}{{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}{%- else -%}{{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}{%- endif -%}
-                  {%- elsif cart.taxes_included -%}
-                    {%- if shop.shipping_policy.body == blank -%}{{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}{%- else -%}{{ 'sections.cart.taxes_included_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}{%- endif -%}
-                  {%- else -%}
-                    {%- if shop.shipping_policy.body == blank -%}{{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}{%- else -%}{{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html' | t: link: shop.shipping_policy.url }}{%- endif -%}
-                  {%- endif -%}
-                </p>
+                <p class="lx-tax-note">Taxes included. Free Express Shipping on all orders.</p>
 
                 <div class="lx-checkout-wrap lx-desktop">
                   <button type="submit" id="checkout" class="lx-checkout-btn cart__checkout-button button" name="checkout" form="cart">
@@ -1280,6 +1272,86 @@ function lxOpenVariantModal(productId) {
   const STORAGE_KEY = 'lx_coupon_code';
   const STORAGE_TIME = 'lx_coupon_time';
 
+  function lxRecalculateCartSummary() {
+    var code = localStorage.getItem(STORAGE_KEY) || '';
+    var subtotalCents = {{ cart.items_subtotal_price | default: cart.total_price | default: 0 }};
+    var totalMrpCents = 0;
+
+    {% for item in cart.items %}
+      {% assign item_comp = item.variant.compare_at_price %}
+      {% if item_comp == blank or item_comp <= item.variant.price %}
+        {% assign item_comp = item.variant.price %}
+      {% endif %}
+      totalMrpCents += {{ item_comp | times: item.quantity }};
+    {% endfor %}
+
+    var mrpDiscountCents = Math.max(0, totalMrpCents - subtotalCents);
+
+    var couponDiscountCents = 0;
+    if (code && code.trim()) {
+      var codeUpper = code.trim().toUpperCase();
+      var numMatch = codeUpper.match(/\d+/);
+      var pct = numMatch ? parseInt(numMatch[0]) : 10;
+      if (pct > 0 && pct <= 100) {
+        couponDiscountCents = Math.round(subtotalCents * (pct / 100));
+      }
+    }
+
+    var finalPayableCents = Math.max(0, subtotalCents - couponDiscountCents);
+    var totalSavingsCents = mrpDiscountCents + couponDiscountCents;
+
+    function fmt(cents) {
+      if (window.Shopify && window.Shopify.formatMoney) {
+        return window.Shopify.formatMoney(cents);
+      }
+      return 'Rs. ' + (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+    }
+
+    var mrpEl = document.getElementById('lx-total-mrp');
+    if (mrpEl) mrpEl.innerHTML = fmt(totalMrpCents);
+
+    var mrpDiscRow = document.getElementById('lx-mrp-discount-row');
+    var mrpDiscVal = document.getElementById('lx-mrp-discount-value');
+    if (mrpDiscountCents > 0) {
+      if (mrpDiscRow) mrpDiscRow.style.display = 'flex';
+      if (mrpDiscVal) mrpDiscVal.innerHTML = '-' + fmt(mrpDiscountCents);
+    } else if (mrpDiscRow) {
+      mrpDiscRow.style.display = 'none';
+    }
+
+    var dynamicContainer = document.getElementById('lx-dynamic-discounts');
+    var couponRow = document.getElementById('lx-applied-coupon-discount-row');
+    if (couponDiscountCents > 0 && code) {
+      if (!couponRow && dynamicContainer) {
+        couponRow = document.createElement('div');
+        couponRow.id = 'lx-applied-coupon-discount-row';
+        couponRow.className = 'lx-totals-row lx-totals-row--discount';
+        dynamicContainer.appendChild(couponRow);
+      }
+      if (couponRow) {
+        couponRow.style.display = 'flex';
+        couponRow.innerHTML = '<span class="lx-totals-row-label" style="color:#16A34A;font-weight:600;">Coupon Discount (' + code.toUpperCase() + ')</span><span class="lx-totals-row-value" style="color:#16A34A;font-weight:700;">-' + fmt(couponDiscountCents) + '</span>';
+      }
+    } else if (couponRow) {
+      couponRow.style.display = 'none';
+    }
+
+    var grandTotalEl = document.getElementById('lx-grand-total');
+    if (grandTotalEl) grandTotalEl.innerHTML = fmt(finalPayableCents);
+
+    var mobValEl = document.querySelector('.lx-mob-total-val');
+    if (mobValEl) mobValEl.innerHTML = fmt(finalPayableCents);
+
+    var savingsBanner = document.getElementById('lx-savings-banner');
+    var savingsText = document.getElementById('lx-savings-text');
+    if (totalSavingsCents > 0) {
+      if (savingsBanner) savingsBanner.style.display = 'flex';
+      if (savingsText) savingsText.innerHTML = "You're saving " + fmt(totalSavingsCents) + " on this order!";
+    } else if (savingsBanner) {
+      savingsBanner.style.display = 'none';
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     var urlParams = new URLSearchParams(window.location.search);
     var discountParam = urlParams.get('discount');
@@ -1297,6 +1369,7 @@ function lxOpenVariantModal(productId) {
         }).catch(function(e){ console.error(e); });
       }
     }
+    lxRecalculateCartSummary();
   });
 
   function showAppliedState(code) {
@@ -1312,6 +1385,7 @@ function lxOpenVariantModal(productId) {
     }
     banner.classList.add('show');
     picker.style.display = 'none';
+    lxRecalculateCartSummary();
   }
 
   function hideAppliedState() {
@@ -1319,6 +1393,7 @@ function lxOpenVariantModal(productId) {
     const picker = document.getElementById('lx-coupon-picker');
     if (banner) banner.classList.remove('show');
     if (picker) picker.style.display = '';
+    lxRecalculateCartSummary();
   }
 
   function setMsg(text, type) {
