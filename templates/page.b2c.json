@@ -499,31 +499,6 @@
         "autoplay_speed": 1,
         "accessibility_info": "Promotional banners carousel"
       }
-    },
-    "buy_now_product_info": {
-      "type": "product-information",
-      "settings": {
-        "product": "vidhyut-saathi-electric-power-saver-card",
-        "bg_color": "#FFFFFF",
-        "text_color": "#111111",
-        "border_color": "#EAEAEA",
-        "primary_button_color": "#D4A373",
-        "primary_button_text": "#FFFFFF",
-        "enable_offers_section": true,
-        "offer_card_height": 110,
-        "offer_section_bg": "#E8F5E9",
-        "offer_icon_bg": "#D4A373",
-        "offer_link_color": "#A67B5B",
-        "offer_copy_color": "#4C7B8B",
-        "offer_badge_bg": "#F27A33",
-        "offer_link_text": "View all Offers",
-        "offer_link_url": "",
-        "heading_font": "work_sans_n7",
-        "body_font": "work_sans_n4",
-        "install_guide_text": "Installation Guide",
-        "install_guide_link": "",
-        "enable_delivery_check": true
-      }
     }
   },
   "order": [
