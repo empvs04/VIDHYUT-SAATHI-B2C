@@ -757,22 +757,23 @@
       gap: 16px;
     }
     .by-media-gallery {
-      gap: 12px;
-    }
-    .by-thumbnails {
-      order: 2;
-      justify-content: flex-start;
-      gap: 8px;
-    }
-    .by-thumb {
-      width: 54px;
-      height: 54px;
-      border-radius: 8px;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
     }
     .by-main-image-wrap {
-      order: 1;
-      aspect-ratio: 1 / 1;
-      border-radius: 14px;
+      order: 1 !important;
+      width: 100% !important;
+      aspect-ratio: 4 / 5 !important;
+      border-radius: 14px !important;
+    }
+    .by-5-thumbs-row {
+      order: 2 !important;
+      width: 100% !important;
+      display: grid !important;
+      grid-template-columns: repeat(5, 1fr) !important;
+      gap: 6px !important;
+      margin-top: 4px !important;
     }
     .by-title-row h1 {
       font-size: 1.25rem;
