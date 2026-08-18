@@ -341,7 +341,7 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
     <i class="ti ti-shopping-cart-off lx-empty-icon"></i>
     <h1 class="lx-empty-title">{{ 'sections.cart.empty' | t }}</h1>
     <p class="lx-empty-sub">Looks like you haven't added anything yet.</p>
-    <a href="{{ routes.all_products_collection_url }}" class="lx-empty-btn" style="margin-bottom: 30px;">
+    <a href="/" class="lx-empty-btn" style="margin-bottom: 30px;">
       {{ 'general.continue_shopping' | t }}
     </a>
 
@@ -423,7 +423,7 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
                   Shopping Cart
                   <span class="lx-cart-count">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</span>
                 </h1>
-                <a href="{{ routes.all_products_collection_url }}" class="lx-continue lx-desktop">
+                <a href="/" class="lx-continue lx-desktop">
                   <i class="ti ti-arrow-left" style="font-size:13px;"></i> Continue Shopping
                 </a>
               </div>
@@ -526,7 +526,7 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
                         </div>
 
                         <cart-remove-button id="Remove-{{ line_index }}" data-index="{{ line_index }}">
-                          <a href="{{ item.url_to_remove }}" class="lx-remove-btn" aria-label="Remove {{ item.product.title | escape }}">
+                          <a href="{{ item.url_to_remove }}" onclick="lxRemoveCartItem({{ line_index }}); return false;" class="lx-remove-btn" aria-label="Remove {{ item.product.title | escape }}">
                             <i class="ti ti-trash" style="font-size:14px;"></i> Remove
                           </a>
                         </cart-remove-button>
@@ -1401,6 +1401,22 @@ function lxOpenVariantModal(productId) {
     vipCode: {{ section.settings.vip_discount_code | default: 'PURCHASE1999' | json }},
     vipThreshold: {{ section.settings.vip_threshold | default: 2500 | times: 100 | json }}
   };
+
+  function lxRemoveCartItem(lineIndex) {
+    var overlay = document.getElementById('Loading-' + lineIndex);
+    if (overlay) overlay.classList.remove('hidden');
+    fetch((window.Shopify.routes.root || '/') + 'cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ line: lineIndex, quantity: 0 })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function() { window.location.reload(); })
+    .catch(function(err) {
+      console.error("Cart item remove error:", err);
+      window.location.reload();
+    });
+  }
 </script>
 
 {% schema %}

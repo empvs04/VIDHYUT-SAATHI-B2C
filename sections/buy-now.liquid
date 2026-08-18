@@ -170,18 +170,6 @@
     flex-direction: column;
   }
 
-  .by-breadcrumbs {
-    font-size: 0.8rem;
-    color: #777;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 500;
-  }
-  .by-breadcrumbs a { color: #555; text-decoration: none; }
-  .by-breadcrumbs a:hover { color: #ec5c0a; }
-
   .by-title-row {
     display: flex;
     justify-content: space-between;
@@ -374,10 +362,10 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     transition: all 0.3s ease;
   }
-  .by-offer-card:hover {
+  .by-offer-card:hover, .by-offer-card.active-coupon {
     border-color: #ec5c0a;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(236, 92, 10, 0.12);
+    box-shadow: 0 8px 20px rgba(236, 92, 10, 0.15);
   }
   .by-offer-card strong { display: block; font-size: 0.95rem; margin-bottom: 4px; color: #1a1a1a; font-weight: 800; }
   .by-offer-card p { font-size: 0.8rem; color: #555; margin: 0 0 12px 0; line-height: 1.4; }
@@ -390,7 +378,7 @@
     text-transform: uppercase; margin-top: auto;
     transition: all 0.2s ease;
   }
-  .by-offer-copy:hover { background: #007b3e; color: #fff; }
+  .by-offer-copy:hover, .by-offer-copy.applied { background: #007b3e; color: #fff; }
   .by-offer-copy svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.5; fill: none; }
   
   .by-offer-badge {
@@ -512,7 +500,7 @@
     line-height: 1.4;
   }
 
-  /* --- AMAZON / FLIPKART TRUST ASSURANCES ROW --- */
+  /* --- TRUST ASSURANCES ROW --- */
   .by-trust-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -558,6 +546,52 @@
   .by-accordion summary::after { content: '+'; font-size: 1.4rem; font-weight: 400; transition: transform 0.3s; color: #ec5c0a; }
   .by-accordion[open] summary::after { transform: rotate(45deg); }
   .by-accordion-content { padding-bottom: 16px; font-size: 0.9rem; color: #555; line-height: 1.6; font-weight: 500; }
+
+  /* --- QUANTITY PICKER STYLES --- */
+  .by-qty-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    background: #fdfdfd;
+    padding: 10px 14px;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    width: fit-content;
+  }
+  .by-qty-controls {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .by-qty-controls button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #f5f5f5;
+    font-weight: 900;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #1a1a1a;
+    transition: background 0.2s ease;
+  }
+  .by-qty-controls button:hover { background: #ec5c0a; color: #fff; }
+  .by-qty-controls input {
+    width: 50px;
+    height: 40px;
+    border: none;
+    text-align: center;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    outline: none;
+    -moz-appearance: textfield;
+  }
+  .by-qty-controls input::-webkit-outer-spin-button,
+  .by-qty-controls input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
   /* --- DESKTOP BUYING CTAs vs MOBILE STICKY BAR --- */
   .by-actions-desktop {
@@ -772,15 +806,11 @@
 
 <div class="by-product-{{ section.id }}">
   <div class="by-container">
-    
-    <div class="by-breadcrumbs">
-      <a href="/">Home</a> <span>/</span> <span>{{ product.title | escape }}</span>
-    </div>
 
     {%- if product != blank -%}
       {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
         <input type="hidden" name="id" id="SelectedVariantID-{{ section.id }}" value="{{ current_variant.id }}">
-        <input type="hidden" name="quantity" value="1">
+        <input type="hidden" name="quantity" id="FormQtyInput-{{ section.id }}" value="1">
 
         <div class="by-desktop-layout">
           
@@ -813,7 +843,7 @@
           <div class="by-content-wrapper">
             
             <div class="by-title-row">
-              <h1>{{ product.title | default: 'Premium Modular Pack' }}</h1>
+              <h1>{{ product.title | default: 'VIDHYUT SAATHI - Electric Power Saver Card' }}</h1>
               <button type="button" class="by-share-btn" id="ShareBtn-{{ section.id }}" aria-label="Share product">
                 <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
               </button>
@@ -877,7 +907,7 @@
                         
                         <button type="button" class="by-offer-copy" data-code="{{ block.settings.code }}">
                           <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                          <span>CLICK TO COPY</span>
+                          <span>APPLY COUPON</span>
                         </button>
 
                         {%- if block.settings.enable_timer and block.settings.timer_date != blank -%}
@@ -891,11 +921,11 @@
 
                   {%- if has_offers == false -%}
                     <div class="by-offer-card">
-                      <strong>Freeship</strong>
+                      <strong>FREESHIP</strong>
                       <p>Get Free Shipping on all orders</p>
                       <button type="button" class="by-offer-copy" data-code="FREESHIP">
                         <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                        <span>CLICK TO COPY</span>
+                        <span>APPLY COUPON</span>
                       </button>
                       <div class="by-offer-badge">Limited Time</div>
                     </div>
@@ -933,17 +963,21 @@
                   {%- endif -%}
                 {%- endfor -%}
 
-                {%- if creative_card_label == blank -%}
-                  {%- assign downcase_title = variant.title | downcase -%}
-                  {%- if downcase_title contains 'single' or downcase_title contains 'one' or downcase_title contains '1' -%}
-                    {%- assign creative_card_label = 'One Card' -%}
-                  {%- elsif downcase_title contains 'trio' or downcase_title contains 'three' or downcase_title contains '3' -%}
-                    {%- assign creative_card_label = 'Three Cards' -%}
-                  {%- elsif downcase_title contains 'penta' or downcase_title contains 'five' or downcase_title contains '5' -%}
-                    {%- assign creative_card_label = 'Five Cards' -%}
-                  {%- else -%}
-                    {%- assign creative_card_label = 'Combo Pack' -%}
-                  {%- endif -%}
+                {%- assign display_title = variant.title -%}
+                {%- assign downcase_title = variant.title | downcase -%}
+
+                {%- if downcase_title contains 'single' or downcase_title contains 'one' or downcase_title contains '1' -%}
+                  {%- assign display_title = 'Single Pack (1 Card)' -%}
+                  {%- if creative_card_label == blank -%}{%- assign creative_card_label = '1 Card' -%}{%- endif -%}
+                  {%- if custom_subtitle == blank -%}{%- assign custom_subtitle = 'Ideal for Single Meter & Small Homes' -%}{%- endif -%}
+                {%- elsif downcase_title contains 'trio' or downcase_title contains 'three' or downcase_title contains '3' -%}
+                  {%- assign display_title = 'Trio Pack (3 Cards)' -%}
+                  {%- if creative_card_label == blank -%}{%- assign creative_card_label = '3 Cards' -%}{%- endif -%}
+                  {%- if custom_subtitle == blank -%}{%- assign custom_subtitle = 'Most Popular - Recommended for Full Family Homes' -%}{%- endif -%}
+                {%- elsif downcase_title contains 'penta' or downcase_title contains 'five' or downcase_title contains '5' -%}
+                  {%- assign display_title = 'Penta Pack (5 Cards)' -%}
+                  {%- if creative_card_label == blank -%}{%- assign creative_card_label = '5 Cards' -%}{%- endif -%}
+                  {%- if custom_subtitle == blank -%}{%- assign custom_subtitle = 'Best Value - Maximum Savings for Big Homes & Offices' -%}{%- endif -%}
                 {%- endif -%}
 
                 {%- assign is_popular = false -%}
@@ -964,13 +998,13 @@
                     <div class="by-ribbon-tag value-tag">BEST VALUE</div>
                   {%- endif -%}
                   
-                  <input type="radio" name="combo_selector_radio" value="{{ variant.id }}" {% if variant.id == current_variant.id %}checked{% endif %} data-price="{{ variant.price | money | escape }}" data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | escape }}{% endif %}" data-save="{% if save_percent > 0 %}{{ save_percent }}{% endif %}" style="display:none;">
+                  <input type="radio" name="combo_selector_radio" value="{{ variant.id }}" {% if variant.id == current_variant.id %}checked{% endif %} data-raw-price="{{ variant.price }}" data-raw-compare="{{ variant.compare_at_price }}" data-price="{{ variant.price | money | escape }}" data-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | escape }}{% endif %}" data-save="{% if save_percent > 0 %}{{ save_percent }}{% endif %}" style="display:none;">
                   
                   <div class="by-combo-main-row">
                     <div class="by-combo-left">
                       <div class="by-combo-radio"></div>
                       <div class="by-combo-info">
-                        <span class="by-combo-title">{{ variant.title }}</span>
+                        <span class="by-combo-title">{{ display_title }}</span>
                         <div class="by-combo-badges-row">
                           {%- if save_percent > 0 -%}
                             <span class="by-save-pill">SAVE {{ save_percent }}%</span>
@@ -1028,7 +1062,7 @@
               </div>
             {%- endif -%}
 
-            <!-- AMAZON / FLIPKART TRUST ASSURANCES ROW -->
+            <!-- TRUST ASSURANCES ROW -->
             <div class="by-trust-grid">
               <div class="by-trust-item">
                 <div class="by-trust-icon">
@@ -1050,14 +1084,24 @@
               </div>
             </div>
 
+            <!-- DYNAMIC QUANTITY PICKER -->
+            <div class="by-qty-wrapper">
+              <span style="font-weight: 800; font-size: 0.9rem; color: #1a1a1a;">Select Quantity:</span>
+              <div class="by-qty-controls">
+                <button type="button" id="QtyMinusBtn-{{ section.id }}">-</button>
+                <input type="number" id="QuantityPicker-{{ section.id }}" value="1" min="1" max="99">
+                <button type="button" id="QtyPlusBtn-{{ section.id }}">+</button>
+              </div>
+            </div>
+
             <!-- DESKTOP ACTION BUTTONS -->
             <div class="by-actions-desktop">
               <div class="by-btn-row">
-                <button class="by-btn-add" type="submit" name="add" id="SubmitBtnDesktop-{{ section.id }}">
+                <button class="by-btn-add" type="button" id="SubmitBtnDesktop-{{ section.id }}">
                   <span>Add to Cart</span> 
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
                 </button>
-                <button class="by-btn-buy" type="submit" name="add" id="BuyBtnDesktop-{{ section.id }}">
+                <button class="by-btn-buy" type="button" id="BuyBtnDesktop-{{ section.id }}">
                   <span>Buy Now</span>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
                 </button>
@@ -1068,7 +1112,7 @@
             <div class="by-details-container">
               <details class="by-accordion" open>
                 <summary>Product Description</summary>
-                <div class="by-accordion-content">{{ product.description | default: 'Experience premium quality.' }}</div>
+                <div class="by-accordion-content">{{ product.description | default: 'Experience premium quality Vidhyut Saathi Power Saver Card.' }}</div>
               </details>
             </div>
 
@@ -1078,10 +1122,10 @@
 
         <!-- MOBILE STICKY BOTTOM ACTIONS BAR -->
         <div class="by-sticky-bar">
-          <button class="by-btn-add" type="submit" name="add" id="SubmitBtnMobile-{{ section.id }}">
+          <button class="by-btn-add" type="button" id="SubmitBtnMobile-{{ section.id }}">
             <span>Add to Cart</span>
           </button>
-          <button class="by-btn-buy" type="submit" name="add" id="BuyBtnMobile-{{ section.id }}">
+          <button class="by-btn-buy" type="button" id="BuyBtnMobile-{{ section.id }}">
             <span>Buy Now</span>
           </button>
         </div>
@@ -1097,6 +1141,8 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    let activeCouponCode = '';
+
     // 1. Media Gallery Thumbnail Switcher
     const mainImg = document.getElementById('MainProductImage-{{ section.id }}');
     const thumbs = document.querySelectorAll('.by-thumb');
@@ -1115,55 +1161,165 @@
       });
     });
 
-    // 2. Combo Variant Selection Logic
-    const grid = document.getElementById('ComboGrid-{{ section.id }}');
+    // 2. Quantity & Dynamic Price/Offer Recalculation Engine
     const mainVariantInput = document.getElementById('SelectedVariantID-{{ section.id }}');
+    const formQtyInput = document.getElementById('FormQtyInput-{{ section.id }}');
+    const qtyPicker = document.getElementById('QuantityPicker-{{ section.id }}');
+    const qtyMinus = document.getElementById('QtyMinusBtn-{{ section.id }}');
+    const qtyPlus = document.getElementById('QtyPlusBtn-{{ section.id }}');
+
     const topPrice = document.getElementById('TopPrice-{{ section.id }}');
     const topCompare = document.getElementById('TopComparePrice-{{ section.id }}');
     const topSaveBadge = document.getElementById('TopSaveBadge-{{ section.id }}');
     const priceWrapper = document.getElementById('MainPriceWrapper-{{ section.id }}');
 
+    function formatMoney(cents) {
+      if (window.Shopify && window.Shopify.formatMoney) {
+        return window.Shopify.formatMoney(cents);
+      }
+      return '₹' + (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+    }
+
+    function recalculatePrices() {
+      const activeCard = document.querySelector('#ComboGrid-{{ section.id }} .by-combo-card.active');
+      if(!activeCard) return;
+
+      const radio = activeCard.querySelector('input[type="radio"]');
+      if(!radio) return;
+
+      const qty = parseInt(qtyPicker.value) || 1;
+      if(formQtyInput) formQtyInput.value = qty;
+      if(mainVariantInput) mainVariantInput.value = radio.value;
+
+      const rawPrice = parseInt(radio.getAttribute('data-raw-price')) || 0;
+      const rawCompare = parseInt(radio.getAttribute('data-raw-compare')) || 0;
+
+      const totalCents = rawPrice * qty;
+      const totalCompareCents = rawCompare * qty;
+
+      if(topPrice) topPrice.innerHTML = formatMoney(totalCents);
+      
+      if(topCompare) {
+        if(totalCompareCents > totalCents) {
+          topCompare.innerHTML = formatMoney(totalCompareCents);
+          topCompare.style.display = 'inline-block';
+        } else {
+          topCompare.style.display = 'none';
+        }
+      }
+
+      if(topSaveBadge) {
+        if(totalCompareCents > totalCents) {
+          const savePct = Math.round(((totalCompareCents - totalCents) / totalCompareCents) * 100);
+          topSaveBadge.innerHTML = 'Save ' + savePct + '%';
+          topSaveBadge.style.display = 'inline-block';
+        } else {
+          topSaveBadge.style.display = 'none';
+        }
+      }
+    }
+
+    if(qtyMinus && qtyPlus && qtyPicker) {
+      qtyMinus.addEventListener('click', function() {
+        let val = parseInt(qtyPicker.value) || 1;
+        if(val > 1) {
+          qtyPicker.value = val - 1;
+          recalculatePrices();
+        }
+      });
+      qtyPlus.addEventListener('click', function() {
+        let val = parseInt(qtyPicker.value) || 1;
+        qtyPicker.value = val + 1;
+        recalculatePrices();
+      });
+      qtyPicker.addEventListener('change', function() {
+        let val = parseInt(this.value) || 1;
+        if(val < 1) this.value = 1;
+        recalculatePrices();
+      });
+    }
+
+    const grid = document.getElementById('ComboGrid-{{ section.id }}');
     if(grid) {
       const cards = grid.querySelectorAll('.by-combo-card');
       cards.forEach(card => {
         card.addEventListener('click', function() {
           cards.forEach(c => c.classList.remove('active'));
           this.classList.add('active');
-          
           const radio = this.querySelector('input[type="radio"]');
-          if(radio) {
-            radio.checked = true;
-            if(mainVariantInput) mainVariantInput.value = radio.value;
-            
-            if(priceWrapper) {
-              priceWrapper.style.opacity = '0';
-              setTimeout(() => {
-                if(topPrice && radio.dataset.price) topPrice.innerHTML = radio.dataset.price;
-                if(topCompare) {
-                  if(radio.dataset.compare) {
-                    topCompare.innerHTML = radio.dataset.compare;
-                    topCompare.style.display = 'inline-block';
-                  } else {
-                    topCompare.style.display = 'none';
-                  }
-                }
-                if(topSaveBadge) {
-                  if(radio.dataset.save) {
-                    topSaveBadge.innerHTML = 'Save ' + radio.dataset.save + '%';
-                    topSaveBadge.style.display = 'inline-block';
-                  } else {
-                    topSaveBadge.style.display = 'none';
-                  }
-                }
-                priceWrapper.style.opacity = '1';
-              }, 150);
-            }
-          }
+          if(radio) radio.checked = true;
+          recalculatePrices();
         });
       });
     }
 
-    // 3. Pincode Availability Checker
+    // 3. Coupon Engine & Auto-Apply
+    const copyBtns = document.querySelectorAll('.by-offer-copy');
+    copyBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const code = this.getAttribute('data-code');
+        activeCouponCode = code;
+        try { sessionStorage.setItem('lx_applied_coupon', code); } catch(err){}
+
+        copyBtns.forEach(b => {
+          b.classList.remove('applied');
+          const s = b.querySelector('span');
+          if(s) s.innerText = 'APPLY COUPON';
+        });
+
+        this.classList.add('applied');
+        const span = this.querySelector('span');
+        if(span) span.innerText = 'APPLIED! ✅';
+
+        if(navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(code);
+        }
+      });
+    });
+
+    // 4. Buy Now & Add to Cart Action Dispatchers
+    function doBuyNow() {
+      const variantId = mainVariantInput ? mainVariantInput.value : '';
+      const qty = qtyPicker ? qtyPicker.value : 1;
+      let checkoutUrl = '/cart/' + variantId + ':' + qty;
+      if(activeCouponCode) {
+        checkoutUrl += '?discount=' + encodeURIComponent(activeCouponCode);
+      }
+      window.location.href = checkoutUrl;
+    }
+
+    function doAddToCart() {
+      const variantId = mainVariantInput ? mainVariantInput.value : '';
+      const qty = qtyPicker ? qtyPicker.value : 1;
+      fetch((window.Shopify.routes.root || '/') + 'cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: parseInt(qty) })
+      })
+      .then(r => r.json())
+      .then(data => {
+        let cartUrl = '/cart';
+        if(activeCouponCode) cartUrl += '?discount=' + encodeURIComponent(activeCouponCode);
+        window.location.href = cartUrl;
+      })
+      .catch(err => {
+        console.error('Add to cart error:', err);
+        window.location.href = '/cart';
+      });
+    }
+
+    const buyBtnDesktop = document.getElementById('BuyBtnDesktop-{{ section.id }}');
+    const buyBtnMobile = document.getElementById('BuyBtnMobile-{{ section.id }}');
+    const submitBtnDesktop = document.getElementById('SubmitBtnDesktop-{{ section.id }}');
+    const submitBtnMobile = document.getElementById('SubmitBtnMobile-{{ section.id }}');
+
+    if(buyBtnDesktop) buyBtnDesktop.addEventListener('click', doBuyNow);
+    if(buyBtnMobile) buyBtnMobile.addEventListener('click', doBuyNow);
+    if(submitBtnDesktop) submitBtnDesktop.addEventListener('click', doAddToCart);
+    if(submitBtnMobile) submitBtnMobile.addEventListener('click', doAddToCart);
+
+    // 5. Pincode Availability Checker
     const pinInput = document.getElementById('DeliveryPincodeInput-{{ section.id }}');
     const pinBtn = document.getElementById('DeliveryPincodeBtn-{{ section.id }}');
     const pinResult = document.getElementById('DeliveryResult-{{ section.id }}');
@@ -1182,28 +1338,7 @@
       });
     }
 
-    // 4. Coupon Copy Engine
-    const copyBtns = document.querySelectorAll('.by-offer-copy');
-    copyBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const code = this.getAttribute('data-code');
-        const span = this.querySelector('span');
-        if(navigator.clipboard && window.isSecureContext) {
-          navigator.clipboard.writeText(code).then(() => {
-            if(span) span.innerText = 'COPIED!';
-            setTimeout(() => { if(span) span.innerText = 'CLICK TO COPY'; }, 2000);
-          });
-        } else {
-          const textArea = document.createElement("textarea");
-          textArea.value = code; document.body.appendChild(textArea);
-          textArea.select(); document.execCommand("copy"); textArea.remove();
-          if(span) span.innerText = 'COPIED!';
-          setTimeout(() => { if(span) span.innerText = 'CLICK TO COPY'; }, 2000);
-        }
-      });
-    });
-
-    // 5. Native Share API Engine
+    // 6. Native Share API Engine
     const shareBtn = document.getElementById('ShareBtn-{{ section.id }}');
     if(shareBtn) {
       shareBtn.addEventListener('click', function() {
@@ -1213,32 +1348,14 @@
             url: window.location.href
           }).catch(console.error);
         } else {
-          navigator.clipboard.writeText(window.location.href);
+          if(navigator.clipboard) navigator.clipboard.writeText(window.location.href);
           alert('Product link copied to clipboard!');
         }
       });
     }
 
-    // 6. Live Countdown Engine
-    const timerBadges = document.querySelectorAll('.timer-badge');
-    if(timerBadges.length > 0) {
-      setInterval(() => {
-        const now = new Date().getTime();
-        timerBadges.forEach(badge => {
-          let targetStr = badge.getAttribute('data-endtime').replace(/-/g, '/');
-          const countDownDate = new Date(targetStr).getTime();
-          const distance = countDownDate - now;
-          if (distance < 0) {
-            badge.innerHTML = "EXPIRED";
-          } else {
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            badge.innerHTML = `Ends in ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
-          }
-        });
-      }, 1000);
-    }
+    // Initial pricing sync
+    recalculatePrices();
   });
 </script>
 
@@ -1397,7 +1514,7 @@
           "type": "text",
           "id": "title",
           "label": "Offer Title",
-          "default": "Freeship"
+          "default": "FREESHIP"
         },
         {
           "type": "text",
@@ -1440,7 +1557,7 @@
           "type": "text",
           "id": "card_label",
           "label": "Creative Highlight Text",
-          "info": "E.g. 'One Card', 'Three Cards', 'Five Cards'."
+          "info": "E.g. '1 Card', '3 Cards', '5 Cards'."
         },
         {
           "type": "text",
