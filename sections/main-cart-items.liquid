@@ -528,9 +528,11 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
                                  type="number"
                                  name="updates[]"
                                  value="{{ item.quantity }}"
-                                 min="0"
+                                 min="1"
                                  step="1"
                                  data-index="{{ line_index }}"
+                                 data-compare-price="{{ item.variant.compare_at_price | default: item.variant.price }}"
+                                 data-unit-price="{{ item.variant.price }}"
                                  data-quantity-variant-id="{{ item.variant.id }}"
                                  id="Quantity-{{ line_index }}"
                                  onchange="lxQtyInputChange(this)">
@@ -1269,16 +1271,33 @@ function lxOpenVariantModal(productId) {
     var subtotalCents = 0;
     var totalMrpCents = 0;
 
+    // Update DOM inputs if cartData is passed from AJAX
     if (cartData && cartData.items && cartData.items.length > 0) {
-      cartData.items.forEach(function(item) {
-        var unitPrice = item.price || item.final_price || 0;
-        var compPrice = item.compare_at_price || item.original_price || unitPrice;
-        if (compPrice < unitPrice) compPrice = unitPrice;
-        var q = item.quantity || 1;
-        subtotalCents += (item.final_line_price !== undefined ? item.final_line_price : unitPrice * q);
-        totalMrpCents += compPrice * q;
+      cartData.items.forEach(function(item, idx) {
+        var lineNum = idx + 1;
+        var input = document.getElementById('Quantity-' + lineNum);
+        if (input) {
+          input.value = item.quantity;
+          if (item.price !== undefined) input.setAttribute('data-unit-price', item.price);
+          var comp = item.compare_at_price || item.variant_options_compare || item.price;
+          if (comp) input.setAttribute('data-compare-price', comp);
+        }
       });
-    } else {
+    }
+
+    // Read all line items from DOM inputs for accurate total MRP calculation
+    var qtyInputs = document.querySelectorAll('.lx-qty-input');
+    qtyInputs.forEach(function(input) {
+      var q = parseInt(input.value) || 1;
+      var unitP = parseInt(input.getAttribute('data-unit-price')) || 0;
+      var compP = parseInt(input.getAttribute('data-compare-price')) || unitP;
+      if (compP < unitP) compP = unitP;
+
+      subtotalCents += unitP * q;
+      totalMrpCents += compP * q;
+    });
+
+    if (qtyInputs.length === 0) {
       subtotalCents = {{ cart.items_subtotal_price | default: cart.total_price | default: 0 }};
       {% for item in cart.items %}
         {% assign item_comp = item.variant.compare_at_price %}
