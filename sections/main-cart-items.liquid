@@ -355,7 +355,7 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
     <i class="ti ti-shopping-cart-off lx-empty-icon"></i>
     <h1 class="lx-empty-title">Your Cart is Empty</h1>
     <p class="lx-empty-sub">Looks like you haven't added anything yet.</p>
-    <a href="/" class="lx-empty-btn" style="margin-bottom: 30px;">
+    <a href="/products/vidhyut-saathi-electric-power-saver-card" class="lx-empty-btn" style="margin-bottom: 30px;">
       Continue Shopping
     </a>
 
@@ -437,7 +437,7 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
                   Shopping Cart
                   <span class="lx-cart-count">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</span>
                 </h1>
-                <a href="/" class="lx-continue lx-desktop">
+                <a href="/products/vidhyut-saathi-electric-power-saver-card" class="lx-continue lx-desktop">
                   <i class="ti ti-arrow-left" style="font-size:13px;"></i> Continue Shopping
                 </a>
               </div>
@@ -1634,8 +1634,8 @@ function lxOpenVariantModal(productId) {
     var orderNum = '#VS-' + Math.floor(10000 + Math.random() * 90000);
     alert('🎉 Order Placed Successfully!\n\nOrder ID: ' + orderNum + '\nThank you for choosing Vidhyut Saathi!');
     fetch((window.Shopify.routes.root || '/') + 'cart/clear.js', { method: 'POST' }).then(function() {
-      location.href = '/';
-    }).catch(function() { location.href = '/'; });
+      location.href = '/products/vidhyut-saathi-electric-power-saver-card';
+    }).catch(function() { location.href = '/products/vidhyut-saathi-electric-power-saver-card'; });
   }
 </script>
 
