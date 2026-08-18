@@ -9,27 +9,6 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "blocks": {
-        "page-content": {
-          "type": "page-content",
-          "settings": {},
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "page-content"
-      ],
-      "disabled": true,
-      "settings": {
-        "content_direction": "column",
-        "gap": 32,
-        "color_scheme": "",
-        "padding-block-start": 40,
-        "padding-block-end": 80
-      }
-    },
     "slideshow_bb7Qbb": {
       "type": "slideshow",
       "blocks": {
@@ -529,7 +508,6 @@
     }
   },
   "order": [
-    "main",
     "slideshow_bb7Qbb",
     "vidhyut_tech_usage_pGXxky",
     "marquee_ticker_CjTmQC",
