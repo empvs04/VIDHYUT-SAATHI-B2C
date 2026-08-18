@@ -433,7 +433,7 @@
           {% if section.settings.logo != blank %}
             <img src="{{ section.settings.logo | img_url: 'master' }}" alt="{{ shop.name }}">
           {% else %}
-            <h2>{{ shop.name }}</h2>
+            <img src="{{ 'vidhyut-saathi-logo.png' | asset_url }}" alt="{{ shop.name }}" style="max-width: {{ section.settings.logo_width }}px; height: auto; display: block; object-fit: contain;">
           {% endif %}
         </a>
       </div>
