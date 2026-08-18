@@ -116,6 +116,21 @@
       align-self: start !important;
       z-index: 10;
     }
+    .by-content-wrapper {
+      max-height: calc(100vh - 110px) !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain !important;
+      padding-right: 8px !important;
+      scrollbar-width: thin;
+      scrollbar-color: #ddd transparent;
+    }
+    .by-content-wrapper::-webkit-scrollbar {
+      width: 5px;
+    }
+    .by-content-wrapper::-webkit-scrollbar-thumb {
+      background: #ddd;
+      border-radius: 4px;
+    }
   }
 
   .by-5-thumbs-row {
