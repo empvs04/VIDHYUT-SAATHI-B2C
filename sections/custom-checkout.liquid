@@ -477,8 +477,12 @@
   <!-- TOP HEADER BAR -->
   <header class="vs-checkout-header">
     <div class="vs-checkout-header-inner">
-      <a href="/" class="vs-checkout-logo">
-        <span class="vs-checkout-title">⚡ VIDHYUT SAATHI</span>
+      <a href="{{ routes.root_url }}" class="vs-checkout-logo">
+        {% if settings.logo != blank %}
+          <img src="{{ settings.logo | img_url: 'master' }}" alt="{{ shop.name }}" style="height: 48px; width: auto; max-width: 180px; object-fit: contain; display: block;">
+        {% else %}
+          <img src="{{ 'vidhyut-saathi-logo.png' | asset_url }}" alt="{{ shop.name }}" style="height: 48px; width: auto; max-width: 180px; object-fit: contain; display: block;">
+        {% endif %}
       </a>
       <div class="vs-secure-badge">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>

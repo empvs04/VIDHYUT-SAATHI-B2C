@@ -1558,7 +1558,13 @@ function lxOpenVariantModal(productId) {
 <div id="vs-checkout-drawer-overlay" style="display:none; position:fixed; inset:0; background:#f1f3f6; z-index:99999; overflow-y:auto;">
   <div style="background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; padding:12px 20px; display:flex; justify-content:space-between; align-items:center;">
     <div style="display:flex; align-items:center; gap:10px;">
-      <span style="font-size:1.1rem; font-weight:900; color:#ec5c0a;">⚡ VIDHYUT SAATHI</span>
+      <a href="{{ routes.root_url }}" title="{{ shop.name }}" style="display:inline-block;">
+        {% if settings.logo != blank %}
+          <img src="{{ settings.logo | img_url: 'master' }}" alt="{{ shop.name }}" style="height: 42px; width: auto; max-width: 160px; object-fit: contain; display: block;">
+        {% else %}
+          <img src="{{ 'vidhyut-saathi-logo.png' | asset_url }}" alt="{{ shop.name }}" style="height: 42px; width: auto; max-width: 160px; object-fit: contain; display: block;">
+        {% endif %}
+      </a>
     </div>
     <div style="display:flex; align-items:center; gap:14px;">
       <span style="font-size:0.85rem; font-weight:700; color:#2e7d32; background:#e8f5e9; padding:4px 10px; border-radius:20px;">🔒 100% Secure Checkout</span>
