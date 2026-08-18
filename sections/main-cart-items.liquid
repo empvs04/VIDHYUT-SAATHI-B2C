@@ -1579,18 +1579,27 @@ function lxOpenVariantModal(productId) {
       .vs-overlay-form-grid textarea {
         grid-column: span 1 !important;
       }
+      .vs-card-fields-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .vs-card-fields-grid input {
+        grid-column: span 1 !important;
+      }
       .vs-overlay-logo-img {
         height: 36px !important;
         max-width: 130px !important;
       }
       .vs-chk-grid-container {
         margin: 10px auto !important;
-        padding: 0 10px 100px 10px !important;
+        padding: 0 10px 120px 10px !important;
+      }
+      .vs-mob-sticky-bar {
+        display: flex !important;
       }
     }
   </style>
 
-  <div style="max-width:1100px; margin:20px auto; padding:0 16px 60px 16px; display:grid; grid-template-columns:1fr; gap:20px;" class="vs-chk-grid-container">
+  <div style="max-width:1100px; margin:20px auto; padding:0 16px 80px 16px; display:grid; grid-template-columns:1fr; gap:20px;" class="vs-chk-grid-container">
     <div>
       <div style="background:#fff; border-radius:8px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); margin-bottom:16px;">
         <h3 style="margin:0 0 16px; font-size:1rem; font-weight:800; text-transform:uppercase; color:#ec5c0a;">1. Delivery Address</h3>
@@ -1650,7 +1659,7 @@ function lxOpenVariantModal(productId) {
               <span>💳 Credit / Debit / ATM Card</span>
             </label>
             
-            <div id="vs-fields-card" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed #e0e0e0; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div id="vs-fields-card" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed #e0e0e0; gap:10px;" class="vs-card-fields-grid">
               <input type="text" id="vs-card-num" placeholder="Card Number (16 digits) *" maxlength="19" style="grid-column:span 2; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:0.9rem;">
               <input type="text" id="vs-card-exp" placeholder="MM / YY *" maxlength="5" style="padding:10px; border:1px solid #ccc; border-radius:6px; font-size:0.9rem;">
               <input type="password" id="vs-card-cvv" placeholder="CVV *" maxlength="4" style="padding:10px; border:1px solid #ccc; border-radius:6px; font-size:0.9rem;">
@@ -1714,6 +1723,18 @@ function lxOpenVariantModal(productId) {
       </div>
     </div>
   </div>
+
+  <!-- STICKY MOBILE PLACE ORDER BOTTOM BAR -->
+  <div class="vs-mob-sticky-bar" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#fff; box-shadow:0 -4px 16px rgba(0,0,0,0.12); padding:12px 16px; z-index:999999; justify-content:space-between; align-items:center; border-top:1px solid #eee;">
+    <div style="display:flex; flex-direction:column;">
+      <span style="font-size:0.75rem; color:#777; text-transform:uppercase; font-weight:700;">Payable Amount</span>
+      <span id="vs-mob-sticky-amount" style="font-size:1.1rem; font-weight:900; color:#1a1a1a;">{{ cart.total_price | money }}</span>
+    </div>
+    <button type="button" onclick="vsPlaceOrderFinal()" style="background:linear-gradient(135deg, #ec5c0a, #ff9a00); color:#fff; border:none; padding:12px 24px; border-radius:6px; font-weight:900; font-size:0.95rem; cursor:pointer; text-transform:uppercase; box-shadow:0 4px 12px rgba(236,92,10,0.35);">
+      PLACE ORDER
+    </button>
+  </div>
+</div>
 </div>
 
 <script>
