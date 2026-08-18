@@ -74,54 +74,63 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
   }
 
   @media (min-width: 992px) {
     .by-media-gallery {
       position: sticky;
       top: 90px;
-      flex-direction: row;
-      align-items: flex-start;
-    }
-  }
-
-  .by-thumbnails {
-    display: flex;
-    gap: 10px;
-    padding: 4px 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .by-thumbnails::-webkit-scrollbar { display: none; }
-
-  @media (min-width: 992px) {
-    .by-thumbnails {
       flex-direction: column;
-      overflow-y: auto;
-      max-height: 500px;
-      padding-right: 6px;
-      flex-shrink: 0;
+      align-items: stretch;
     }
   }
 
-  .by-thumb {
-    width: 65px;
-    height: 75px;
-    border-radius: 8px;
-    border: 2px solid var(--border-color);
-    overflow: hidden;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: #fff;
+  .by-5-thumbs-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    width: 100%;
+    margin-top: 4px;
   }
-  .by-thumb:hover, .by-thumb.active {
-    border-color: #ec5c0a;
-    box-shadow: 0 4px 12px rgba(236, 92, 10, 0.25);
+
+  .by-5-thumb-item {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 10px;
+    border: 2px solid var(--border-color, #e0e0e0);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .by-5-thumb-item:hover, .by-5-thumb-item.active {
+    border-color: #ec5c0a !important;
+    box-shadow: 0 4px 14px rgba(236, 92, 10, 0.35) !important;
     transform: translateY(-2px);
   }
-  .by-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  .by-5-thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .by-5-thumbs-row {
+      grid-template-columns: repeat(5, 1fr) !important;
+      gap: 6px !important;
+      margin-top: 4px !important;
+    }
+    .by-5-thumb-item {
+      border-radius: 8px !important;
+      aspect-ratio: 4 / 5 !important;
+    }
+  }
 
   .by-main-image-wrap {
     width: 100%;
@@ -878,16 +887,6 @@
           
           <!-- LEFT COLUMN: MEDIA GALLERY -->
           <div class="by-media-gallery">
-            {%- if product.media.size > 1 -%}
-              <div class="by-thumbnails">
-                {%- for media in product.media -%}
-                  <div class="by-thumb {% if forloop.first %}active{% endif %}" data-src="{{ media | img_url: '1000x' }}">
-                    <img src="{{ media | img_url: '150x150', crop: 'center' }}" alt="{{ media.alt | escape }}" loading="lazy">
-                  </div>
-                {%- endfor -%}
-              </div>
-            {%- endif -%}
-
             <div class="by-main-image-wrap">
               <div class="by-image-badge">
                 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -896,7 +895,33 @@
               {%- if product.featured_media -%}
                 <img id="MainProductImage-{{ section.id }}" src="{{ product.featured_media | img_url: '1000x' }}" alt="{{ product.title | escape }}">
               {%- else -%}
-                <div style="width: 100%; height: 100%; background: #e0e0e0; display:flex; align-items:center; justify-content:center; color: #666;">Product Image</div>
+                <img id="MainProductImage-{{ section.id }}" src="{{ 'vidhyut-logo-official.png' | asset_url }}" alt="{{ product.title | escape }}">
+              {%- endif -%}
+            </div>
+
+            <!-- 5 THUMBNAILS 4:5 ROW BELOW MAIN IMAGE -->
+            <div class="by-5-thumbs-row">
+              {%- assign total_imgs = product.media.size -%}
+              {%- if total_imgs > 0 -%}
+                {%- for media in product.media limit: 5 -%}
+                  <div class="by-5-thumb-item {% if forloop.first %}active{% endif %}" onclick="bySwitchMainImage('{{ section.id }}', '{{ media | img_url: '1000x' }}', this)">
+                    <img src="{{ media | img_url: '400x500', crop: 'center' }}" alt="{{ media.alt | default: product.title | escape }}" loading="lazy">
+                  </div>
+                {%- endfor -%}
+                {%- if total_imgs < 5 -%}
+                  {%- assign needed = 5 | minus: total_imgs -%}
+                  {%- for i in (1..needed) -%}
+                    <div class="by-5-thumb-item" onclick="bySwitchMainImage('{{ section.id }}', '{{ product.featured_media | img_url: '1000x' }}', this)">
+                      <img src="{{ product.featured_media | img_url: '400x500', crop: 'center' }}" alt="{{ product.title | escape }}" loading="lazy">
+                    </div>
+                  {%- endfor -%}
+                {%- endif -%}
+              {%- else -%}
+                {%- for i in (1..5) -%}
+                  <div class="by-5-thumb-item {% if forloop.first %}active{% endif %}" onclick="bySwitchMainImage('{{ section.id }}', '{{ 'vidhyut-logo-official.png' | asset_url }}', this)">
+                    <img src="{{ 'vidhyut-logo-official.png' | asset_url }}" alt="Vidhyut Saathi" loading="lazy">
+                  </div>
+                {%- endfor -%}
               {%- endif -%}
             </div>
           </div>
@@ -1424,6 +1449,22 @@
     // Initial pricing sync
     recalculatePrices();
   });
+
+  function bySwitchMainImage(sectionId, newSrc, el) {
+    var mainImg = document.getElementById('MainProductImage-' + sectionId);
+    if (mainImg) {
+      mainImg.style.transition = 'opacity 0.2s ease';
+      mainImg.style.opacity = '0.3';
+      mainImg.src = newSrc;
+      setTimeout(function() { mainImg.style.opacity = '1'; }, 100);
+    }
+    var container = el.parentElement;
+    if (container) {
+      var items = container.querySelectorAll('.by-5-thumb-item');
+      items.forEach(function(item) { item.classList.remove('active'); });
+    }
+    el.classList.add('active');
+  }
 </script>
 
 {% schema %}
