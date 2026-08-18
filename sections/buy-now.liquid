@@ -144,6 +144,40 @@
     transform: scale(1.05);
   }
 
+  @media (max-width: 768px) {
+    .by-media-gallery {
+      gap: 10px !important;
+    }
+    .by-main-image-wrap {
+      border-radius: 12px !important;
+      aspect-ratio: 1 / 1 !important;
+      background: #fafafa !important;
+    }
+    .by-main-image-wrap img {
+      object-fit: contain !important;
+      padding: 6px !important;
+    }
+    .by-image-badge {
+      top: 10px !important;
+      left: 10px !important;
+      font-size: 0.68rem !important;
+      padding: 4px 10px !important;
+    }
+    .by-thumbnails {
+      display: flex !important;
+      gap: 8px !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      padding: 4px 2px !important;
+      margin-top: 4px !important;
+    }
+    .by-thumb {
+      width: 58px !important;
+      height: 64px !important;
+      border-radius: 6px !important;
+    }
+  }
+
   .by-image-badge {
     position: absolute;
     top: 14px;
