@@ -1572,18 +1572,34 @@ function lxOpenVariantModal(productId) {
         grid-template-columns: 1.6fr 1fr !important;
       }
     }
+    @media (max-width: 768px) {
+      .vs-overlay-form-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .vs-overlay-form-grid textarea {
+        grid-column: span 1 !important;
+      }
+      .vs-overlay-logo-img {
+        height: 36px !important;
+        max-width: 130px !important;
+      }
+      .vs-chk-grid-container {
+        margin: 10px auto !important;
+        padding: 0 10px 100px 10px !important;
+      }
+    }
   </style>
 
   <div style="max-width:1100px; margin:20px auto; padding:0 16px 60px 16px; display:grid; grid-template-columns:1fr; gap:20px;" class="vs-chk-grid-container">
     <div>
       <div style="background:#fff; border-radius:8px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); margin-bottom:16px;">
         <h3 style="margin:0 0 16px; font-size:1rem; font-weight:800; text-transform:uppercase; color:#ec5c0a;">1. Delivery Address</h3>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-          <input type="text" id="vs-overlay-name" placeholder="Full Name *" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
-          <input type="tel" id="vs-overlay-phone" placeholder="Mobile Number *" maxlength="10" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
-          <input type="text" id="vs-overlay-pin" placeholder="Pincode *" maxlength="6" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
-          <input type="text" id="vs-overlay-city" placeholder="City / District *" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
-          <textarea id="vs-overlay-addr" placeholder="Flat, House No, Street Address *" rows="2" style="grid-column:span 2; padding:10px; border:1px solid #ccc; border-radius:6px;"></textarea>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" class="vs-overlay-form-grid">
+          <input type="text" id="vs-overlay-name" placeholder="Full Name *" style="padding:12px; border:1px solid #ccc; border-radius:6px; font-size:14px;">
+          <input type="tel" id="vs-overlay-phone" placeholder="Mobile Number *" maxlength="10" style="padding:12px; border:1px solid #ccc; border-radius:6px; font-size:14px;">
+          <input type="text" id="vs-overlay-pin" placeholder="Pincode *" maxlength="6" style="padding:12px; border:1px solid #ccc; border-radius:6px; font-size:14px;">
+          <input type="text" id="vs-overlay-city" placeholder="City / District *" style="padding:12px; border:1px solid #ccc; border-radius:6px; font-size:14px;">
+          <textarea id="vs-overlay-addr" placeholder="Flat, House No, Street Address *" rows="2" style="grid-column:span 2; padding:12px; border:1px solid #ccc; border-radius:6px; font-size:14px;"></textarea>
         </div>
       </div>
 
