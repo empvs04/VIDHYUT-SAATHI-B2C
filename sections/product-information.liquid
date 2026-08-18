@@ -74,7 +74,6 @@
       width: 100% !important;
       margin-top: 0 !important;
       padding-top: 0 !important;
-      overflow: visible !important;
     }
     .by-media-gallery {
       width: 100% !important;
@@ -85,9 +84,7 @@
       position: -webkit-sticky !important;
       position: sticky !important;
       top: 90px !important;
-      height: fit-content !important;
       z-index: 10 !important;
-      overflow: visible !important;
     }
     .by-content-wrapper {
       width: 100% !important;
@@ -95,6 +92,10 @@
       margin-top: 0 !important;
       padding-top: 0 !important;
       align-self: start !important;
+      max-height: calc(100vh - 110px) !important;
+      overflow-y: scroll !important;
+      overscroll-behavior: contain !important;
+      padding-right: 10px !important;
     }
     .by-main-image-wrap {
       margin-top: 0 !important;
