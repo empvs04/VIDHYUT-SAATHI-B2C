@@ -46,8 +46,8 @@
       "settings": {
         "show_top_bar": true,
         "top_bar_left_text": "Need Help? Call Us: +91 9876543210",
-        "franchise_text": "BECOME A DEALER / FRANCHISE",
-        "franchise_link": "/pages/contact",
+        "franchise_text": "GET CARD",
+        "franchise_link": "/products/vidhyut-saathi-electric-power-saver-card",
         "top_bar_bg": "#1a1a1a",
         "top_bar_text_color": "#ffffff",
         "top_bar_font_size": 12,
