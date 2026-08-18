@@ -28,6 +28,8 @@
     white-space: nowrap;
     overflow: hidden;
     border-bottom: 1px solid {{ section.settings.border_color }};
+    box-sizing: border-box;
+    width: 100%;
   }
   
   .vidhyut-top-bar-{{ section.id }} .top-bar-left {
@@ -65,10 +67,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 24px;
+    padding: 10px 24px;
     margin: 0;
     height: auto;
     gap: 30px;
+    box-sizing: border-box;
+    width: 100%;
   }
   
   /* Logo Section */
@@ -384,7 +388,7 @@
       justify-content: space-between; 
       align-items: center;
       font-size: 11px;
-      padding: 8px 3%;
+      padding: 8px 16px !important;
       gap: 10px;
     }
     
@@ -399,7 +403,7 @@
     }
     
     .vidhyut-main-header-{{ section.id }} { 
-      padding: 8px 3%;
+      padding: 8px 16px !important;
       gap: 15px;
     }
     
@@ -425,11 +429,11 @@
   @media screen and (max-width: 480px) {
     .vidhyut-top-bar-{{ section.id }} { 
       font-size: 9px;
-      padding: 6px 2%;
+      padding: 8px 12px !important;
     }
     
     .vidhyut-main-header-{{ section.id }} { 
-      padding: 6px 2%;
+      padding: 8px 12px !important;
     }
   }
 {%- endstyle -%}
