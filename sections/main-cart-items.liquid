@@ -282,24 +282,38 @@ cart-remove-button .button { min-width: auto; min-height: auto; }
 @keyframes lxShimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
 
-/* ═══════════════ MOBILE STICKY BAR ═══════════════ */
+/* ═══════════════ MOBILE RESPONSIVE & STICKY BAR ═══════════════ */
 @media (max-width: 989px) {
-  .lx-cart { padding-bottom: 110px; }
+  .lx-cart { padding-bottom: 120px; width: 100% !important; overflow-x: hidden !important; }
+  .lx-container { padding: 0 12px; gap: 16px; width: 100% !important; box-sizing: border-box !important; }
+  .lx-cart-header { flex-direction: row; align-items: center; margin-bottom: 14px; }
+  .lx-cart-title { font-size: 18px; }
+  .lx-cart-item { padding: 12px; gap: 10px; border-radius: 12px; }
+  .lx-item-img { width: 76px; height: 98px; border-radius: 8px; }
+  .lx-final-price { font-size: 15px; }
+  .lx-summary-card { padding: 16px; border-radius: 12px; }
+  .lx-qty-control { height: 38px !important; border-radius: 6px !important; }
+  .lx-qty-btn { width: 38px !important; height: 38px !important; font-size: 14px !important; }
+  .lx-qty-input { width: 40px !important; font-size: 14px !important; }
+  .lx-remove-btn { padding: 8px 6px; font-size: 13px; font-weight: 600; }
+  .lx-coupon-input-row { gap: 6px; }
+  .lx-coupon-input { height: 42px; font-size: 13px; padding: 0 10px; }
+  .lx-coupon-apply-btn { height: 42px; padding: 0 16px; font-size: 13px; }
   .lx-mobile-bar {
     position: fixed; bottom: 0; left: 0; right: 0;
-    background: var(--lx-surface);
+    background: #ffffff;
     border-top: 1px solid var(--lx-border);
-    padding: 12px 18px;
+    padding: 12px 16px;
     display: flex; justify-content: space-between; align-items: center;
-    box-shadow: 0 -6px 24px rgba(0,0,0,0.10);
+    box-shadow: 0 -6px 24px rgba(0,0,0,0.12);
     z-index: 9999;
-    gap: 14px;
+    gap: 12px;
   }
   .lx-mob-total { display: flex; flex-direction: column; gap: 1px; }
-  .lx-mob-total-label { font-size: 10.5px; color: var(--lx-text-light); }
-  .lx-mob-total-val { font-size: 20px; font-weight: 700; color: var(--lx-text); line-height: 1; }
-  .lx-mob-savings { font-size: 10px; color: var(--lx-success); font-weight: 500; }
-  .lx-mobile-bar .lx-checkout-btn { width: auto !important; flex: 1 !important; padding: 13px 20px !important; font-size: 15px !important; margin-top: 0 !important; }
+  .lx-mob-total-label { font-size: 11px; color: var(--lx-text-light); font-weight: 500; }
+  .lx-mob-total-val { font-size: 18px; font-weight: 800; color: var(--lx-text); line-height: 1.1; }
+  .lx-mob-savings { font-size: 10px; color: var(--lx-success); font-weight: 600; }
+  .lx-mobile-bar .lx-checkout-btn { width: auto !important; flex: 1 !important; padding: 14px 18px !important; font-size: 15px !important; margin-top: 0 !important; border-radius: 10px !important; }
 }
 
 /* ═══════════════ ANIMATIONS ═══════════════ */
@@ -1037,17 +1051,9 @@ function lxRefreshCartUI(cart) {
   });
   
   // Update totals
-  if (cart.original_total_price !== undefined) {
-    var mrpEl = document.getElementById('lx-total-mrp');
-    if (mrpEl) mrpEl.textContent = lxFormatMoney(cart.original_total_price);
-  }
-  
-  if (cart.total_price !== undefined) {
-    var grandEl = document.getElementById('lx-grand-total');
-    if (grandEl) grandEl.textContent = lxFormatMoney(cart.total_price);
-    
-    var mobGrandEl = document.getElementById('lx-mob-grand-total');
-    if (mobGrandEl) mobGrandEl.textContent = lxFormatMoney(cart.total_price);
+  // Update totals dynamically with live cart object
+  if (window.lxRecalculateCartSummary) {
+    window.lxRecalculateCartSummary(cart);
   }
   
   // Update cart icon bubble if it exists
@@ -1272,18 +1278,30 @@ function lxOpenVariantModal(productId) {
   const STORAGE_KEY = 'lx_coupon_code';
   const STORAGE_TIME = 'lx_coupon_time';
 
-  function lxRecalculateCartSummary() {
+  window.lxRecalculateCartSummary = function(cartData) {
     var code = localStorage.getItem(STORAGE_KEY) || '';
-    var subtotalCents = {{ cart.items_subtotal_price | default: cart.total_price | default: 0 }};
+    var subtotalCents = 0;
     var totalMrpCents = 0;
 
-    {% for item in cart.items %}
-      {% assign item_comp = item.variant.compare_at_price %}
-      {% if item_comp == blank or item_comp <= item.variant.price %}
-        {% assign item_comp = item.variant.price %}
-      {% endif %}
-      totalMrpCents += {{ item_comp | times: item.quantity }};
-    {% endfor %}
+    if (cartData && cartData.items && cartData.items.length > 0) {
+      cartData.items.forEach(function(item) {
+        var unitPrice = item.price || item.final_price || 0;
+        var compPrice = item.compare_at_price || item.original_price || unitPrice;
+        if (compPrice < unitPrice) compPrice = unitPrice;
+        var q = item.quantity || 1;
+        subtotalCents += (item.final_line_price !== undefined ? item.final_line_price : unitPrice * q);
+        totalMrpCents += compPrice * q;
+      });
+    } else {
+      subtotalCents = {{ cart.items_subtotal_price | default: cart.total_price | default: 0 }};
+      {% for item in cart.items %}
+        {% assign item_comp = item.variant.compare_at_price %}
+        {% if item_comp == blank or item_comp <= item.variant.price %}
+          {% assign item_comp = item.variant.price %}
+        {% endif %}
+        totalMrpCents += {{ item_comp | times: item.quantity }};
+      {% endfor %}
+    }
 
     var mrpDiscountCents = Math.max(0, totalMrpCents - subtotalCents);
 
