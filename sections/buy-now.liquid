@@ -66,22 +66,23 @@
     }
 
     .by-desktop-layout {
-      display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
+      display: flex !important;
+      flex-direction: row !important;
       gap: 36px !important;
-      align-items: stretch !important;
-      align-content: start !important;
+      align-items: flex-start !important;
       width: 100% !important;
       margin-top: 0 !important;
       padding-top: 0 !important;
       overflow: visible !important;
     }
     .by-media-gallery {
-      width: 100% !important;
+      flex: 0 0 calc(50% - 18px) !important;
+      width: calc(50% - 18px) !important;
+      max-width: calc(50% - 18px) !important;
       box-sizing: border-box !important;
       margin-top: 0 !important;
       padding-top: 0 !important;
-      align-self: start !important;
+      align-self: flex-start !important;
       position: -webkit-sticky !important;
       position: sticky !important;
       top: 24px !important;
@@ -90,11 +91,15 @@
       overflow: visible !important;
     }
     .by-content-wrapper {
-      width: 100% !important;
+      flex: 0 0 calc(50% - 18px) !important;
+      width: calc(50% - 18px) !important;
+      max-width: calc(50% - 18px) !important;
       box-sizing: border-box !important;
       margin-top: 0 !important;
       padding-top: 0 !important;
-      align-self: stretch !important;
+      align-self: flex-start !important;
+      position: static !important;
+      height: auto !important;
       display: flex !important;
       flex-direction: column !important;
       overflow: visible !important;
