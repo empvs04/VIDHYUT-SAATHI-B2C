@@ -1158,7 +1158,11 @@
 
             <!-- PINCODE DELIVERY CHECKER -->
             {%- if section.settings.enable_delivery_check -%}
-              <div class="by-delivery-wrapper">
+              <div class="by-delivery-wrapper"
+                   id="DeliveryWrapper-{{ section.id }}"
+                   data-pincode-mode="{{ section.settings.pincode_mode | default: 'all_india' }}"
+                   data-allowed-states="{{ section.settings.allowed_states | escape }}"
+                   data-est-delivery="{{ section.settings.estimated_delivery_text | escape }}">
                 <div class="by-delivery-title">
                   <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                   Check Delivery Availability
@@ -1447,21 +1451,89 @@
     if(submitBtnDesktop) submitBtnDesktop.addEventListener('click', doAddToCartOrBuyNow);
     if(submitBtnMobile) submitBtnMobile.addEventListener('click', doAddToCartOrBuyNow);
 
-    // 5. Pincode Availability Checker
+    // 5. Pincode Availability Checker with Live Indian Postal API & Theme Settings Mode
     const pinInput = document.getElementById('DeliveryPincodeInput-{{ section.id }}');
     const pinBtn = document.getElementById('DeliveryPincodeBtn-{{ section.id }}');
     const pinResult = document.getElementById('DeliveryResult-{{ section.id }}');
-    if(pinBtn && pinInput && pinResult) {
-      pinBtn.addEventListener('click', function() {
+    const pinWrapper = document.getElementById('DeliveryWrapper-{{ section.id }}');
+
+    if (pinBtn && pinInput && pinResult && pinWrapper) {
+      function checkPincode() {
         const pin = pinInput.value.trim();
-        if(pin.length === 6 && /^\d+$/.test(pin)) {
-          pinResult.style.display = 'block';
-          pinResult.style.color = '#007b3e';
-          pinResult.innerHTML = '✅ Delivery available for <strong>' + pin + '</strong>! Estimated delivery by <strong>Tomorrow</strong> | Free Express Shipping.';
-        } else {
+        if (pin.length !== 6 || !/^\d{6}$/.test(pin)) {
           pinResult.style.display = 'block';
           pinResult.style.color = '#d32f2f';
+          pinResult.style.backgroundColor = '#ffebee';
+          pinResult.style.borderColor = '#ffcdd2';
           pinResult.innerHTML = '⚠️ Please enter a valid 6-digit Pincode.';
+          return;
+        }
+
+        // Show loading state
+        pinResult.style.display = 'block';
+        pinResult.style.color = '#1565c0';
+        pinResult.style.backgroundColor = '#e3f2fd';
+        pinResult.style.borderColor = '#bbdefb';
+        pinResult.innerHTML = '⏳ Checking pincode availability with Indian Postal API...';
+
+        const pincodeMode = pinWrapper.getAttribute('data-pincode-mode') || 'all_india';
+        const allowedStatesRaw = pinWrapper.getAttribute('data-allowed-states') || '';
+        const estDelivery = pinWrapper.getAttribute('data-est-delivery') || '3 - 5 Business Days';
+
+        // Fetch Live Indian Postal Pincode API
+        fetch('https://api.postalpincode.in/pincode/' + pin)
+          .then(response => response.json())
+          .then(data => {
+            if (data && data[0] && data[0].Status === 'Success' && data[0].PostOffice && data[0].PostOffice.length > 0) {
+              const po = data[0].PostOffice[0];
+              const stateName = (po.State || '').trim();
+              const districtName = (po.District || po.Name || '').trim();
+
+              if (pincodeMode === 'all_india') {
+                // Pan India: All States & UTs Allowed
+                pinResult.style.color = '#1b5e20';
+                pinResult.style.backgroundColor = '#e8f5e9';
+                pinResult.style.borderColor = '#c8e6c9';
+                pinResult.innerHTML = '✅ <strong>Delivery Available!</strong> Serviceable in <strong>' + districtName + ', ' + stateName + '</strong>.<br>🚚 Estimated Delivery: <strong>' + estDelivery + '</strong> | Cash on Delivery Available.';
+              } else {
+                // Specific States Allowed Only
+                const allowedList = allowedStatesRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+                const isAllowed = allowedList.some(s => stateName.toLowerCase().includes(s) || s.includes(stateName.toLowerCase()));
+
+                if (isAllowed) {
+                  pinResult.style.color = '#1b5e20';
+                  pinResult.style.backgroundColor = '#e8f5e9';
+                  pinResult.style.borderColor = '#c8e6c9';
+                  pinResult.innerHTML = '✅ <strong>Delivery Available!</strong> Serviceable in <strong>' + districtName + ', ' + stateName + '</strong>.<br>🚚 Estimated Delivery: <strong>' + estDelivery + '</strong> | Cash on Delivery Available.';
+                } else {
+                  pinResult.style.color = '#b71c1c';
+                  pinResult.style.backgroundColor = '#ffebee';
+                  pinResult.style.borderColor = '#ffcdd2';
+                  pinResult.innerHTML = '❌ <strong>Delivery Not Available</strong> for <strong>' + stateName + '</strong> (Pincode: ' + pin + ').<br>We currently deliver only to: <em>' + allowedStatesRaw + '</em>.';
+                }
+              }
+            } else {
+              pinResult.style.color = '#b71c1c';
+              pinResult.style.backgroundColor = '#ffebee';
+              pinResult.style.borderColor = '#ffcdd2';
+              pinResult.innerHTML = '❌ Pincode <strong>' + pin + '</strong> was not found in postal records. Please check the code and try again.';
+            }
+          })
+          .catch(err => {
+            console.error('Pincode API Error:', err);
+            // Fallback gracefully
+            pinResult.style.color = '#1b5e20';
+            pinResult.style.backgroundColor = '#e8f5e9';
+            pinResult.style.borderColor = '#c8e6c9';
+            pinResult.innerHTML = '✅ Delivery available for pincode <strong>' + pin + '</strong>. Estimated delivery: <strong>' + estDelivery + '</strong>.';
+          });
+      }
+
+      pinBtn.addEventListener('click', checkPincode);
+      pinInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          checkPincode();
         }
       });
     }
@@ -1640,13 +1712,42 @@
     },
     {
       "type": "header",
-      "content": "Other Settings"
+      "content": "Pincode & Delivery Settings"
     },
     {
       "type": "checkbox",
       "id": "enable_delivery_check",
       "label": "Enable Pincode/Delivery Check",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "pincode_mode",
+      "label": "Delivery Region Mode",
+      "options": [
+        {
+          "value": "all_india",
+          "label": "Pan India (All States & UTs Allowed)"
+        },
+        {
+          "value": "specific_states",
+          "label": "Specific Allowed States Only"
+        }
+      ],
+      "default": "all_india"
+    },
+    {
+      "type": "textarea",
+      "id": "allowed_states",
+      "label": "Allowed States/UTs (Comma Separated)",
+      "info": "Used when Mode is set to 'Specific Allowed States Only'. E.g: Delhi, Maharashtra, Haryana, Uttar Pradesh, Gujarat, Karnataka",
+      "default": "Delhi, Maharashtra, Haryana, Uttar Pradesh, Gujarat, Karnataka"
+    },
+    {
+      "type": "text",
+      "id": "estimated_delivery_text",
+      "label": "Estimated Delivery Text",
+      "default": "3 - 5 Business Days"
     }
   ],
   "blocks": [
