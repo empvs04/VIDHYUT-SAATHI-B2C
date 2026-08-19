@@ -98,7 +98,7 @@
       padding-top: 0 !important;
       align-self: flex-start !important;
       overflow-y: auto !important;
-      overscroll-behavior: contain !important;
+      overscroll-behavior: auto !important;
       scroll-behavior: smooth !important;
       padding-right: 6px !important;
       display: flex !important;
@@ -1281,6 +1281,21 @@
     syncProductContainerHeight();
     window.addEventListener('resize', syncProductContainerHeight);
     window.addEventListener('load', syncProductContainerHeight);
+
+    const rightColElem = document.querySelector('.by-product-{{ section.id }} .by-content-wrapper');
+    if (rightColElem) {
+      rightColElem.addEventListener('wheel', function(e) {
+        if (window.innerWidth < 992) return;
+        const scrollTop = rightColElem.scrollTop;
+        const scrollHeight = rightColElem.scrollHeight;
+        const height = rightColElem.clientHeight;
+        const delta = e.deltaY;
+
+        if ((delta > 0 && scrollTop + height >= scrollHeight - 2) || (delta < 0 && scrollTop <= 2)) {
+          window.scrollBy({ top: delta, behavior: 'auto' });
+        }
+      }, { passive: true });
+    }
 
     let activeCouponCode = '';
 
