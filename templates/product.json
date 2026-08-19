@@ -32,7 +32,7 @@
         "install_guide_text": "Setup Guide",
         "install_guide_link": "",
         "enable_delivery_check": true,
-        "pincode_mode": "all_india",
+        "pincode_mode": "specific_states",
         "allowed_states": "Haryana",
         "estimated_delivery_text": "3 - 5 Business Days"
       }
