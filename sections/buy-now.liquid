@@ -97,22 +97,12 @@
       margin-top: 0 !important;
       padding-top: 0 !important;
       align-self: flex-start !important;
-      overflow-y: auto !important;
-      overscroll-behavior: auto !important;
-      padding-right: 6px !important;
+      position: static !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
       display: flex !important;
       flex-direction: column !important;
-    }
-    .by-content-wrapper::-webkit-scrollbar {
-      width: 5px;
-    }
-    .by-content-wrapper::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.03);
-      border-radius: 10px;
-    }
-    .by-content-wrapper::-webkit-scrollbar-thumb {
-      background: #f7941d;
-      border-radius: 10px;
     }
     .by-main-image-wrap {
       margin-top: 0 !important;
@@ -1260,26 +1250,6 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // 0. Height Sync: Make Right Container Height Exactly Equal to Left Media Gallery Height
-    function syncProductContainerHeight() {
-      if (window.innerWidth < 992) {
-        const rightCol = document.querySelector('.by-product-{{ section.id }} .by-content-wrapper');
-        if (rightCol) rightCol.style.maxHeight = 'none';
-        return;
-      }
-      const leftCol = document.querySelector('.by-product-{{ section.id }} .by-media-gallery');
-      const rightCol = document.querySelector('.by-product-{{ section.id }} .by-content-wrapper');
-      if (leftCol && rightCol) {
-        const leftH = leftCol.offsetHeight;
-        if (leftH > 100) {
-          rightCol.style.maxHeight = leftH + 'px';
-        }
-      }
-    }
-
-    syncProductContainerHeight();
-    window.addEventListener('resize', syncProductContainerHeight);
-    window.addEventListener('load', syncProductContainerHeight);
 
     let activeCouponCode = '';
 
