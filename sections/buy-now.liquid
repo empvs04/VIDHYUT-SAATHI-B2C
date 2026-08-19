@@ -87,7 +87,6 @@
       position: sticky !important;
       top: 24px !important;
       height: fit-content !important;
-      max-height: calc(100vh - 48px) !important;
       z-index: 10 !important;
     }
     .by-content-wrapper {
@@ -98,7 +97,6 @@
       margin-top: 0 !important;
       padding-top: 0 !important;
       align-self: flex-start !important;
-      max-height: calc(100vh - 48px) !important;
       overflow-y: auto !important;
       overscroll-behavior: contain !important;
       scroll-behavior: smooth !important;
@@ -1263,6 +1261,27 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // 0. Height Sync: Make Right Container Height Exactly Equal to Left Media Gallery Height
+    function syncProductContainerHeight() {
+      if (window.innerWidth < 992) {
+        const rightCol = document.querySelector('.by-product-{{ section.id }} .by-content-wrapper');
+        if (rightCol) rightCol.style.maxHeight = 'none';
+        return;
+      }
+      const leftCol = document.querySelector('.by-product-{{ section.id }} .by-media-gallery');
+      const rightCol = document.querySelector('.by-product-{{ section.id }} .by-content-wrapper');
+      if (leftCol && rightCol) {
+        const leftH = leftCol.offsetHeight;
+        if (leftH > 100) {
+          rightCol.style.maxHeight = leftH + 'px';
+        }
+      }
+    }
+
+    syncProductContainerHeight();
+    window.addEventListener('resize', syncProductContainerHeight);
+    window.addEventListener('load', syncProductContainerHeight);
+
     let activeCouponCode = '';
 
     // 1. Media Gallery Thumbnail Switcher
