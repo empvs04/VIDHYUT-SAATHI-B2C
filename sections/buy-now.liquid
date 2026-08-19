@@ -61,7 +61,7 @@
       max-width: 1320px;
       padding: 32px 24px;
     }
-    .by-product-{{ section.id }}, .by-container, form.form {
+    .by-product-{{ section.id }}, .by-container, form.form, form[data-type="add-to-cart-form"] {
       overflow: visible !important;
     }
 
@@ -69,7 +69,7 @@
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
       gap: 36px !important;
-      align-items: start !important;
+      align-items: stretch !important;
       align-content: start !important;
       width: 100% !important;
       margin-top: 0 !important;
@@ -94,7 +94,7 @@
       box-sizing: border-box !important;
       margin-top: 0 !important;
       padding-top: 0 !important;
-      align-self: start !important;
+      align-self: stretch !important;
       display: flex !important;
       flex-direction: column !important;
       overflow: visible !important;
