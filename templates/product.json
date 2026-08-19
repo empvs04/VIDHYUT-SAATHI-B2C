@@ -31,7 +31,10 @@
         "body_font": "outfit_n4",
         "install_guide_text": "Setup Guide",
         "install_guide_link": "",
-        "enable_delivery_check": true
+        "enable_delivery_check": true,
+        "pincode_mode": "specific_states",
+        "allowed_states": "Haryana",
+        "estimated_delivery_text": "3 - 5 Business Days"
       }
     },
     "product_recommendations_qggXJq": {
