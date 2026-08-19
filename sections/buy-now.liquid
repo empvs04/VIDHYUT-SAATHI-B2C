@@ -69,7 +69,7 @@
       display: flex !important;
       flex-direction: row !important;
       gap: 36px !important;
-      align-items: stretch !important;
+      align-items: flex-start !important;
       width: 100% !important;
       margin-top: 0 !important;
       padding-top: 0 !important;
@@ -87,8 +87,8 @@
       position: sticky !important;
       top: 24px !important;
       height: fit-content !important;
+      max-height: calc(100vh - 48px) !important;
       z-index: 10 !important;
-      overflow: visible !important;
     }
     .by-content-wrapper {
       flex: 0 0 calc(50% - 18px) !important;
@@ -97,12 +97,25 @@
       box-sizing: border-box !important;
       margin-top: 0 !important;
       padding-top: 0 !important;
-      align-self: stretch !important;
-      position: static !important;
-      height: auto !important;
+      align-self: flex-start !important;
+      max-height: calc(100vh - 48px) !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain !important;
+      scroll-behavior: smooth !important;
+      padding-right: 6px !important;
       display: flex !important;
       flex-direction: column !important;
-      overflow: visible !important;
+    }
+    .by-content-wrapper::-webkit-scrollbar {
+      width: 5px;
+    }
+    .by-content-wrapper::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 10px;
+    }
+    .by-content-wrapper::-webkit-scrollbar-thumb {
+      background: #f7941d;
+      border-radius: 10px;
     }
     .by-main-image-wrap {
       margin-top: 0 !important;
