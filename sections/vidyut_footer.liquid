@@ -768,10 +768,11 @@
     position: relative;
     display: flex;
     align-items: center;
-    background: rgba(2, 6, 23, 0.7);
+    background: rgba(2, 6, 23, 0.95);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 0 10px;
+    padding: 6px 12px;
     flex-shrink: 0;
+    gap: 10px;
   }
 
   .vs-policy-arrow-btn {
@@ -788,26 +789,27 @@
     font-size: 0.85rem;
     flex-shrink: 0;
     transition: all 0.25s ease;
-    z-index: 5;
-    box-shadow: 0 4px 12px rgba(241, 126, 57, 0.3);
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(241, 126, 57, 0.35);
   }
 
   .vs-policy-arrow-btn:hover {
-    transform: scale(1.15);
+    transform: scale(1.12);
     box-shadow: 0 6px 18px rgba(241, 126, 57, 0.5);
   }
 
   .vs-policy-arrow-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.92);
   }
 
   .vs-policy-modal-tabs {
     display: flex;
     gap: 8px;
-    padding: 12px 10px;
+    padding: 10px 4px;
     overflow-x: auto;
     white-space: nowrap;
     flex: 1;
+    min-width: 0;
     -ms-overflow-style: none;
     scrollbar-width: none;
     scroll-behavior: smooth;
@@ -1000,18 +1002,21 @@
     }
 
     .vs-policy-tabs-wrapper {
-      padding: 0 4px;
+      padding: 6px 8px;
+      gap: 8px;
     }
 
     .vs-policy-arrow-btn {
-      width: 26px;
-      height: 26px;
-      font-size: 0.75rem;
+      width: 28px;
+      height: 28px;
+      font-size: 0.78rem;
+      flex-shrink: 0;
     }
 
     .vs-policy-modal-tabs {
-      padding: 8px 4px;
+      padding: 6px 2px;
       gap: 6px;
+      min-width: 0;
       -webkit-overflow-scrolling: touch;
     }
 
