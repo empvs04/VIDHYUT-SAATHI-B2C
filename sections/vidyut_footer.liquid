@@ -954,16 +954,126 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  @media (max-width: 680px) {
+  /* Mobile Responsiveness for Policy Modal */
+  @media (max-width: 768px) {
+    .vs-policy-modal-overlay {
+      padding: 0;
+      align-items: flex-end; /* Sheet style on mobile for comfortable thumb access */
+    }
+
     .vs-policy-modal-container {
-      max-height: 92vh;
-      border-radius: 20px;
+      width: 100%;
+      max-height: 94vh;
+      border-radius: 20px 20px 0 0;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.7);
     }
+
     .vs-policy-modal-header {
-      padding: 16px 20px;
+      padding: 14px 16px;
     }
+
+    .vs-policy-modal-title h3 {
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+
+    .vs-policy-modal-title span {
+      font-size: 0.72rem;
+    }
+
+    .vs-policy-modal-title i {
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+    }
+
+    .vs-policy-modal-close {
+      width: 34px;
+      height: 34px;
+      font-size: 0.95rem;
+    }
+
+    .vs-policy-tabs-wrapper {
+      padding: 0 4px;
+    }
+
+    .vs-policy-arrow-btn {
+      width: 26px;
+      height: 26px;
+      font-size: 0.75rem;
+    }
+
+    .vs-policy-modal-tabs {
+      padding: 8px 4px;
+      gap: 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .vs-policy-tab-btn {
+      padding: 7px 12px;
+      font-size: 0.78rem;
+      border-radius: 14px;
+      gap: 5px;
+    }
+
+    .vs-policy-tab-btn i {
+      font-size: 0.8rem;
+    }
+
     .vs-policy-modal-body {
-      padding: 20px 18px;
+      padding: 20px 16px;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .vs-policy-modal-body h4 {
+      font-size: 1.02rem;
+      margin: 20px 0 10px 0;
+      padding-left: 10px;
+      border-left-width: 3px;
+    }
+
+    .vs-policy-date-badge {
+      font-size: 0.76rem;
+      padding: 5px 12px;
+    }
+
+    .vs-policy-callout, .vs-policy-contact-box {
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      margin: 16px 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .vs-policy-modal-container {
+      max-height: 96vh;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .vs-policy-modal-header {
+      padding: 12px 14px;
+    }
+
+    .vs-policy-modal-title {
+      gap: 8px;
+    }
+
+    .vs-policy-modal-title h3 {
+      font-size: 0.92rem;
+    }
+
+    .vs-policy-modal-title span {
+      font-size: 0.68rem;
+    }
+
+    .vs-policy-modal-body {
+      padding: 16px 12px;
     }
   }
 </style>

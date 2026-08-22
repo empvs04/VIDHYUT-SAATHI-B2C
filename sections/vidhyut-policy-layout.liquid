@@ -269,15 +269,67 @@
   }
 
   @media (max-width: 900px) {
+    .vs-policy-wrapper {
+      padding: 30px 14px 60px;
+    }
+    .vs-policy-hero h1 {
+      font-size: 1.8rem;
+    }
     .vs-policy-container {
       grid-template-columns: 1fr;
+      gap: 20px;
     }
     .vs-policy-sidebar {
       position: relative;
       top: 0;
+      padding: 16px;
+    }
+    .vs-policy-nav {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 8px;
+      padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .vs-policy-nav::-webkit-scrollbar {
+      display: none;
+    }
+    .vs-policy-nav li {
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+    .vs-policy-nav a {
+      padding: 8px 14px;
+      font-size: 0.82rem;
+      border-radius: 12px;
+      white-space: nowrap;
     }
     .vs-policy-content-card {
-      padding: 24px 20px;
+      padding: 22px 18px;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+    .vs-policy-body h2 {
+      font-size: 1.12rem;
+      margin: 24px 0 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .vs-policy-hero h1 {
+      font-size: 1.5rem;
+    }
+    .vs-policy-hero p {
+      font-size: 0.88rem;
+    }
+    .vs-policy-content-card {
+      padding: 18px 14px;
+    }
+    .vs-policy-highlight-box, .vs-policy-contact-card {
+      padding: 16px;
+      border-radius: 12px;
     }
   }
 {%- endstyle -%}
