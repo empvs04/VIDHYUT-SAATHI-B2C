@@ -1,30 +1,47 @@
 
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<div
-  class="
-    section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}
-    {% if section.settings.section_height != "" %} {{ section.settings.section_height | prepend: "section--height-" }}{% endif %}
-  "
->
-  <div>
-    <div
-      class="
-        spacing-style
-        layout-panel-flex
-        layout-panel-flex--column
-        section-content-wrapper
-        mobile-column
-      "
-      style="
-        {% render 'layout-panel-style', settings: section.settings %}
-        {% render 'spacing-style', settings: section.settings %}
-      "
-    >
-      {% content_for 'blocks' %}
+{% liquid
+  assign request_path = request.path | downcase
+  assign is_policy = false
+  if request_path contains 'privacy' or request_path contains 'terms' or request_path contains 'refund' or request_path contains 'return' or request_path contains 'shipping' or request_path contains 'legal' or request_path contains 'disclaimer' or request_path contains 'contact'
+    assign is_policy = true
+  endif
+%}
+
+{% if is_policy %}
+  {% section 'vidhyut-policy-layout' %}
+{% else %}
+  <script>
+    if (window.location.pathname !== '/pages/b2c' && window.location.pathname !== '/') {
+      window.location.replace('/pages/b2c');
+    }
+  </script>
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  <div
+    class="
+      section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}
+      {% if section.settings.section_height != "" %} {{ section.settings.section_height | prepend: "section--height-" }}{% endif %}
+    "
+  >
+    <div>
+      <div
+        class="
+          spacing-style
+          layout-panel-flex
+          layout-panel-flex--column
+          section-content-wrapper
+          mobile-column
+        "
+        style="
+          {% render 'layout-panel-style', settings: section.settings %}
+          {% render 'spacing-style', settings: section.settings %}
+        "
+      >
+        {% content_for 'blocks' %}
+      </div>
     </div>
   </div>
-</div>
+{% endif %}
 
 {% schema %}
 {
