@@ -578,13 +578,13 @@
       <div class="vs-bento-dock-card v-anim-footer">
         <h4 class="vs-dock-card-title">Legal &amp; Policies</h4>
         <ul class="vs-dock-links">
-          <li><a href="{{ shop.privacy_policy.url | default: '/pages/privacy-policy' }}"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
-          <li><a href="{{ shop.terms_of_service.url | default: '/pages/terms-and-conditions' }}"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</a></li>
-          <li><a href="{{ shop.refund_policy.url | default: '/pages/return-refund-policy' }}"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund Policy</a></li>
-          <li><a href="{{ shop.shipping_policy.url | default: '/pages/shipping-policy' }}"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</a></li>
-          <li><a href="/pages/legal-notice"><i class="fa-solid fa-scale-balanced"></i> Legal Notice</a></li>
-          <li><a href="/pages/disclaimer"><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</a></li>
-          <li><a href="/pages/contact-information"><i class="fa-solid fa-address-card"></i> Contact Information</a></li>
+          <li><a href="javascript:void(0)" onclick="openVsPolicyModal('privacy')"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
+          <li><a href="javascript:void(0)" onclick="openVsPolicyModal('terms')"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</a></li>
+          <li><a href="javascript:void(0)" onclick="openVsPolicyModal('refund')"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund Policy</a></li>
+          <li><a href="javascript:void(0)" onclick="openVsPolicyModal('shipping')"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</a></li>
+          <li><a href="javascript:void(0)" onclick="openVsPolicyModal('legal')"><i class="fa-solid fa-scale-balanced"></i> Legal Notice</a></li>
+          <li><a href="javascript:void(0)" onclick="openVsPolicyModal('disclaimer')"><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</a></li>
+          <li><a href="javascript:void(0)" onclick="openVsPolicyModal('contact')"><i class="fa-solid fa-address-card"></i> Contact Information</a></li>
         </ul>
       </div>
 
@@ -653,7 +653,313 @@
   </div>
 </footer>
 
+<!-- INTERACTIVE POLICY MODAL -->
+<style>
+  .vs-policy-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .vs-policy-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .vs-policy-modal-container {
+    background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 920px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: #e2e8f0;
+    transform: translateY(20px) scale(0.96);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .vs-policy-modal-overlay.active .vs-policy-modal-container {
+    transform: translateY(0) scale(1);
+  }
+
+  .vs-policy-modal-header {
+    padding: 18px 24px;
+    background: rgba(15, 23, 42, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .vs-policy-modal-header h3 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .vs-policy-modal-close {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+  }
+
+  .vs-policy-modal-close:hover {
+    background: #f17e39;
+    border-color: #f17e39;
+  }
+
+  .vs-policy-modal-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 12px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+  }
+
+  .vs-policy-tab-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .vs-policy-tab-btn.active, .vs-policy-tab-btn:hover {
+    background: linear-gradient(135deg, #f17e39 0%, #d96924 100%);
+    border-color: #f17e39;
+    color: #ffffff;
+  }
+
+  .vs-policy-modal-body {
+    padding: 28px;
+    overflow-y: auto;
+    flex: 1;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #cbd5e1;
+  }
+
+  .vs-policy-modal-body h4 {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 20px 0 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .vs-policy-modal-body h4::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: #f17e39;
+    border-radius: 2px;
+  }
+
+  .vs-policy-tab-content {
+    display: none;
+  }
+
+  .vs-policy-tab-content.active {
+    display: block;
+    animation: vsModalFadeIn 0.3s ease;
+  }
+
+  .vs-policy-callout {
+    background: linear-gradient(135deg, rgba(241, 126, 57, 0.12) 0%, rgba(241, 126, 57, 0.02) 100%);
+    border: 1px solid rgba(241, 126, 57, 0.3);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin: 18px 0;
+  }
+
+  .vs-policy-callout strong {
+    color: #f17e39;
+  }
+
+  @keyframes vsModalFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div class="vs-policy-modal-overlay" id="vsPolicyModalOverlay" onclick="if(event.target === this) closeVsPolicyModal()">
+  <div class="vs-policy-modal-container">
+    
+    <div class="vs-policy-modal-header">
+      <h3><i class="fa-solid fa-shield-halved" style="color: #f17e39;"></i> Legal Policy &amp; Compliance Center</h3>
+      <div class="vs-policy-modal-close" onclick="closeVsPolicyModal()"><i class="fa-solid fa-xmark"></i></div>
+    </div>
+
+    <div class="vs-policy-modal-tabs">
+      <button class="vs-policy-tab-btn active" data-tab="privacy" onclick="switchVsPolicyTab('privacy')"><i class="fa-solid fa-user-shield"></i> Privacy Policy</button>
+      <button class="vs-policy-tab-btn" data-tab="terms" onclick="switchVsPolicyTab('terms')"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</button>
+      <button class="vs-policy-tab-btn" data-tab="refund" onclick="switchVsPolicyTab('refund')"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund</button>
+      <button class="vs-policy-tab-btn" data-tab="shipping" onclick="switchVsPolicyTab('shipping')"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</button>
+      <button class="vs-policy-tab-btn" data-tab="legal" onclick="switchVsPolicyTab('legal')"><i class="fa-solid fa-scale-balanced"></i> Legal Notice</button>
+      <button class="vs-policy-tab-btn" data-tab="disclaimer" onclick="switchVsPolicyTab('disclaimer')"><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</button>
+      <button class="vs-policy-tab-btn" data-tab="contact" onclick="switchVsPolicyTab('contact')"><i class="fa-solid fa-address-card"></i> Contact Info</button>
+    </div>
+
+    <div class="vs-policy-modal-body" id="vsPolicyModalBody">
+      
+      <!-- TAB 1: PRIVACY POLICY -->
+      <div class="vs-policy-tab-content active" id="vs-policy-tab-privacy">
+        <div style="background: rgba(0,123,62,0.2); border:1px solid rgba(0,123,62,0.4); color:#4ade80; padding:6px 14px; border-radius:20px; font-size:0.8rem; font-weight:700; display:inline-block; margin-bottom:14px;">Effective Date: January 10, 2026</div>
+        <p>At Vidhyut Saathi Energy Savers Pvt Ltd ("Vidhyut Saathi", "we", "our", or "us"), we respect your privacy and are committed to protecting the personal information you share with us through www.vidhyutsaathi.in.</p>
+        
+        <h4>1. Information We Collect</h4>
+        <p>We collect information directly provided by you including Full Name, Mobile Number, Email Address, Shipping/Billing Address, PIN Code, Order Details, and Helpline Queries.</p>
+        <p>Payments made on our website are processed through PCI-DSS certified payment gateway partners. We do NOT store your full debit card, credit card, CVV, or UPI PIN credentials on our servers.</p>
+        
+        <div class="vs-policy-callout">
+          <strong><i class="fa-solid fa-lock"></i> Data Protection Guarantee:</strong> Vidhyut Saathi implements strict technical and physical security measures. We NEVER sell or rent your personal information to third parties.
+        </div>
+
+        <h4>2. Support &amp; Contact</h4>
+        <p>Email: info@vidhyutsaathi.in | Helpline: +91-8199036060 / +91-9053110707</p>
+      </div>
+
+      <!-- TAB 2: TERMS & CONDITIONS -->
+      <div class="vs-policy-tab-content" id="vs-policy-tab-terms">
+        <div style="background: rgba(0,123,62,0.2); border:1px solid rgba(0,123,62,0.4); color:#4ade80; padding:6px 14px; border-radius:20px; font-size:0.8rem; font-weight:700; display:inline-block; margin-bottom:14px;">Effective Date: January 10, 2026</div>
+        <p>Welcome to Vidhyut Saathi Energy Savers Pvt Ltd. These Terms &amp; Conditions govern your access to and purchase of products through www.vidhyutsaathi.in.</p>
+        
+        <h4>1. Eligibility &amp; Product Pricing</h4>
+        <p>All prices are listed in Indian Rupees (INR) inclusive of statutory GST. Products purchased come with full invoice documentation.</p>
+        
+        <div class="vs-policy-callout">
+          <strong><i class="fa-solid fa-shield"></i> 3-Year Replacement Warranty:</strong> Vidhyut Saathi products are backed by a 3-Year Replacement Warranty against manufacturing defects from the date of delivery. Valid invoice &amp; order details are required.
+        </div>
+
+        <h4>2. Jurisdiction</h4>
+        <p>Governed by laws of India, subject to exclusive jurisdiction of competent courts in Rohtak, Haryana - 124001.</p>
+      </div>
+
+      <!-- TAB 3: RETURN & REFUND -->
+      <div class="vs-policy-tab-content" id="vs-policy-tab-refund">
+        <div style="background: rgba(0,123,62,0.2); border:1px solid rgba(0,123,62,0.4); color:#4ade80; padding:6px 14px; border-radius:20px; font-size:0.8rem; font-weight:700; display:inline-block; margin-bottom:14px;">Effective Date: January 10, 2026</div>
+        
+        <div class="vs-policy-callout">
+          <strong><i class="fa-solid fa-clock-rotate-left"></i> 3-Day Return Policy:</strong> Customers can raise a return request within 3 calendar days from the product delivery date.
+        </div>
+
+        <h4>1. Return Eligibility</h4>
+        <p>Product must be unused, uninstalled, undamaged, and returned in original packaging with invoice. <strong>For products with 3M adhesive tape, the original backside 3M layer MUST be 100% intact, unused, and unaltered.</strong></p>
+        
+        <h4>2. Damaged Parcels</h4>
+        <p>Report damaged/incomplete deliveries within 24 hours of delivery with photo proof for instant replacement dispatch.</p>
+      </div>
+
+      <!-- TAB 4: SHIPPING POLICY -->
+      <div class="vs-policy-tab-content" id="vs-policy-tab-shipping">
+        <div style="background: rgba(0,123,62,0.2); border:1px solid rgba(0,123,62,0.4); color:#4ade80; padding:6px 14px; border-radius:20px; font-size:0.8rem; font-weight:700; display:inline-block; margin-bottom:14px;">Effective Date: January 10, 2026</div>
+        
+        <div class="vs-policy-callout">
+          <strong><i class="fa-solid fa-truck-fast"></i> 19,000+ PIN Codes Covered:</strong> We deliver Pan-India via Shiprocket, Bigship, NimbusPost logistics partners.
+        </div>
+
+        <h4>1. Delivery Timelines</h4>
+        <p>Orders processed in 1-2 business days. Estimated delivery is generally 5-7 business days across India with real-time SMS/WhatsApp tracking.</p>
+      </div>
+
+      <!-- TAB 5: LEGAL NOTICE -->
+      <div class="vs-policy-tab-content" id="vs-policy-tab-legal">
+        <div style="background: rgba(0,123,62,0.2); border:1px solid rgba(0,123,62,0.4); color:#4ade80; padding:6px 14px; border-radius:20px; font-size:0.8rem; font-weight:700; display:inline-block; margin-bottom:14px;">Effective Date: January 10, 2026</div>
+        <h4>1. Ownership</h4>
+        <p>Website www.vidhyutsaathi.in and all contents, logos, tech designs, images, and brand assets are exclusive property of Vidhyut Saathi Energy Savers Pvt Ltd.</p>
+      </div>
+
+      <!-- TAB 6: DISCLAIMER -->
+      <div class="vs-policy-tab-content" id="vs-policy-tab-disclaimer">
+        <div style="background: rgba(0,123,62,0.2); border:1px solid rgba(0,123,62,0.4); color:#4ade80; padding:6px 14px; border-radius:20px; font-size:0.8rem; font-weight:700; display:inline-block; margin-bottom:14px;">Effective Date: January 10, 2026</div>
+        <h4>1. Product Results</h4>
+        <p>Energy saving efficiency depends on site electrical wiring, earthing quality, connected load type, and voltage stability.</p>
+      </div>
+
+      <!-- TAB 7: CONTACT INFO -->
+      <div class="vs-policy-tab-content" id="vs-policy-tab-contact">
+        <h4>Corporate Headquarters</h4>
+        <p><strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong><br>
+        SCO-77A, 3rd Floor, Ashoka Complex, Delhi Road, Rohtak - 124001, Haryana, India.</p>
+        <p><strong>Support Email:</strong> info@vidhyutsaathi.in | info@vidhyutsaathi.com<br>
+        <strong>Helpline:</strong> +91-8199036060 / +91-9053110707</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
 <script>
+  function openVsPolicyModal(policyKey) {
+    const overlay = document.getElementById('vsPolicyModalOverlay');
+    if (!overlay) return;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    switchVsPolicyTab(policyKey);
+  }
+
+  function closeVsPolicyModal() {
+    const overlay = document.getElementById('vsPolicyModalOverlay');
+    if (!overlay) return;
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function switchVsPolicyTab(policyKey) {
+    document.querySelectorAll('.vs-policy-tab-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-tab') === policyKey);
+    });
+    document.querySelectorAll('.vs-policy-tab-content').forEach(content => {
+      content.classList.toggle('active', content.getAttribute('id') === 'vs-policy-tab-' + policyKey);
+    });
+    const body = document.getElementById('vsPolicyModalBody');
+    if (body) body.scrollTop = 0;
+  }
+
   function initDockFooterAnimations() {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
