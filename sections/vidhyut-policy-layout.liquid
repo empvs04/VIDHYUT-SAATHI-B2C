@@ -1,0 +1,544 @@
+{%- style -%}
+  :root {
+    --pol-primary: #f17e39;
+    --pol-primary-dark: #d96924;
+    --pol-secondary: #007b3e;
+    --pol-bg: #090e1a;
+    --pol-card-bg: rgba(30, 41, 59, 0.7);
+    --pol-text: #e2e8f0;
+    --pol-muted: #94a3b8;
+    --pol-border: rgba(255, 255, 255, 0.1);
+  }
+
+  .vs-policy-wrapper {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 60%, #020617 100%);
+    color: var(--pol-text);
+    min-height: 100vh;
+    padding-bottom: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vs-policy-glow-1 {
+    position: absolute;
+    top: -150px;
+    left: 10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(241, 126, 57, 0.12) 0%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+  }
+
+  .vs-policy-glow-2 {
+    position: absolute;
+    bottom: -150px;
+    right: 10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 123, 62, 0.12) 0%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+  }
+
+  /* Hero Section */
+  .vs-policy-hero {
+    padding: 70px 20px 40px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    border-bottom: 1px solid var(--pol-border);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+  }
+
+  .vs-policy-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(241, 126, 57, 0.15);
+    border: 1px solid rgba(241, 126, 57, 0.4);
+    color: #f17e39;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .vs-policy-hero h1 {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .vs-policy-hero p {
+    color: var(--pol-muted);
+    font-size: 1.05rem;
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Main Layout */
+  .vs-policy-container {
+    max-width: 1280px;
+    margin: 40px auto 0;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 36px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Sidebar Nav */
+  .vs-policy-sidebar {
+    background: var(--pol-card-bg);
+    border: 1px solid var(--pol-border);
+    border-radius: 20px;
+    padding: 24px;
+    backdrop-filter: blur(16px);
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+  }
+
+  .vs-policy-sidebar-title {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin: 0 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .vs-policy-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .vs-policy-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: var(--pol-muted);
+    text-decoration: none;
+    font-size: 0.93rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+
+  .vs-policy-nav a i {
+    font-size: 1rem;
+    color: var(--pol-primary);
+    width: 20px;
+    text-align: center;
+  }
+
+  .vs-policy-nav a:hover,
+  .vs-policy-nav a.active {
+    background: linear-gradient(135deg, rgba(241, 126, 57, 0.2) 0%, rgba(241, 126, 57, 0.05) 100%);
+    border-color: rgba(241, 126, 57, 0.4);
+    color: #ffffff;
+    transform: translateX(4px);
+  }
+
+  /* Content Card */
+  .vs-policy-content-card {
+    background: var(--pol-card-bg);
+    border: 1px solid var(--pol-border);
+    border-radius: 24px;
+    padding: 40px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .vs-policy-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--pol-border);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .vs-policy-effective-date {
+    background: rgba(0, 123, 62, 0.2);
+    border: 1px solid rgba(0, 123, 62, 0.4);
+    color: #4ade80;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .vs-policy-body h2 {
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 30px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .vs-policy-body h2::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--pol-primary);
+    border-radius: 2px;
+  }
+
+  .vs-policy-body h3 {
+    color: #f8fafc;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 22px 0 10px;
+  }
+
+  .vs-policy-body p {
+    color: var(--pol-text);
+    font-size: 0.98rem;
+    line-height: 1.75;
+    margin: 0 0 16px;
+  }
+
+  .vs-policy-body ul, .vs-policy-body ol {
+    margin: 0 0 20px 20px;
+    color: var(--pol-text);
+  }
+
+  .vs-policy-body li {
+    margin-bottom: 8px;
+    line-height: 1.7;
+    font-size: 0.98rem;
+  }
+
+  .vs-policy-highlight-box {
+    background: linear-gradient(135deg, rgba(241, 126, 57, 0.12) 0%, rgba(241, 126, 57, 0.03) 100%);
+    border: 1px solid rgba(241, 126, 57, 0.3);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+
+  .vs-policy-highlight-box h4 {
+    color: var(--pol-primary);
+    margin: 0 0 8px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .vs-policy-highlight-box p {
+    margin: 0;
+    font-size: 0.94rem;
+  }
+
+  .vs-policy-contact-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--pol-border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 30px;
+  }
+
+  .vs-policy-contact-card h4 {
+    color: #ffffff;
+    margin: 0 0 12px;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  @media (max-width: 900px) {
+    .vs-policy-container {
+      grid-template-columns: 1fr;
+    }
+    .vs-policy-sidebar {
+      position: relative;
+      top: 0;
+    }
+    .vs-policy-content-card {
+      padding: 24px 20px;
+    }
+  }
+{%- endstyle -%}
+
+{% liquid
+  assign current_handle = page.handle | default: section.settings.default_policy
+  if current_handle contains 'privacy'
+    assign active_policy = 'privacy'
+  elsif current_handle contains 'terms'
+    assign active_policy = 'terms'
+  elsif current_handle contains 'refund' or current_handle contains 'return'
+    assign active_policy = 'refund'
+  elsif current_handle contains 'shipping'
+    assign active_policy = 'shipping'
+  elsif current_handle contains 'legal'
+    assign active_policy = 'legal'
+  elsif current_handle contains 'disclaimer'
+    assign active_policy = 'disclaimer'
+  elsif current_handle contains 'contact'
+    assign active_policy = 'contact'
+  else
+    assign active_policy = section.settings.default_policy | default: 'privacy'
+  endif
+%}
+
+<div class="vs-policy-wrapper">
+  <div class="vs-policy-glow-1"></div>
+  <div class="vs-policy-glow-2"></div>
+
+  <!-- Hero Header -->
+  <div class="vs-policy-hero">
+    <div class="vs-policy-hero-badge">
+      <i class="fa-solid fa-shield-halved"></i> Vidhyut Saathi Legal &amp; Compliance Center
+    </div>
+    <h1>
+      {% if active_policy == 'privacy' %}Privacy Policy
+      {% elsif active_policy == 'terms' %}Terms &amp; Conditions
+      {% elsif active_policy == 'refund' %}Return &amp; Refund Policy
+      {% elsif active_policy == 'shipping' %}Shipping Policy
+      {% elsif active_policy == 'legal' %}Legal Notice
+      {% elsif active_policy == 'disclaimer' %}Disclaimer
+      {% elsif active_policy == 'contact' %}Contact Information
+      {% else %}Customer Policy &amp; Terms{% endif %}
+    </h1>
+    <p>Official legal guidelines, terms, warranties, and privacy protection protocols for Vidhyut Saathi Energy Savers Pvt Ltd.</p>
+  </div>
+
+  <!-- Container -->
+  <div class="vs-policy-container">
+    
+    <!-- Sidebar Navigation -->
+    <div class="vs-policy-sidebar">
+      <div class="vs-policy-sidebar-title">
+        <i class="fa-solid fa-scale-balanced" style="color: var(--pol-primary);"></i> All Policies
+      </div>
+      <ul class="vs-policy-nav">
+        <li>
+          <a href="/pages/privacy-policy" class="{% if active_policy == 'privacy' %}active{% endif %}">
+            <i class="fa-solid fa-user-shield"></i> Privacy Policy
+          </a>
+        </li>
+        <li>
+          <a href="/pages/terms-and-conditions" class="{% if active_policy == 'terms' %}active{% endif %}">
+            <i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions
+          </a>
+        </li>
+        <li>
+          <a href="/pages/return-refund-policy" class="{% if active_policy == 'refund' %}active{% endif %}">
+            <i class="fa-solid fa-rotate-left"></i> Return &amp; Refund
+          </a>
+        </li>
+        <li>
+          <a href="/pages/shipping-policy" class="{% if active_policy == 'shipping' %}active{% endif %}">
+            <i class="fa-solid fa-truck-fast"></i> Shipping Policy
+          </a>
+        </li>
+        <li>
+          <a href="/pages/legal-notice" class="{% if active_policy == 'legal' %}active{% endif %}">
+            <i class="fa-solid fa-scale-balanced"></i> Legal Notice
+          </a>
+        </li>
+        <li>
+          <a href="/pages/disclaimer" class="{% if active_policy == 'disclaimer' %}active{% endif %}">
+            <i class="fa-solid fa-triangle-exclamation"></i> Disclaimer
+          </a>
+        </li>
+        <li>
+          <a href="/pages/contact-information" class="{% if active_policy == 'contact' %}active{% endif %}">
+            <i class="fa-solid fa-address-card"></i> Contact Information
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="vs-policy-content-card">
+      
+      <div class="vs-policy-header-bar">
+        <div class="vs-policy-effective-date">
+          <i class="fa-solid fa-calendar-check"></i> Effective Date: January 10, 2026
+        </div>
+        <div style="color: var(--pol-muted); font-size: 0.88rem; font-weight: 600;">
+          Vidhyut Saathi Energy Savers Pvt Ltd
+        </div>
+      </div>
+
+      <div class="vs-policy-body">
+        
+        {% if active_policy == 'privacy' %}
+          <!-- PRIVACY POLICY -->
+          <p>At Vidhyut Saathi Energy Savers Pvt Ltd ("Vidhyut Saathi", "we", "our", or "us"), we respect your privacy and are committed to protecting the personal information you share with us through our website, www.vidhyutsaathi.in ("Website").</p>
+
+          <h2>1. Consent</h2>
+          <p>By using our Website, registering an account, placing an order, or providing your personal information, you acknowledge that you have read, understood, and agreed to this Privacy Policy. You may withdraw your consent at any time by contacting us.</p>
+
+          <h2>2. Information We Collect</h2>
+          <p>We collect information directly provided by you, automatically collected technical data, and details from authorized third parties:</p>
+          <ul>
+            <li><strong>Direct Information:</strong> Full Name, Email Address, Mobile Number, Shipping &amp; Billing Address, PIN Code, Account Details, and Queries.</li>
+            <li><strong>Payment Details:</strong> Payments are processed via PCI-DSS compliant authorized payment gateways. We do not store full debit/credit card numbers or UPI PINs.</li>
+            <li><strong>Technical Data:</strong> IP Address, Device Info, Browser Type, Operating System, Cookies, and Analytics data.</li>
+          </ul>
+
+          <h2>3. How We Use Your Information</h2>
+          <p>We process your data to fulfill orders, deliver products across India, manage accounts, provide helpline support, dispatch invoices, prevent fraud, and comply with legal requirements.</p>
+
+          <div class="vs-policy-highlight-box">
+            <h4><i class="fa-solid fa-lock"></i> Data Protection Commitment</h4>
+            <p>Vidhyut Saathi strictly enforces administrative, technical, and physical security measures. We NEVER sell your personal information to third parties.</p>
+          </div>
+
+          <h2>4. Contact Information</h2>
+          <p>For any privacy requests or data inquiries, contact us at <strong>info@vidhyutsaathi.in</strong> or <strong>+91-8199036060</strong>.</p>
+
+        {% elsif active_policy == 'terms' %}
+          <!-- TERMS & CONDITIONS -->
+          <p>Welcome to Vidhyut Saathi Energy Savers Pvt Ltd ("Vidhyut Saathi"). These Terms &amp; Conditions govern your access to and use of www.vidhyutsaathi.in ("Website") and all products and services offered.</p>
+
+          <h2>1. Eligibility &amp; Account Registration</h2>
+          <p>By using this Website, you confirm that you are at least 18 years of age or legally competent under applicable law. You are responsible for maintaining account confidentiality.</p>
+
+          <h2>2. Pricing &amp; Payments</h2>
+          <p>All prices are displayed in Indian Rupees (INR) and include applicable statutory GST taxes as per prevailing laws. Orders are processed upon successful payment receipt.</p>
+
+          <div class="vs-policy-highlight-box">
+            <h4><i class="fa-solid fa-shield"></i> 3-Year Replacement Warranty</h4>
+            <p>Unless otherwise stated, Vidhyut Saathi products come with a 3-Year Replacement Warranty against manufacturing defects from delivery date. Valid purchase invoice &amp; warranty card are required.</p>
+          </div>
+
+          <h2>3. Order Acceptance &amp; Delivery</h2>
+          <p>Estimated delivery is 5-7 business days across serviceable PIN codes in India. Risk and ownership pass upon successful delivery.</p>
+
+          <h2>4. Governing Law</h2>
+          <p>These Terms shall be governed by the laws of India, subject to the exclusive jurisdiction of competent courts located in Rohtak, Haryana - 124001.</p>
+
+        {% elsif active_policy == 'refund' %}
+          <!-- RETURN & REFUND POLICY -->
+          <p>At Vidhyut Saathi Energy Savers Pvt Ltd, we strive for complete customer satisfaction. Please review our return and replacement guidelines carefully.</p>
+
+          <div class="vs-policy-highlight-box">
+            <h4><i class="fa-solid fa-clock-rotate-left"></i> 3-Day Return Window</h4>
+            <p>Customers may raise a return request within 3 calendar days from the date of product delivery.</p>
+          </div>
+
+          <h2>1. Return Eligibility Criteria</h2>
+          <ul>
+            <li>Product must be unused, uninstalled, undamaged, and in original packaging with manuals &amp; invoice.</li>
+            <li><strong>3M Backing Layer Rule:</strong> Products with 3M adhesive backing MUST have the original 3M protective layer completely intact, unused, and unaltered.</li>
+            <li>Product must pass Vidhyut Saathi quality inspection upon return arrival.</li>
+          </ul>
+
+          <h2>2. Damaged or Defective Deliveries</h2>
+          <p>If you receive a damaged or incomplete shipment, notify us within 24 hours of delivery with photo/video evidence for immediate resolution.</p>
+
+          <h2>3. Refund Processing</h2>
+          <p>Approved refunds are credited back to the original payment mode within 5-7 banking business days after quality clearance.</p>
+
+        {% elsif active_policy == 'shipping' %}
+          <!-- SHIPPING POLICY -->
+          <p>Vidhyut Saathi partners with top logistics aggregators (Shiprocket, Bigship, NimbusPost) to ensure fast Pan-India delivery.</p>
+
+          <div class="vs-policy-highlight-box">
+            <h4><i class="fa-solid fa-truck-ramp-box"></i> Pan India Logistics Coverage</h4>
+            <p>We serve 19,000+ PIN codes across India with estimated delivery within 5-7 business days.</p>
+          </div>
+
+          <h2>1. Order Processing</h2>
+          <p>Orders confirmed before 2:00 PM are processed within 1-2 working days. Tracking links are sent via SMS, WhatsApp, and Email once dispatched.</p>
+
+          <h2>2. Delivery Inspection</h2>
+          <p>Please inspect outer packaging upon arrival. If the parcel appears damaged or tampered with, report it to our helpline within 24 hours.</p>
+
+        {% elsif active_policy == 'legal' %}
+          <!-- LEGAL NOTICE -->
+          <p>This Legal Notice governs access to and ownership of www.vidhyutsaathi.in, operated by Vidhyut Saathi Energy Savers Pvt Ltd.</p>
+
+          <h2>1. Intellectual Property</h2>
+          <p>All Website content, logos, graphics, US-German tech brand materials, product photos, and trademarks are the exclusive property of Vidhyut Saathi Energy Savers Pvt Ltd.</p>
+
+          <h2>2. Product Performance Disclaimer</h2>
+          <p>Energy saving and power factor stabilization results depend on site earthing, electrical wiring quality, connected load type, and voltage stability.</p>
+
+          <h2>3. Jurisdiction</h2>
+          <p>Governed by laws of India. Courts in Rohtak, Haryana - 124001 have exclusive jurisdiction.</p>
+
+        {% elsif active_policy == 'disclaimer' %}
+          <!-- DISCLAIMER -->
+          <p>The information on www.vidhyutsaathi.in is provided for general informational purposes regarding electrical energy conservation.</p>
+
+          <h2>1. Product Usage &amp; Site Factors</h2>
+          <p>Efficiency results of Vidhyut Saathi Cards vary based on site electrical conditions, earthing quality, connected motor/inductive load, and appliance efficiency.</p>
+
+          <h2>2. Professional Guidance</h2>
+          <p>Content on this website does not constitute electrical engineering or statutory utility advice. Consult qualified technicians for heavy industrial installations.</p>
+
+        {% elsif active_policy == 'contact' %}
+          <!-- CONTACT INFORMATION -->
+          <p>Vidhyut Saathi Energy Savers Pvt Ltd Customer Support &amp; Corporate Office Information:</p>
+
+          <div class="vs-policy-contact-card">
+            <h4><i class="fa-solid fa-building"></i> Corporate Headquarters</h4>
+            <p><strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong><br>
+            SCO-77A, 3rd Floor, Ashoka Complex, Delhi Road, Rohtak - 124001, Haryana, India.</p>
+
+            <h4 style="margin-top: 20px;"><i class="fa-solid fa-headset"></i> Support Desk</h4>
+            <p><strong>Email:</strong> info@vidhyutsaathi.in / info@vidhyutsaathi.com<br>
+            <strong>Helpline:</strong> +91-8199036060 / +91-9053110707<br>
+            <strong>Support Hours:</strong> Monday – Saturday: 10:00 AM – 6:00 PM IST</p>
+          </div>
+
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Vidhyut Policy Layout",
+  "settings": [
+    {
+      "type": "select",
+      "id": "default_policy",
+      "label": "Default Policy Type",
+      "options": [
+        { "value": "privacy", "label": "Privacy Policy" },
+        { "value": "terms", "label": "Terms & Conditions" },
+        { "value": "refund", "label": "Return & Refund Policy" },
+        { "value": "shipping", "label": "Shipping Policy" },
+        { "value": "legal", "label": "Legal Notice" },
+        { "value": "disclaimer", "label": "Disclaimer" },
+        { "value": "contact", "label": "Contact Information" }
+      ],
+      "default": "privacy"
+    }
+  ],
+  "presets": [
+    { "name": "Vidhyut Policy Layout" }
+  ]
+}
+{% endschema %}

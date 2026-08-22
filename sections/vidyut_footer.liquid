@@ -578,13 +578,13 @@
       <div class="vs-bento-dock-card v-anim-footer">
         <h4 class="vs-dock-card-title">Legal &amp; Policies</h4>
         <ul class="vs-dock-links">
-          <li><a href="/policies/privacy-policy"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
-          <li><a href="/policies/terms-of-service"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</a></li>
-          <li><a href="/policies/refund-policy"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund Policy</a></li>
-          <li><a href="/policies/shipping-policy"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</a></li>
+          <li><a href="{{ shop.privacy_policy.url | default: '/pages/privacy-policy' }}"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
+          <li><a href="{{ shop.terms_of_service.url | default: '/pages/terms-and-conditions' }}"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</a></li>
+          <li><a href="{{ shop.refund_policy.url | default: '/pages/return-refund-policy' }}"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund Policy</a></li>
+          <li><a href="{{ shop.shipping_policy.url | default: '/pages/shipping-policy' }}"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</a></li>
           <li><a href="/pages/legal-notice"><i class="fa-solid fa-scale-balanced"></i> Legal Notice</a></li>
           <li><a href="/pages/disclaimer"><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</a></li>
-          <li><a href="/policies/contact-information"><i class="fa-solid fa-address-card"></i> Contact Information</a></li>
+          <li><a href="/pages/contact-information"><i class="fa-solid fa-address-card"></i> Contact Information</a></li>
         </ul>
       </div>
 

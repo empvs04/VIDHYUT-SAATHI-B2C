@@ -3,7 +3,7 @@
     "policy_layout": {
       "type": "vidhyut-policy-layout",
       "settings": {
-        "default_policy": "legal"
+        "default_policy": "shipping"
       }
     }
   },
