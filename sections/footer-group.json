@@ -30,9 +30,7 @@
       "type": "vidyut_footer",
       "name": "Vidhyut Footer",
       "settings": {
-        "bg_color": "#0f172a",
-        "text_color": "#94a3b8",
-        "footer_logo": "shopify://shop_images/Vidhyut_Saathi_Logo224x224.png",
+        "footer_logo": "shopify://shop_images/Vidhyut_Saathi_Logo224X224_1.png",
         "address": "SCO-77A, 3rd Floor, Ashoka Complex, Delhi Road Rohtak - 124001, Haryana.",
         "email": "info@vidhyutsaathi.com",
         "social_fb": "",
