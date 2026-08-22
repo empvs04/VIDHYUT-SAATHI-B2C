@@ -12,35 +12,14 @@
   {% section 'vidhyut-policy-layout' %}
 {% else %}
   <script>
-    if (window.location.pathname !== '/pages/b2c' && window.location.pathname !== '/') {
-      window.location.replace('/pages/b2c');
+    if (window.location.pathname !== '/') {
+      window.location.replace('/');
     }
   </script>
-  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-  <div
-    class="
-      section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}
-      {% if section.settings.section_height != "" %} {{ section.settings.section_height | prepend: "section--height-" }}{% endif %}
-    "
-  >
-    <div>
-      <div
-        class="
-          spacing-style
-          layout-panel-flex
-          layout-panel-flex--column
-          section-content-wrapper
-          mobile-column
-        "
-        style="
-          {% render 'layout-panel-style', settings: section.settings %}
-          {% render 'spacing-style', settings: section.settings %}
-        "
-      >
-        {% content_for 'blocks' %}
-      </div>
-    </div>
-  </div>
+  <style>
+    /* Suppress default 404 error text during redirect */
+    .section-content-wrapper, .section-background { display: none !important; }
+  </style>
 {% endif %}
 
 {% schema %}
