@@ -560,24 +560,38 @@
         </div>
       </div>
 
-      <!-- Card 2: Useful Links -->
+      <!-- Card 2: Quick Links -->
       <div class="vs-bento-dock-card v-anim-footer">
-        <h4 class="vs-dock-card-title">Useful Links</h4>
+        <h4 class="vs-dock-card-title">Quick Links</h4>
         <ul class="vs-dock-links">
           <li><a href="/"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
           <li><a href="/pages/about-us"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
           <li><a href="/pages/b2c"><i class="fa-solid fa-chevron-right"></i> Why Vidhyut Saathi</a></li>
-          <li><a href="/policies/privacy-policy"><i class="fa-solid fa-chevron-right"></i> Privacy Policy</a></li>
-          <li><a href="/policies/terms-of-service"><i class="fa-solid fa-chevron-right"></i> Terms &amp; Conditions</a></li>
-          <li><a href="/pages/disclaimer"><i class="fa-solid fa-chevron-right"></i> Disclaimer</a></li>
+          <li><a href="/pages/our-team"><i class="fa-solid fa-chevron-right"></i> Our Team</a></li>
+          <li><a href="/pages/success-stories"><i class="fa-solid fa-chevron-right"></i> Success Stories</a></li>
           <li><a href="/pages/contact"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
+          <li><a href="/pages/faq"><i class="fa-solid fa-chevron-right"></i> FAQ &amp; Help</a></li>
         </ul>
       </div>
 
-      <!-- Card 3: Our Solutions (With Required Cards) -->
+      <!-- Card 3: Legal & Policies -->
+      <div class="vs-bento-dock-card v-anim-footer">
+        <h4 class="vs-dock-card-title">Legal &amp; Policies</h4>
+        <ul class="vs-dock-links">
+          <li><a href="/policies/privacy-policy"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
+          <li><a href="/policies/terms-of-service"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</a></li>
+          <li><a href="/policies/refund-policy"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund Policy</a></li>
+          <li><a href="/policies/shipping-policy"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</a></li>
+          <li><a href="/pages/legal-notice"><i class="fa-solid fa-scale-balanced"></i> Legal Notice</a></li>
+          <li><a href="/pages/disclaimer"><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</a></li>
+          <li><a href="/policies/contact-information"><i class="fa-solid fa-address-card"></i> Contact Information</a></li>
+        </ul>
+      </div>
+
+      <!-- Card 4: Our Solutions & Recognitions -->
       <div class="vs-bento-dock-card v-anim-footer">
         <h4 class="vs-dock-card-title">Our Solutions</h4>
-        <ul class="vs-dock-links">
+        <ul class="vs-dock-links" style="margin-bottom: 18px;">
           <li><a href="/products/vidhyut-saathi-electric-power-saver-card"><i class="fa-solid fa-chevron-right"></i> Vidhyut Saathi Card</a></li>
           <li>
             <a href="/pages/required-cards" class="vs-req-hot-badge">
@@ -585,17 +599,10 @@
             </a>
           </li>
           <li><a href="/pages/b2c"><i class="fa-solid fa-chevron-right"></i> Fuel Saving Saathi</a></li>
-          <li><a href="/products/vidhyut-saathi-electric-power-saver-card"><i class="fa-solid fa-chevron-right"></i> Get Card</a></li>
-          <li><a href="/pages/contact"><i class="fa-solid fa-chevron-right"></i> Get Franchise</a></li>
-          <li><a href="/pages/faq"><i class="fa-solid fa-chevron-right"></i> FAQ &amp; Help</a></li>
+          <li><a href="/pages/contact"><i class="fa-solid fa-chevron-right"></i> Become Partner / Franchise</a></li>
         </ul>
-      </div>
 
-      <!-- Card 4: Recognitions -->
-      <div class="vs-bento-dock-card v-anim-footer">
-        <h4 class="vs-dock-card-title">Recognitions</h4>
         <div class="vs-dock-cert-stack">
-          
           <a href="/pages/iso-certification" class="vs-dock-cert-card">
             <div class="vs-dock-cert-img">
               {% if section.settings.iso_cert_image != blank %}
@@ -623,7 +630,6 @@
               <span><i class="fa-solid fa-circle-check"></i> Govt. Recognized</span>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -632,7 +638,7 @@
     <!-- BOTTOM STRIP -->
     <div class="vs-dock-bottom-strip v-anim-footer">
       <div class="vs-dock-copy">
-        &copy; {{ 'now' | date: "%Y" }} <strong>Vidhyut Saathi Energy Savers</strong>. All rights reserved.
+        &copy; {{ 'now' | date: "%Y" }} <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong>. All rights reserved.
       </div>
       <div class="vs-dock-socials">
         {% if section.settings.social_fb != blank %}<a href="{{ section.settings.social_fb }}" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>{% endif %}
@@ -640,7 +646,7 @@
         {% if section.settings.social_yt != blank %}<a href="{{ section.settings.social_yt }}" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>{% endif %}
       </div>
       <div class="vs-dock-status-tag">
-        <i class="fa-solid fa-bolt"></i> 20,000 ION TECH
+        <i class="fa-solid fa-bolt"></i> 20,000+ ION TECH USERS
       </div>
     </div>
 
