@@ -564,13 +564,13 @@
       <div class="vs-bento-dock-card v-anim-footer">
         <h4 class="vs-dock-card-title">Quick Links</h4>
         <ul class="vs-dock-links">
-          <li><a href="/"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
-          <li><a href="/pages/about-us"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
+          <li><a href="/pages/b2c"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
+          <li><a href="/pages/b2c#about"><i class="fa-solid fa-chevron-right"></i> About Us</a></li>
           <li><a href="/pages/b2c"><i class="fa-solid fa-chevron-right"></i> Why Vidhyut Saathi</a></li>
-          <li><a href="/pages/our-team"><i class="fa-solid fa-chevron-right"></i> Our Team</a></li>
-          <li><a href="/pages/success-stories"><i class="fa-solid fa-chevron-right"></i> Success Stories</a></li>
-          <li><a href="/pages/contact"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
-          <li><a href="/pages/faq"><i class="fa-solid fa-chevron-right"></i> FAQ &amp; Help</a></li>
+          <li><a href="/pages/b2c#team"><i class="fa-solid fa-chevron-right"></i> Our Team</a></li>
+          <li><a href="/pages/b2c#testimonials"><i class="fa-solid fa-chevron-right"></i> Success Stories</a></li>
+          <li><a href="javascript:void(0)" onclick="openVsPolicyModal('contact')"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
+          <li><a href="/pages/b2c#faq"><i class="fa-solid fa-chevron-right"></i> FAQ &amp; Help</a></li>
         </ul>
       </div>
 
@@ -594,12 +594,12 @@
         <ul class="vs-dock-links" style="margin-bottom: 18px;">
           <li><a href="/products/vidhyut-saathi-electric-power-saver-card"><i class="fa-solid fa-chevron-right"></i> Vidhyut Saathi Card</a></li>
           <li>
-            <a href="/pages/required-cards" class="vs-req-hot-badge">
+            <a href="/pages/b2c#required-cards" class="vs-req-hot-badge">
               <i class="fa-solid fa-bolt"></i> Required Cards <span>HOT</span>
             </a>
           </li>
           <li><a href="/pages/b2c"><i class="fa-solid fa-chevron-right"></i> Fuel Saving Saathi</a></li>
-          <li><a href="/pages/contact"><i class="fa-solid fa-chevron-right"></i> Become Partner / Franchise</a></li>
+          <li><a href="javascript:void(0)" onclick="openVsPolicyModal('contact')"><i class="fa-solid fa-chevron-right"></i> Become Partner / Franchise</a></li>
         </ul>
 
         <div class="vs-dock-cert-stack">
@@ -1632,7 +1632,51 @@
         }
       }, { passive: false });
     }
+
+    // Auto-open policy modal on page load if URL matches a policy
+    const path = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    const search = window.location.search.toLowerCase();
+
+    if (path.includes('privacy') || hash.includes('privacy') || search.includes('privacy')) {
+      setTimeout(function() { openVsPolicyModal('privacy'); }, 150);
+    } else if (path.includes('terms') || hash.includes('terms') || search.includes('terms')) {
+      setTimeout(function() { openVsPolicyModal('terms'); }, 150);
+    } else if (path.includes('refund') || path.includes('return') || hash.includes('refund') || search.includes('refund')) {
+      setTimeout(function() { openVsPolicyModal('refund'); }, 150);
+    } else if (path.includes('shipping') || hash.includes('shipping') || search.includes('shipping')) {
+      setTimeout(function() { openVsPolicyModal('shipping'); }, 150);
+    } else if (path.includes('legal') || hash.includes('legal') || search.includes('legal')) {
+      setTimeout(function() { openVsPolicyModal('legal'); }, 150);
+    } else if (path.includes('disclaimer') || hash.includes('disclaimer') || search.includes('disclaimer')) {
+      setTimeout(function() { openVsPolicyModal('disclaimer'); }, 150);
+    } else if (path.includes('contact') || hash.includes('contact') || search.includes('contact')) {
+      setTimeout(function() { openVsPolicyModal('contact'); }, 150);
+    }
   });
+
+  {% if request.page_type == '404' %}
+  document.addEventListener("DOMContentLoaded", function() {
+    const path = window.location.pathname.toLowerCase();
+    if (path.includes('privacy')) {
+      openVsPolicyModal('privacy');
+    } else if (path.includes('terms')) {
+      openVsPolicyModal('terms');
+    } else if (path.includes('refund') || path.includes('return')) {
+      openVsPolicyModal('refund');
+    } else if (path.includes('shipping')) {
+      openVsPolicyModal('shipping');
+    } else if (path.includes('legal')) {
+      openVsPolicyModal('legal');
+    } else if (path.includes('disclaimer')) {
+      openVsPolicyModal('disclaimer');
+    } else if (path.includes('contact')) {
+      openVsPolicyModal('contact');
+    } else {
+      window.location.replace('/pages/b2c');
+    }
+  });
+  {% endif %}
 
   function initDockFooterAnimations() {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
