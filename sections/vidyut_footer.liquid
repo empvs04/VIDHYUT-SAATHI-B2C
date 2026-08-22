@@ -763,18 +763,54 @@
     transform: rotate(90deg);
   }
 
-  /* Nav Tabs */
+  /* Nav Tabs Wrapper & Navigation Arrows */
+  .vs-policy-tabs-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(2, 6, 23, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0 10px;
+    flex-shrink: 0;
+  }
+
+  .vs-policy-arrow-btn {
+    background: linear-gradient(135deg, #f17e39 0%, #d96924 100%);
+    border: none;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+    z-index: 5;
+    box-shadow: 0 4px 12px rgba(241, 126, 57, 0.3);
+  }
+
+  .vs-policy-arrow-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 18px rgba(241, 126, 57, 0.5);
+  }
+
+  .vs-policy-arrow-btn:active {
+    transform: scale(0.95);
+  }
+
   .vs-policy-modal-tabs {
     display: flex;
     gap: 8px;
-    padding: 12px 20px;
-    background: rgba(2, 6, 23, 0.7);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 12px 10px;
     overflow-x: auto;
     white-space: nowrap;
-    flex-shrink: 0;
+    flex: 1;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    scroll-behavior: smooth;
   }
 
   .vs-policy-modal-tabs::-webkit-scrollbar {
@@ -946,14 +982,19 @@
       <div class="vs-policy-modal-close" onclick="closeVsPolicyModal()"><i class="fa-solid fa-xmark"></i></div>
     </div>
 
-    <div class="vs-policy-modal-tabs">
-      <button class="vs-policy-tab-btn active" data-tab="privacy" onclick="switchVsPolicyTab('privacy')"><i class="fa-solid fa-user-shield"></i> Privacy Policy</button>
-      <button class="vs-policy-tab-btn" data-tab="terms" onclick="switchVsPolicyTab('terms')"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</button>
-      <button class="vs-policy-tab-btn" data-tab="refund" onclick="switchVsPolicyTab('refund')"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund</button>
-      <button class="vs-policy-tab-btn" data-tab="shipping" onclick="switchVsPolicyTab('shipping')"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</button>
-      <button class="vs-policy-tab-btn" data-tab="legal" onclick="switchVsPolicyTab('legal')"><i class="fa-solid fa-scale-balanced"></i> Legal Notice</button>
-      <button class="vs-policy-tab-btn" data-tab="disclaimer" onclick="switchVsPolicyTab('disclaimer')"><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</button>
-      <button class="vs-policy-tab-btn" data-tab="contact" onclick="switchVsPolicyTab('contact')"><i class="fa-solid fa-address-card"></i> Contact Info</button>
+    <!-- TABS BAR WITH ARROW CONTROLS -->
+    <div class="vs-policy-tabs-wrapper">
+      <button class="vs-policy-arrow-btn vs-arrow-left" onclick="slideVsTabs('left')" title="Scroll Left"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="vs-policy-modal-tabs" id="vsPolicyModalTabs">
+        <button class="vs-policy-tab-btn active" data-tab="privacy" onclick="switchVsPolicyTab('privacy')"><i class="fa-solid fa-user-shield"></i> Privacy Policy</button>
+        <button class="vs-policy-tab-btn" data-tab="terms" onclick="switchVsPolicyTab('terms')"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</button>
+        <button class="vs-policy-tab-btn" data-tab="refund" onclick="switchVsPolicyTab('refund')"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund</button>
+        <button class="vs-policy-tab-btn" data-tab="shipping" onclick="switchVsPolicyTab('shipping')"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</button>
+        <button class="vs-policy-tab-btn" data-tab="legal" onclick="switchVsPolicyTab('legal')"><i class="fa-solid fa-scale-balanced"></i> Legal Notice</button>
+        <button class="vs-policy-tab-btn" data-tab="disclaimer" onclick="switchVsPolicyTab('disclaimer')"><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</button>
+        <button class="vs-policy-tab-btn" data-tab="contact" onclick="switchVsPolicyTab('contact')"><i class="fa-solid fa-address-card"></i> Contact Info</button>
+      </div>
+      <button class="vs-policy-arrow-btn vs-arrow-right" onclick="slideVsTabs('right')" title="Scroll Right"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
 
     <div class="vs-policy-modal-body" id="vsPolicyModalBody">
@@ -1153,9 +1194,20 @@
     document.body.style.overflow = '';
   }
 
+  function slideVsTabs(direction) {
+    const tabsContainer = document.getElementById('vsPolicyModalTabs');
+    if (!tabsContainer) return;
+    const scrollAmount = direction === 'left' ? -240 : 240;
+    tabsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
+
   function switchVsPolicyTab(policyKey) {
     document.querySelectorAll('.vs-policy-tab-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.getAttribute('data-tab') === policyKey);
+      const isTarget = btn.getAttribute('data-tab') === policyKey;
+      btn.classList.toggle('active', isTarget);
+      if (isTarget) {
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
     });
     document.querySelectorAll('.vs-policy-tab-content').forEach(content => {
       content.classList.toggle('active', content.getAttribute('id') === 'vs-policy-tab-' + policyKey);
@@ -1163,6 +1215,18 @@
     const body = document.getElementById('vsPolicyModalBody');
     if (body) body.scrollTop = 0;
   }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const tabsContainer = document.getElementById('vsPolicyModalTabs');
+    if (tabsContainer) {
+      tabsContainer.addEventListener('wheel', function(e) {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          tabsContainer.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    }
+  });
 
   function initDockFooterAnimations() {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
