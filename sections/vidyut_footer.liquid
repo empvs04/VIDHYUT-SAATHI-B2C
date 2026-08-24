@@ -569,26 +569,22 @@
           <li><a href="/"><i class="fa-solid fa-chevron-right"></i> Why Vidhyut Saathi</a></li>
           <li><a href="/#team"><i class="fa-solid fa-chevron-right"></i> Our Team</a></li>
           <li><a href="/#testimonials"><i class="fa-solid fa-chevron-right"></i> Success Stories</a></li>
-{% liquid
-  assign vs_policy_page_url = pages['legal-and-policies'].url | default: pages['legal-policies'].url | default: '/pages/legal-and-policies'
-%}
-
-          <li><a href="{{ vs_policy_page_url }}#contact"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
+          <li><a href="/pages/contact-information"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
           <li><a href="/#faq"><i class="fa-solid fa-chevron-right"></i> FAQ &amp; Help</a></li>
         </ul>
       </div>
 
       <!-- Card 3: Legal & Policies -->
       <div class="vs-bento-dock-card v-anim-footer">
-        <h4 class="vs-dock-card-title"><a href="{{ vs_policy_page_url }}" style="color: inherit; text-decoration: none;">Legal &amp; Policies</a></h4>
+        <h4 class="vs-dock-card-title"><a href="/pages/privacy-policy" style="color: inherit; text-decoration: none;">Legal &amp; Policies</a></h4>
         <ul class="vs-dock-links">
-          <li><a href="{{ vs_policy_page_url }}#privacy"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
-          <li><a href="{{ vs_policy_page_url }}#terms"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</a></li>
-          <li><a href="{{ vs_policy_page_url }}#refund"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund Policy</a></li>
-          <li><a href="{{ vs_policy_page_url }}#shipping"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</a></li>
-          <li><a href="{{ vs_policy_page_url }}#legal"><i class="fa-solid fa-scale-balanced"></i> Legal Notice</a></li>
-          <li><a href="{{ vs_policy_page_url }}#disclaimer"><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</a></li>
-          <li><a href="{{ vs_policy_page_url }}#contact"><i class="fa-solid fa-address-card"></i> Contact Information</a></li>
+          <li><a href="/pages/privacy-policy"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
+          <li><a href="/pages/terms-and-conditions"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</a></li>
+          <li><a href="/pages/return-refund-policy"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund Policy</a></li>
+          <li><a href="/pages/shipping-policy"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</a></li>
+          <li><a href="/pages/legal-notice"><i class="fa-solid fa-scale-balanced"></i> Legal Notice</a></li>
+          <li><a href="/pages/disclaimer"><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</a></li>
+          <li><a href="/pages/contact-information"><i class="fa-solid fa-address-card"></i> Contact Information</a></li>
         </ul>
       </div>
 
@@ -603,7 +599,7 @@
             </a>
           </li>
           <li><a href="/"><i class="fa-solid fa-chevron-right"></i> Fuel Saving Saathi</a></li>
-          <li><a href="{{ vs_policy_page_url }}#contact"><i class="fa-solid fa-chevron-right"></i> Become Partner / Franchise</a></li>
+          <li><a href="/pages/contact-information"><i class="fa-solid fa-chevron-right"></i> Become Partner / Franchise</a></li>
         </ul>
 
         <div class="vs-dock-cert-stack">
