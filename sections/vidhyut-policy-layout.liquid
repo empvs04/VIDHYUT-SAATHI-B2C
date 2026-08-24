@@ -340,6 +340,18 @@
       border-radius: 12px;
     }
   }
+
+  .vs-policy-tab-pane {
+    display: none;
+    animation: vsPolicyFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .vs-policy-tab-pane.active {
+    display: block;
+  }
+  @keyframes vsPolicyFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 {%- endstyle -%}
 
 {% liquid
@@ -372,7 +384,7 @@
     <div class="vs-policy-hero-badge">
       <i class="fa-solid fa-shield-halved"></i> Vidhyut Saathi Legal &amp; Compliance Center
     </div>
-    <h1>
+    <h1 id="vsPolicyHeroTitle">
       {% if active_policy == 'privacy' %}Privacy Policy
       {% elsif active_policy == 'terms' %}Terms &amp; Conditions
       {% elsif active_policy == 'refund' %}Return &amp; Refund Policy
@@ -395,37 +407,37 @@
       </div>
       <ul class="vs-policy-nav">
         <li>
-          <a href="/pages/privacy-policy" class="{% if active_policy == 'privacy' %}active{% endif %}">
+          <a href="#privacy" onclick="showVsPolicySection('privacy'); return false;" class="vs-policy-nav-btn {% if active_policy == 'privacy' %}active{% endif %}" data-policy="privacy">
             <i class="fa-solid fa-user-shield"></i> Privacy Policy
           </a>
         </li>
         <li>
-          <a href="/pages/terms-and-conditions" class="{% if active_policy == 'terms' %}active{% endif %}">
+          <a href="#terms" onclick="showVsPolicySection('terms'); return false;" class="vs-policy-nav-btn {% if active_policy == 'terms' %}active{% endif %}" data-policy="terms">
             <i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions
           </a>
         </li>
         <li>
-          <a href="/pages/return-refund-policy" class="{% if active_policy == 'refund' %}active{% endif %}">
+          <a href="#refund" onclick="showVsPolicySection('refund'); return false;" class="vs-policy-nav-btn {% if active_policy == 'refund' %}active{% endif %}" data-policy="refund">
             <i class="fa-solid fa-rotate-left"></i> Return &amp; Refund
           </a>
         </li>
         <li>
-          <a href="/pages/shipping-policy" class="{% if active_policy == 'shipping' %}active{% endif %}">
+          <a href="#shipping" onclick="showVsPolicySection('shipping'); return false;" class="vs-policy-nav-btn {% if active_policy == 'shipping' %}active{% endif %}" data-policy="shipping">
             <i class="fa-solid fa-truck-fast"></i> Shipping Policy
           </a>
         </li>
         <li>
-          <a href="/pages/legal-notice" class="{% if active_policy == 'legal' %}active{% endif %}">
+          <a href="#legal" onclick="showVsPolicySection('legal'); return false;" class="vs-policy-nav-btn {% if active_policy == 'legal' %}active{% endif %}" data-policy="legal">
             <i class="fa-solid fa-scale-balanced"></i> Legal Notice
           </a>
         </li>
         <li>
-          <a href="/pages/disclaimer" class="{% if active_policy == 'disclaimer' %}active{% endif %}">
+          <a href="#disclaimer" onclick="showVsPolicySection('disclaimer'); return false;" class="vs-policy-nav-btn {% if active_policy == 'disclaimer' %}active{% endif %}" data-policy="disclaimer">
             <i class="fa-solid fa-triangle-exclamation"></i> Disclaimer
           </a>
         </li>
         <li>
-          <a href="/pages/contact-information" class="{% if active_policy == 'contact' %}active{% endif %}">
+          <a href="#contact" onclick="showVsPolicySection('contact'); return false;" class="vs-policy-nav-btn {% if active_policy == 'contact' %}active{% endif %}" data-policy="contact">
             <i class="fa-solid fa-address-card"></i> Contact Information
           </a>
         </li>
@@ -446,7 +458,7 @@
 
       <div class="vs-policy-body">
         
-        {% if active_policy == 'privacy' %}
+        <div class="vs-policy-tab-pane {% if active_policy == 'privacy' %}active{% endif %}" id="policy-pane-privacy">
           <!-- PRIVACY POLICY -->
           <p>At <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong> ("Vidhyut Saathi", "we", "our", or "us"), we respect your privacy and are committed to protecting the personal information you share with us through our website, <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a> ("Website"). This Privacy Policy explains how we collect, use, store, disclose, and safeguard your information when you visit our Website, create an account, purchase products, or use our services.</p>
           <p>By accessing or using our Website, you agree to the practices described in this Privacy Policy.</p>
@@ -559,7 +571,8 @@
           Website: <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39;">www.vidhyutsaathi.in</a><br>
           Address: SCO-77A, 3rd Floor, Ashoka Complex, Delhi Road, Rohtak - 124001, Haryana, India.</p>
 
-        {% elsif active_policy == 'terms' %}
+        </div>
+        <div class="vs-policy-tab-pane {% if active_policy == 'terms' %}active{% endif %}" id="policy-pane-terms">
           <!-- TERMS & CONDITIONS -->
           <p>Welcome to <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong> ("Vidhyut Saathi", "we", "our", or "us"). These Terms &amp; Conditions govern your access to and use of our website, <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a> ("Website"), including the purchase of products and use of services offered through the Website.</p>
           <p>By accessing, browsing, registering on, or placing an order through this Website, you agree to be bound by these Terms &amp; Conditions. If you do not agree with any part of these Terms, please refrain from using our Website.</p>
@@ -667,7 +680,8 @@
           Website: <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39;">www.vidhyutsaathi.in</a><br>
           Address: SCO-77A, 3rd Floor, Ashoka Complex, Delhi Road, Rohtak - 124001, Haryana, India.</p>
 
-        {% elsif active_policy == 'refund' %}
+        </div>
+        <div class="vs-policy-tab-pane {% if active_policy == 'refund' %}active{% endif %}" id="policy-pane-refund">
           <!-- RETURN & REFUND POLICY -->
           <p>At <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong> ("Vidhyut Saathi", "we", "our", or "us"), we strive to ensure customer satisfaction with every purchase made through <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a> ("Website"). Please read this Return &amp; Refund Policy carefully before placing an order.</p>
           <p>By placing an order on our Website, you agree to the terms of this Policy.</p>
@@ -721,7 +735,8 @@
           Website: <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39;">www.vidhyutsaathi.in</a><br>
           Please mention your Order ID and registered mobile number while contacting us for faster assistance.</p>
 
-        {% elsif active_policy == 'shipping' %}
+        </div>
+        <div class="vs-policy-tab-pane {% if active_policy == 'shipping' %}active{% endif %}" id="policy-pane-shipping">
           <!-- SHIPPING POLICY -->
           <p>Thank you for shopping with <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong>. This Shipping Policy outlines the terms and conditions relating to the shipment and delivery of products purchased through <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a>.</p>
 
@@ -771,7 +786,8 @@
           Email: <a href="mailto:info@vidhyutsaathi.in" style="color: #f17e39;">info@vidhyutsaathi.in</a><br>
           Website: <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39;">www.vidhyutsaathi.in</a></p>
 
-        {% elsif active_policy == 'legal' %}
+        </div>
+        <div class="vs-policy-tab-pane {% if active_policy == 'legal' %}active{% endif %}" id="policy-pane-legal">
           <!-- LEGAL NOTICE -->
           <p>This Legal Notice governs the access to and use of the website <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a> ("Website"), owned and operated by <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong> ("Vidhyut Saathi", "we", "our", or "us").</p>
           <p>By accessing, browsing, registering on, or purchasing products through this Website, you acknowledge that you have read, understood, and agreed to comply with this Legal Notice, along with our Terms &amp; Conditions, Privacy Policy, Shipping Policy, Return &amp; Refund Policy, and other applicable policies published on the Website.</p>
@@ -818,7 +834,8 @@
           Email: <a href="mailto:info@vidhyutsaathi.in" style="color: #f17e39;">info@vidhyutsaathi.in</a><br>
           Website: <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39;">www.vidhyutsaathi.in</a></p>
 
-        {% elsif active_policy == 'disclaimer' %}
+        </div>
+        <div class="vs-policy-tab-pane {% if active_policy == 'disclaimer' %}active{% endif %}" id="policy-pane-disclaimer">
           <!-- DISCLAIMER -->
           <p>The information provided on <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a> ("Website") is for general informational purposes only. By accessing and using this Website, you acknowledge and agree to the terms of this Disclaimer.</p>
 
@@ -865,7 +882,8 @@
           Email: <a href="mailto:info@vidhyutsaathi.in" style="color: #f17e39;">info@vidhyutsaathi.in</a><br>
           Website: <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39;">www.vidhyutsaathi.in</a></p>
 
-        {% elsif active_policy == 'contact' %}
+        </div>
+        <div class="vs-policy-tab-pane {% if active_policy == 'contact' %}active{% endif %}" id="policy-pane-contact">
           <!-- CONTACT INFORMATION -->
           <p>At <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong>, we are committed to providing prompt assistance and exceptional customer support. If you have any questions regarding our products, orders, shipping, returns, warranty claims, or general enquiries, our team is here to help.</p>
 
@@ -893,8 +911,7 @@
 
           <p style="margin-top: 18px;">To help us resolve your query quickly, please mention your <strong>Order ID</strong>, <strong>registered email address</strong>, and a brief description of your concern while contacting us.</p>
           <p>We value your trust and strive to provide timely and effective support to all our customers.</p>
-
-        {% endif %}
+        </div>
 
       </div>
 
@@ -902,6 +919,72 @@
 
   </div>
 </div>
+
+<script>
+  function showVsPolicySection(policyKey) {
+    if (!policyKey) policyKey = 'privacy';
+    
+    var panes = document.querySelectorAll('.vs-policy-tab-pane');
+    panes.forEach(function(pane) {
+      pane.classList.remove('active');
+    });
+
+    var navBtns = document.querySelectorAll('.vs-policy-nav-btn');
+    navBtns.forEach(function(btn) {
+      btn.classList.remove('active');
+    });
+
+    var targetPane = document.getElementById('policy-pane-' + policyKey);
+    var targetBtns = document.querySelectorAll('.vs-policy-nav-btn[data-policy="' + policyKey + '"]');
+    
+    if (targetPane) targetPane.classList.add('active');
+    targetBtns.forEach(function(btn) {
+      btn.classList.add('active');
+    });
+
+    var titles = {
+      'privacy': 'Privacy Policy',
+      'terms': 'Terms & Conditions',
+      'refund': 'Return & Refund Policy',
+      'shipping': 'Shipping Policy',
+      'legal': 'Legal Notice',
+      'disclaimer': 'Disclaimer',
+      'contact': 'Contact Information'
+    };
+    var heroTitleEl = document.getElementById('vsPolicyHeroTitle');
+    if (heroTitleEl && titles[policyKey]) {
+      heroTitleEl.textContent = titles[policyKey];
+    }
+
+    if (history.pushState) {
+      history.pushState(null, null, '#' + policyKey);
+    } else {
+      window.location.hash = '#' + policyKey;
+    }
+  }
+
+  function initVsPolicyTabs() {
+    var hash = window.location.hash.replace('#', '').toLowerCase();
+    var validKeys = ['privacy', 'terms', 'refund', 'shipping', 'legal', 'disclaimer', 'contact'];
+    if (hash && validKeys.indexOf(hash) !== -1) {
+      showVsPolicySection(hash);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVsPolicyTabs);
+  } else {
+    initVsPolicyTabs();
+  }
+
+  window.addEventListener('hashchange', function() {
+    var hash = window.location.hash.replace('#', '').toLowerCase();
+    var validKeys = ['privacy', 'terms', 'refund', 'shipping', 'legal', 'disclaimer', 'contact'];
+    if (hash && validKeys.indexOf(hash) !== -1) {
+      showVsPolicySection(hash);
+    }
+  });
+</script>
 
 {% schema %}
 {
