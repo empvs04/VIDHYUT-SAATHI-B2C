@@ -570,16 +570,7 @@
           <li><a href="/#team"><i class="fa-solid fa-chevron-right"></i> Our Team</a></li>
           <li><a href="/#testimonials"><i class="fa-solid fa-chevron-right"></i> Success Stories</a></li>
 {% liquid
-  assign vs_policy_page_url = '/pages/privacy-policy'
-  if pages['legal-policies'].url != blank
-    assign vs_policy_page_url = pages['legal-policies'].url
-  elsif pages['legal-and-policies'].url != blank
-    assign vs_policy_page_url = pages['legal-and-policies'].url
-  elsif pages['legal-policy'].url != blank
-    assign vs_policy_page_url = pages['legal-policy'].url
-  elsif pages['privacy-policy'].url != blank
-    assign vs_policy_page_url = pages['privacy-policy'].url
-  endif
+  assign vs_policy_page_url = pages['legal-and-policies'].url | default: pages['legal-policies'].url | default: '/pages/legal-and-policies'
 %}
 
           <li><a href="{{ vs_policy_page_url }}#contact"><i class="fa-solid fa-chevron-right"></i> Contact Us</a></li>
