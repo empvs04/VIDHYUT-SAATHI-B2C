@@ -9,13 +9,12 @@
     --pol-body-text: #334155;
     --pol-muted: #64748b;
     --pol-border: #e2e8f0;
-    --pol-card-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-    --pol-card-hover-shadow: 0 20px 45px rgba(241, 126, 57, 0.08);
+    --pol-card-shadow: 0 12px 40px rgba(15, 23, 42, 0.06);
   }
 
   .vs-policy-wrapper {
-    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-    background: radial-gradient(circle at 50% 0%, rgba(241, 126, 57, 0.06) 0%, #f8fafc 40%, rgba(0, 123, 62, 0.04) 100%);
+    font-family: 'Plus Jakarta Sans', 'Outfit', 'Inter', system-ui, sans-serif;
+    background: radial-gradient(circle at 50% 0%, rgba(241, 126, 57, 0.08) 0%, #f8fafc 40%, rgba(0, 123, 62, 0.05) 100%);
     color: var(--pol-body-text);
     min-height: 100vh;
     padding-bottom: 80px;
@@ -23,63 +22,73 @@
     overflow: hidden;
   }
 
-  .vs-policy-glow-1 {
-    position: absolute;
-    top: -150px;
-    left: 10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(241, 126, 57, 0.08) 0%, rgba(255,255,255,0) 70%);
-    pointer-events: none;
+  /* --- Moving Watermark Marquee Text --- */
+  @keyframes scroll-left-to-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(50%); }
   }
-
-  .vs-policy-glow-2 {
+  .vs-policy-moving-text {
     position: absolute;
-    bottom: -150px;
-    right: 10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(0, 123, 62, 0.08) 0%, rgba(255,255,255,0) 70%);
+    top: 25px;
+    left: 0;
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0.15;
     pointer-events: none;
+    line-height: 1;
+    font-size: clamp(36px, 5.5vw, 80px);
+    font-weight: 900;
+    background: linear-gradient(90deg, #f17e39, #ffcc00, #007b3e, #f17e39);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: scroll-left-to-right 22s linear infinite;
   }
 
   /* Hero Section */
   .vs-policy-hero {
-    padding: 60px 20px 36px;
+    padding: clamp(50px, 6vw, 80px) 20px 45px;
     text-align: center;
     position: relative;
     z-index: 2;
-    background: linear-gradient(135deg, #ffffff 0%, #fff7ed 50%, #f0fdf4 100%);
-    border-bottom: 1px solid var(--pol-border);
+    background: linear-gradient(135deg, #090e1a 0%, #151d30 50%, #0d1527 100%);
+    color: #ffffff;
+    border-bottom: 2px solid rgba(241, 126, 57, 0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
 
   .vs-policy-hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(241, 126, 57, 0.1);
-    border: 1px solid rgba(241, 126, 57, 0.3);
-    color: #c2410c;
-    padding: 6px 18px;
+    background: rgba(241, 126, 57, 0.18);
+    border: 1px solid rgba(255, 204, 0, 0.4);
+    color: #ffcc00;
+    padding: 6px 20px;
     border-radius: 30px;
     font-size: 0.85rem;
-    font-weight: 700;
-    margin-bottom: 16px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   }
 
   .vs-policy-hero h1 {
-    font-size: clamp(2.2rem, 4vw, 3.2rem);
-    font-weight: 800;
-    color: #0f172a;
-    margin: 0 0 12px;
+    font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+    font-weight: 900;
+    margin: 0 0 14px;
     letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #ffffff 0%, #ffcc00 45%, #f17e39 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .vs-policy-hero p {
-    color: #475569;
+    color: #cbd5e1;
     font-size: 1.05rem;
     max-width: 680px;
-    margin: 0 auto 18px;
+    margin: 0 auto 20px;
     line-height: 1.6;
   }
 
@@ -87,22 +96,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     flex-wrap: wrap;
   }
 
   .vs-policy-trust-pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: #ffffff;
-    border: 1px solid var(--pol-border);
-    padding: 6px 14px;
+    gap: 7px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 7px 16px;
     border-radius: 20px;
     font-size: 0.82rem;
     font-weight: 600;
-    color: #334155;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+    color: #f1f5f9;
   }
 
   /* Main Container */
@@ -128,9 +137,20 @@
     flex-direction: column;
     gap: 12px;
     position: sticky;
-    top: 20px;
+    top: 15px;
     z-index: 100;
     backdrop-filter: blur(16px);
+  }
+
+  .vs-policy-top-bar-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 3px;
+    background: linear-gradient(90deg, #f17e39, #ffcc00, #007b3e);
+    border-radius: 0 0 3px 3px;
   }
 
   .vs-policy-top-bar-header {
@@ -212,7 +232,7 @@
     color: #ffffff;
     font-weight: 700;
     border-color: transparent;
-    box-shadow: 0 6px 20px rgba(241, 126, 57, 0.35);
+    box-shadow: 0 8px 25px rgba(241, 126, 57, 0.35);
     transform: translateY(-1px);
   }
 
@@ -225,7 +245,7 @@
     background: var(--pol-card-bg);
     border: 1px solid var(--pol-border);
     border-radius: 24px;
-    padding: 44px;
+    padding: 48px;
     box-shadow: 0 20px 50px rgba(15, 23, 42, 0.06);
     position: relative;
   }
@@ -237,7 +257,7 @@
     left: 40px;
     right: 40px;
     height: 4px;
-    background: linear-gradient(90deg, #f17e39, #007b3e);
+    background: linear-gradient(90deg, #f17e39, #ffcc00, #007b3e);
     border-radius: 0 0 4px 4px;
   }
 
@@ -532,8 +552,8 @@
 %}
 
 <div class="vs-policy-wrapper">
-  <div class="vs-policy-glow-1"></div>
-  <div class="vs-policy-glow-2"></div>
+  <!-- Moving Watermark Text -->
+  <div class="vs-policy-moving-text">VIDHYUT SAATHI LEGAL &amp; COMPLIANCE</div>
 
   <!-- Hero Header -->
   <div class="vs-policy-hero">
@@ -544,7 +564,7 @@
     <p>Official legal guidelines, terms, warranties, and privacy protection protocols for Vidhyut Saathi Energy Savers Pvt Ltd.</p>
     
     <div class="vs-policy-trust-pills">
-      <div class="vs-policy-trust-pill"><i class="fa-solid fa-certificate" style="color: #007b3e;"></i> ISO 9001:2015 Certified</div>
+      <div class="vs-policy-trust-pill"><i class="fa-solid fa-certificate" style="color: #ffcc00;"></i> ISO 9001:2015 Certified</div>
       <div class="vs-policy-trust-pill"><i class="fa-solid fa-truck-fast" style="color: #f17e39;"></i> All India Delivery</div>
       <div class="vs-policy-trust-pill"><i class="fa-solid fa-shield-cat" style="color: #007b3e;"></i> 3-Year Replacement Cover</div>
     </div>
