@@ -921,7 +921,7 @@
 </div>
 
 <script>
-  function showVsPolicySection(policyKey) {
+  function showVsPolicySection(policyKey, shouldScroll) {
     if (!policyKey) policyKey = 'privacy';
     
     var panes = document.querySelectorAll('.vs-policy-tab-pane');
@@ -961,13 +961,20 @@
     } else {
       window.location.hash = '#' + policyKey;
     }
+
+    if (shouldScroll) {
+      var contentCard = document.querySelector('.vs-policy-content-card');
+      if (contentCard) {
+        contentCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
   }
 
   function initVsPolicyTabs() {
     var hash = window.location.hash.replace('#', '').toLowerCase();
     var validKeys = ['privacy', 'terms', 'refund', 'shipping', 'legal', 'disclaimer', 'contact'];
     if (hash && validKeys.indexOf(hash) !== -1) {
-      showVsPolicySection(hash);
+      showVsPolicySection(hash, true);
     }
   }
 
@@ -981,7 +988,7 @@
     var hash = window.location.hash.replace('#', '').toLowerCase();
     var validKeys = ['privacy', 'terms', 'refund', 'shipping', 'legal', 'disclaimer', 'contact'];
     if (hash && validKeys.indexOf(hash) !== -1) {
-      showVsPolicySection(hash);
+      showVsPolicySection(hash, true);
     }
   });
 </script>
