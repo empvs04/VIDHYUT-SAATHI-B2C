@@ -3,17 +3,20 @@
     --pol-primary: #f17e39;
     --pol-primary-dark: #d96924;
     --pol-secondary: #007b3e;
-    --pol-bg: #090e1a;
-    --pol-card-bg: rgba(30, 41, 59, 0.7);
-    --pol-text: #e2e8f0;
-    --pol-muted: #94a3b8;
-    --pol-border: rgba(255, 255, 255, 0.1);
+    --pol-bg: #f8fafc;
+    --pol-card-bg: #ffffff;
+    --pol-text: #0f172a;
+    --pol-body-text: #334155;
+    --pol-muted: #64748b;
+    --pol-border: #e2e8f0;
+    --pol-card-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    --pol-card-hover-shadow: 0 20px 45px rgba(241, 126, 57, 0.08);
   }
 
   .vs-policy-wrapper {
     font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-    background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 60%, #020617 100%);
-    color: var(--pol-text);
+    background: radial-gradient(circle at 50% 0%, rgba(241, 126, 57, 0.06) 0%, #f8fafc 40%, rgba(0, 123, 62, 0.04) 100%);
+    color: var(--pol-body-text);
     min-height: 100vh;
     padding-bottom: 80px;
     position: relative;
@@ -26,7 +29,7 @@
     left: 10%;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(241, 126, 57, 0.12) 0%, rgba(0,0,0,0) 70%);
+    background: radial-gradient(circle, rgba(241, 126, 57, 0.08) 0%, rgba(255,255,255,0) 70%);
     pointer-events: none;
   }
 
@@ -36,7 +39,7 @@
     right: 10%;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(0, 123, 62, 0.12) 0%, rgba(0,0,0,0) 70%);
+    background: radial-gradient(circle, rgba(0, 123, 62, 0.08) 0%, rgba(255,255,255,0) 70%);
     pointer-events: none;
   }
 
@@ -47,7 +50,7 @@
     position: relative;
     z-index: 2;
     border-bottom: 1px solid var(--pol-border);
-    background: rgba(15, 23, 42, 0.6);
+    background: linear-gradient(135deg, #ffffff 0%, #fff7ed 50%, #f0fdf4 100%);
     backdrop-filter: blur(12px);
   }
 
@@ -55,9 +58,9 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(241, 126, 57, 0.15);
-    border: 1px solid rgba(241, 126, 57, 0.4);
-    color: #f17e39;
+    background: rgba(241, 126, 57, 0.1);
+    border: 1px solid rgba(241, 126, 57, 0.3);
+    color: #c2410c;
     padding: 6px 16px;
     border-radius: 30px;
     font-size: 0.85rem;
@@ -68,13 +71,13 @@
   .vs-policy-hero h1 {
     font-size: clamp(2.2rem, 4vw, 3.2rem);
     font-weight: 800;
-    color: #ffffff;
+    color: #0f172a;
     margin: 0 0 12px;
     letter-spacing: -0.5px;
   }
 
   .vs-policy-hero p {
-    color: var(--pol-muted);
+    color: #475569;
     font-size: 1.05rem;
     max-width: 680px;
     margin: 0 auto;
@@ -99,14 +102,14 @@
     border: 1px solid var(--pol-border);
     border-radius: 20px;
     padding: 24px;
-    backdrop-filter: blur(16px);
+    box-shadow: var(--pol-card-shadow);
     height: fit-content;
     position: sticky;
     top: 100px;
   }
 
   .vs-policy-sidebar-title {
-    color: #ffffff;
+    color: #0f172a;
     font-size: 1.1rem;
     font-weight: 800;
     margin: 0 0 18px;
@@ -130,7 +133,7 @@
     gap: 12px;
     padding: 12px 16px;
     border-radius: 12px;
-    color: var(--pol-muted);
+    color: #475569;
     text-decoration: none;
     font-size: 0.93rem;
     font-weight: 600;
@@ -147,9 +150,10 @@
 
   .vs-policy-nav a:hover,
   .vs-policy-nav a.active {
-    background: linear-gradient(135deg, rgba(241, 126, 57, 0.2) 0%, rgba(241, 126, 57, 0.05) 100%);
-    border-color: rgba(241, 126, 57, 0.4);
-    color: #ffffff;
+    background: linear-gradient(135deg, rgba(241, 126, 57, 0.12) 0%, rgba(241, 126, 57, 0.04) 100%);
+    border-color: rgba(241, 126, 57, 0.3);
+    color: #c2410c;
+    font-weight: 700;
     transform: translateX(4px);
   }
 
@@ -159,8 +163,7 @@
     border: 1px solid var(--pol-border);
     border-radius: 24px;
     padding: 40px;
-    backdrop-filter: blur(16px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--pol-card-shadow);
   }
 
   .vs-policy-header-bar {
@@ -175,9 +178,9 @@
   }
 
   .vs-policy-effective-date {
-    background: rgba(0, 123, 62, 0.2);
-    border: 1px solid rgba(0, 123, 62, 0.4);
-    color: #4ade80;
+    background: rgba(0, 123, 62, 0.08);
+    border: 1px solid rgba(0, 123, 62, 0.25);
+    color: #15803d;
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 0.82rem;
@@ -188,7 +191,7 @@
   }
 
   .vs-policy-body h2 {
-    color: #ffffff;
+    color: #0f172a;
     font-size: 1.4rem;
     font-weight: 800;
     margin: 30px 0 14px;
@@ -206,14 +209,14 @@
   }
 
   .vs-policy-body h3 {
-    color: #f8fafc;
+    color: #1e293b;
     font-size: 1.15rem;
     font-weight: 700;
     margin: 22px 0 10px;
   }
 
   .vs-policy-body p {
-    color: var(--pol-text);
+    color: var(--pol-body-text);
     font-size: 0.98rem;
     line-height: 1.75;
     margin: 0 0 16px;
@@ -223,7 +226,7 @@
 
   .vs-policy-body ul, .vs-policy-body ol {
     margin: 0 0 20px 20px;
-    color: var(--pol-text);
+    color: var(--pol-body-text);
   }
 
   .vs-policy-body li {
@@ -235,15 +238,15 @@
   }
 
   .vs-policy-highlight-box {
-    background: linear-gradient(135deg, rgba(241, 126, 57, 0.12) 0%, rgba(241, 126, 57, 0.03) 100%);
-    border: 1px solid rgba(241, 126, 57, 0.3);
+    background: linear-gradient(135deg, rgba(241, 126, 57, 0.08) 0%, rgba(241, 126, 57, 0.02) 100%);
+    border: 1px solid rgba(241, 126, 57, 0.25);
     border-radius: 16px;
     padding: 20px 24px;
     margin: 24px 0;
   }
 
   .vs-policy-highlight-box h4 {
-    color: var(--pol-primary);
+    color: #c2410c;
     margin: 0 0 8px;
     font-size: 1.05rem;
     font-weight: 800;
@@ -254,11 +257,12 @@
 
   .vs-policy-highlight-box p {
     margin: 0;
+    color: var(--pol-body-text);
     font-size: 0.94rem;
   }
 
   .vs-policy-contact-card {
-    background: rgba(0, 0, 0, 0.3);
+    background: #f8fafc;
     border: 1px solid var(--pol-border);
     border-radius: 16px;
     padding: 24px;
@@ -266,7 +270,7 @@
   }
 
   .vs-policy-contact-card h4 {
-    color: #ffffff;
+    color: #0f172a;
     margin: 0 0 12px;
     font-size: 1.1rem;
     font-weight: 800;
