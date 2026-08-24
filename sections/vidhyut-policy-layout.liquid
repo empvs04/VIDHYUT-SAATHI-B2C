@@ -45,13 +45,12 @@
 
   /* Hero Section */
   .vs-policy-hero {
-    padding: 70px 20px 40px;
+    padding: 60px 20px 36px;
     text-align: center;
     position: relative;
     z-index: 2;
-    border-bottom: 1px solid var(--pol-border);
     background: linear-gradient(135deg, #ffffff 0%, #fff7ed 50%, #f0fdf4 100%);
-    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--pol-border);
   }
 
   .vs-policy-hero-badge {
@@ -61,7 +60,7 @@
     background: rgba(241, 126, 57, 0.1);
     border: 1px solid rgba(241, 126, 57, 0.3);
     color: #c2410c;
-    padding: 6px 16px;
+    padding: 6px 18px;
     border-radius: 30px;
     font-size: 0.85rem;
     font-weight: 700;
@@ -80,81 +79,145 @@
     color: #475569;
     font-size: 1.05rem;
     max-width: 680px;
-    margin: 0 auto;
+    margin: 0 auto 18px;
     line-height: 1.6;
   }
 
-  /* Main Layout */
+  .vs-policy-trust-pills {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .vs-policy-trust-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    border: 1px solid var(--pol-border);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+  }
+
+  /* Main Container */
   .vs-policy-container {
-    max-width: 1280px;
-    margin: 40px auto 0;
+    max-width: 1200px;
+    margin: 36px auto 0;
     padding: 0 20px;
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
     position: relative;
     z-index: 2;
   }
 
-  /* Sidebar Nav */
-  .vs-policy-sidebar {
-    background: var(--pol-card-bg);
+  /* Top Navigation Bar ("All Policies") */
+  .vs-policy-top-bar-container {
+    background: #ffffff;
     border: 1px solid var(--pol-border);
     border-radius: 20px;
-    padding: 24px;
-    box-shadow: var(--pol-card-shadow);
-    height: fit-content;
-    position: sticky;
-    top: 100px;
-  }
-
-  .vs-policy-sidebar-title {
-    color: #0f172a;
-    font-size: 1.1rem;
-    font-weight: 800;
-    margin: 0 0 18px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .vs-policy-nav {
+    padding: 16px 20px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    gap: 12px;
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+    backdrop-filter: blur(16px);
   }
 
-  .vs-policy-nav a {
+  .vs-policy-top-bar-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    border-radius: 12px;
-    color: #475569;
-    text-decoration: none;
-    font-size: 0.93rem;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--pol-border);
+  }
+
+  .vs-policy-top-bar-title {
+    color: #0f172a;
+    font-size: 0.95rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .vs-policy-top-bar-hint {
+    color: #64748b;
+    font-size: 0.82rem;
     font-weight: 600;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
   }
 
-  .vs-policy-nav a i {
-    font-size: 1rem;
+  .vs-policy-top-nav-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vs-policy-top-nav {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 4px 2px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vs-policy-top-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vs-policy-top-btn {
+    padding: 11px 20px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+
+  .vs-policy-top-btn i {
+    font-size: 0.95rem;
     color: var(--pol-primary);
-    width: 20px;
-    text-align: center;
+    transition: color 0.25s ease;
   }
 
-  .vs-policy-nav a:hover,
-  .vs-policy-nav a.active {
-    background: linear-gradient(135deg, rgba(241, 126, 57, 0.12) 0%, rgba(241, 126, 57, 0.04) 100%);
+  .vs-policy-top-btn:hover {
+    background: #fff7ed;
     border-color: rgba(241, 126, 57, 0.3);
     color: #c2410c;
+  }
+
+  .vs-policy-top-btn.active {
+    background: linear-gradient(135deg, #f17e39 0%, #d96924 100%);
+    color: #ffffff;
     font-weight: 700;
-    transform: translateX(4px);
+    border-color: transparent;
+    box-shadow: 0 6px 20px rgba(241, 126, 57, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .vs-policy-top-btn.active i {
+    color: #ffffff;
   }
 
   /* Content Card */
@@ -162,8 +225,20 @@
     background: var(--pol-card-bg);
     border: 1px solid var(--pol-border);
     border-radius: 24px;
-    padding: 40px;
-    box-shadow: var(--pol-card-shadow);
+    padding: 44px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.06);
+    position: relative;
+  }
+
+  .vs-policy-content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 40px;
+    right: 40px;
+    height: 4px;
+    background: linear-gradient(90deg, #f17e39, #007b3e);
+    border-radius: 0 0 4px 4px;
   }
 
   .vs-policy-header-bar {
@@ -278,50 +353,23 @@
 
   @media (max-width: 900px) {
     .vs-policy-wrapper {
-      padding: 30px 14px 60px;
+      padding: 20px 14px 60px;
     }
     .vs-policy-hero h1 {
       font-size: 1.8rem;
     }
-    .vs-policy-container {
-      grid-template-columns: 1fr;
-      gap: 20px;
+    .vs-policy-top-bar-container {
+      top: 10px;
+      padding: 12px 14px;
     }
-    .vs-policy-sidebar {
-      position: relative;
-      top: 0;
-      padding: 16px;
-    }
-    .vs-policy-nav {
-      display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 8px;
-      padding-bottom: 6px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .vs-policy-nav::-webkit-scrollbar {
-      display: none;
-    }
-    .vs-policy-nav li {
-      margin-bottom: 0;
-      flex-shrink: 0;
-    }
-    .vs-policy-nav a {
-      padding: 8px 14px;
-      font-size: 0.82rem;
-      border-radius: 12px;
-      white-space: nowrap;
+    .vs-policy-top-btn {
+      padding: 9px 15px;
+      font-size: 0.84rem;
     }
     .vs-policy-content-card {
-      padding: 22px 18px;
+      padding: 24px 18px;
       word-break: break-word;
       overflow-wrap: anywhere;
-    }
-    .vs-policy-body h2 {
-      font-size: 1.12rem;
-      margin: 24px 0 10px;
     }
   }
 
@@ -332,12 +380,12 @@
     .vs-policy-hero p {
       font-size: 0.88rem;
     }
+    .vs-policy-trust-pill {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+    }
     .vs-policy-content-card {
       padding: 18px 14px;
-    }
-    .vs-policy-highlight-box, .vs-policy-contact-card {
-      padding: 16px;
-      border-radius: 12px;
     }
   }
 
@@ -395,53 +443,49 @@
       {% else %}Customer Policy &amp; Terms{% endif %}
     </h1>
     <p>Official legal guidelines, terms, warranties, and privacy protection protocols for Vidhyut Saathi Energy Savers Pvt Ltd.</p>
+    
+    <div class="vs-policy-trust-pills">
+      <div class="vs-policy-trust-pill"><i class="fa-solid fa-certificate" style="color: #007b3e;"></i> ISO 9001:2015 Certified</div>
+      <div class="vs-policy-trust-pill"><i class="fa-solid fa-truck-fast" style="color: #f17e39;"></i> All India Delivery</div>
+      <div class="vs-policy-trust-pill"><i class="fa-solid fa-shield-cat" style="color: #007b3e;"></i> 3-Year Replacement Cover</div>
+      <div class="vs-policy-trust-pill"><i class="fa-solid fa-rotate-left" style="color: #f17e39;"></i> 3-Day Easy Return</div>
+    </div>
   </div>
 
   <!-- Container -->
   <div class="vs-policy-container">
     
-    <!-- Sidebar Navigation -->
-    <div class="vs-policy-sidebar">
-      <div class="vs-policy-sidebar-title">
-        <i class="fa-solid fa-scale-balanced" style="color: var(--pol-primary);"></i> All Policies
+    <!-- Top All Policies Navigation Bar -->
+    <div class="vs-policy-top-bar-container">
+      <div class="vs-policy-top-bar-header">
+        <span class="vs-policy-top-bar-title"><i class="fa-solid fa-scale-balanced" style="color: var(--pol-primary);"></i> All Policies</span>
+        <span class="vs-policy-top-bar-hint">Select a policy to view:</span>
       </div>
-      <ul class="vs-policy-nav">
-        <li>
-          <a href="#privacy" onclick="showVsPolicySection('privacy'); return false;" class="vs-policy-nav-btn {% if active_policy == 'privacy' %}active{% endif %}" data-policy="privacy">
+      <div class="vs-policy-top-nav-wrapper">
+        <div class="vs-policy-top-nav">
+          <a href="#privacy" onclick="showVsPolicySection('privacy', true); return false;" class="vs-policy-top-btn {% if active_policy == 'privacy' %}active{% endif %}" data-policy="privacy">
             <i class="fa-solid fa-user-shield"></i> Privacy Policy
           </a>
-        </li>
-        <li>
-          <a href="#terms" onclick="showVsPolicySection('terms'); return false;" class="vs-policy-nav-btn {% if active_policy == 'terms' %}active{% endif %}" data-policy="terms">
+          <a href="#terms" onclick="showVsPolicySection('terms', true); return false;" class="vs-policy-top-btn {% if active_policy == 'terms' %}active{% endif %}" data-policy="terms">
             <i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions
           </a>
-        </li>
-        <li>
-          <a href="#refund" onclick="showVsPolicySection('refund'); return false;" class="vs-policy-nav-btn {% if active_policy == 'refund' %}active{% endif %}" data-policy="refund">
+          <a href="#refund" onclick="showVsPolicySection('refund', true); return false;" class="vs-policy-top-btn {% if active_policy == 'refund' %}active{% endif %}" data-policy="refund">
             <i class="fa-solid fa-rotate-left"></i> Return &amp; Refund
           </a>
-        </li>
-        <li>
-          <a href="#shipping" onclick="showVsPolicySection('shipping'); return false;" class="vs-policy-nav-btn {% if active_policy == 'shipping' %}active{% endif %}" data-policy="shipping">
+          <a href="#shipping" onclick="showVsPolicySection('shipping', true); return false;" class="vs-policy-top-btn {% if active_policy == 'shipping' %}active{% endif %}" data-policy="shipping">
             <i class="fa-solid fa-truck-fast"></i> Shipping Policy
           </a>
-        </li>
-        <li>
-          <a href="#legal" onclick="showVsPolicySection('legal'); return false;" class="vs-policy-nav-btn {% if active_policy == 'legal' %}active{% endif %}" data-policy="legal">
+          <a href="#legal" onclick="showVsPolicySection('legal', true); return false;" class="vs-policy-top-btn {% if active_policy == 'legal' %}active{% endif %}" data-policy="legal">
             <i class="fa-solid fa-scale-balanced"></i> Legal Notice
           </a>
-        </li>
-        <li>
-          <a href="#disclaimer" onclick="showVsPolicySection('disclaimer'); return false;" class="vs-policy-nav-btn {% if active_policy == 'disclaimer' %}active{% endif %}" data-policy="disclaimer">
+          <a href="#disclaimer" onclick="showVsPolicySection('disclaimer', true); return false;" class="vs-policy-top-btn {% if active_policy == 'disclaimer' %}active{% endif %}" data-policy="disclaimer">
             <i class="fa-solid fa-triangle-exclamation"></i> Disclaimer
           </a>
-        </li>
-        <li>
-          <a href="#contact" onclick="showVsPolicySection('contact'); return false;" class="vs-policy-nav-btn {% if active_policy == 'contact' %}active{% endif %}" data-policy="contact">
+          <a href="#contact" onclick="showVsPolicySection('contact', true); return false;" class="vs-policy-top-btn {% if active_policy == 'contact' %}active{% endif %}" data-policy="contact">
             <i class="fa-solid fa-address-card"></i> Contact Information
           </a>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
 
     <!-- Main Content Card -->
@@ -451,8 +495,9 @@
         <div class="vs-policy-effective-date">
           <i class="fa-solid fa-calendar-check"></i> Effective Date: January 10, 2026
         </div>
-        <div style="color: var(--pol-muted); font-size: 0.88rem; font-weight: 600;">
-          Vidhyut Saathi Energy Savers Pvt Ltd
+        <div style="color: var(--pol-muted); font-size: 0.88rem; font-weight: 600; display: flex; align-items: center; gap: 14px;">
+          <span>Vidhyut Saathi Energy Savers Pvt Ltd</span>
+          <button onclick="window.print();" style="background: none; border: 1px solid var(--pol-border); padding: 4px 10px; border-radius: 8px; font-size: 0.8rem; cursor: pointer; color: #475569; display: inline-flex; align-items: center; gap: 4px;"><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
 
@@ -929,17 +974,18 @@
       pane.classList.remove('active');
     });
 
-    var navBtns = document.querySelectorAll('.vs-policy-nav-btn');
+    var navBtns = document.querySelectorAll('.vs-policy-top-btn');
     navBtns.forEach(function(btn) {
       btn.classList.remove('active');
     });
 
     var targetPane = document.getElementById('policy-pane-' + policyKey);
-    var targetBtns = document.querySelectorAll('.vs-policy-nav-btn[data-policy="' + policyKey + '"]');
+    var targetBtns = document.querySelectorAll('.vs-policy-top-btn[data-policy="' + policyKey + '"]');
     
     if (targetPane) targetPane.classList.add('active');
     targetBtns.forEach(function(btn) {
       btn.classList.add('active');
+      btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     });
 
     var titles = {
