@@ -311,8 +311,11 @@
     color: var(--pol-body-text);
     font-size: 0.98rem;
     line-height: 1.8;
+    letter-spacing: -0.01em;
+    word-spacing: 0.02em;
     margin: 0 0 20px;
     text-align: left;
+    overflow-wrap: break-word;
   }
 
   .vs-policy-body ul, .vs-policy-body ol {
@@ -324,6 +327,7 @@
   .vs-policy-body li {
     margin-bottom: 10px;
     line-height: 1.75;
+    letter-spacing: -0.01em;
     font-size: 0.98rem;
     text-align: left;
   }
@@ -371,6 +375,9 @@
     .vs-policy-wrapper {
       padding: 20px 14px 60px;
     }
+    .vs-policy-hero {
+      padding: 44px 16px 28px;
+    }
     .vs-policy-hero h1 {
       font-size: 1.8rem;
     }
@@ -389,19 +396,90 @@
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
+    .vs-policy-hero {
+      padding: 36px 14px 24px;
+    }
+    .vs-policy-hero-badge {
+      font-size: 0.78rem;
+      padding: 5px 14px;
+    }
     .vs-policy-hero h1 {
-      font-size: 1.5rem;
+      font-size: 1.55rem;
+      line-height: 1.25;
     }
     .vs-policy-hero p {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+    .vs-policy-trust-pills {
+      gap: 8px;
     }
     .vs-policy-trust-pill {
       font-size: 0.75rem;
-      padding: 4px 10px;
+      padding: 5px 12px;
+    }
+    .vs-policy-container {
+      margin: 20px auto 0;
+      padding: 0 10px;
+      gap: 16px;
+    }
+    .vs-policy-top-bar-container {
+      top: 5px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      gap: 8px;
+    }
+    .vs-policy-top-bar-header {
+      padding-bottom: 6px;
+    }
+    .vs-policy-top-bar-title {
+      font-size: 0.85rem;
+    }
+    .vs-policy-top-bar-hint {
+      display: none;
+    }
+    .vs-policy-top-nav {
+      gap: 6px;
+    }
+    .vs-policy-top-btn {
+      padding: 8px 13px;
+      font-size: 0.8rem;
+      border-radius: 10px;
+      gap: 6px;
     }
     .vs-policy-content-card {
-      padding: 18px 14px;
+      padding: 20px 14px;
+      border-radius: 18px;
+    }
+    .vs-policy-content-card::before {
+      left: 18px;
+      right: 18px;
+    }
+    .vs-policy-section-title {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      gap: 8px;
+    }
+    .vs-policy-body h2 {
+      font-size: 1.1rem;
+      margin: 24px 0 12px;
+    }
+    .vs-policy-body p, .vs-policy-body li {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .vs-policy-highlight-box {
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+    .vs-policy-effective-date {
+      font-size: 0.75rem;
+      padding: 4px 10px;
     }
   }
 
@@ -455,7 +533,6 @@
       <div class="vs-policy-trust-pill"><i class="fa-solid fa-certificate" style="color: #007b3e;"></i> ISO 9001:2015 Certified</div>
       <div class="vs-policy-trust-pill"><i class="fa-solid fa-truck-fast" style="color: #f17e39;"></i> All India Delivery</div>
       <div class="vs-policy-trust-pill"><i class="fa-solid fa-shield-cat" style="color: #007b3e;"></i> 3-Year Replacement Cover</div>
-      <div class="vs-policy-trust-pill"><i class="fa-solid fa-rotate-left" style="color: #f17e39;"></i> 3-Day Easy Return</div>
     </div>
   </div>
 
