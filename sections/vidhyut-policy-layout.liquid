@@ -1002,20 +1002,6 @@
       btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     });
 
-    var titles = {
-      'privacy': 'Privacy Policy',
-      'terms': 'Terms & Conditions',
-      'refund': 'Return & Refund Policy',
-      'shipping': 'Shipping Policy',
-      'legal': 'Legal Notice',
-      'disclaimer': 'Disclaimer',
-      'contact': 'Contact Information'
-    };
-    var heroTitleEl = document.getElementById('vsPolicyHeroTitle');
-    if (heroTitleEl && titles[policyKey]) {
-      heroTitleEl.textContent = titles[policyKey];
-    }
-
     if (history.pushState) {
       history.pushState(null, null, '#' + policyKey);
     } else {
@@ -1023,9 +1009,9 @@
     }
 
     if (shouldScroll) {
-      var contentCard = document.querySelector('.vs-policy-content-card');
-      if (contentCard) {
-        contentCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var topNavCard = document.querySelector('.vs-policy-top-bar-container');
+      if (topNavCard) {
+        topNavCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
   }
@@ -1034,7 +1020,9 @@
     var hash = window.location.hash.replace('#', '').toLowerCase();
     var validKeys = ['privacy', 'terms', 'refund', 'shipping', 'legal', 'disclaimer', 'contact'];
     if (hash && validKeys.indexOf(hash) !== -1) {
-      showVsPolicySection(hash, true);
+      showVsPolicySection(hash, false);
+    } else {
+      showVsPolicySection('privacy', false);
     }
   }
 
@@ -1048,7 +1036,7 @@
     var hash = window.location.hash.replace('#', '').toLowerCase();
     var validKeys = ['privacy', 'terms', 'refund', 'shipping', 'legal', 'disclaimer', 'contact'];
     if (hash && validKeys.indexOf(hash) !== -1) {
-      showVsPolicySection(hash, true);
+      showVsPolicySection(hash, false);
     }
   });
 </script>
