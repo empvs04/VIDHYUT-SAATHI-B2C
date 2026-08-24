@@ -312,10 +312,14 @@
     font-size: 0.98rem;
     line-height: 1.8;
     letter-spacing: -0.01em;
-    word-spacing: 0.02em;
     margin: 0 0 20px;
-    text-align: left;
+    text-align: justify;
+    text-justify: inter-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
     overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .vs-policy-body ul, .vs-policy-body ol {
@@ -329,7 +333,13 @@
     line-height: 1.75;
     letter-spacing: -0.01em;
     font-size: 0.98rem;
-    text-align: left;
+    text-align: justify;
+    text-justify: inter-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .vs-policy-highlight-box {
@@ -469,8 +479,12 @@
     }
     .vs-policy-body p, .vs-policy-body li {
       font-size: 0.9rem;
-      line-height: 1.7;
+      line-height: 1.75;
       margin-bottom: 14px;
+      text-align: justify;
+      text-justify: inter-word;
+      -webkit-hyphens: auto;
+      hyphens: auto;
     }
     .vs-policy-highlight-box {
       padding: 14px 16px;
