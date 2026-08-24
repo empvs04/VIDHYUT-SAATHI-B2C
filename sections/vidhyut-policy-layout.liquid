@@ -265,11 +265,28 @@
     gap: 6px;
   }
 
+  .vs-policy-section-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 24px 0;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  .vs-policy-section-title i {
+    color: var(--pol-primary);
+  }
+
   .vs-policy-body h2 {
     color: #0f172a;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 800;
-    margin: 30px 0 14px;
+    margin: 36px 0 16px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -287,29 +304,28 @@
     color: #1e293b;
     font-size: 1.15rem;
     font-weight: 700;
-    margin: 22px 0 10px;
+    margin: 24px 0 12px;
   }
 
   .vs-policy-body p {
     color: var(--pol-body-text);
     font-size: 0.98rem;
-    line-height: 1.75;
-    margin: 0 0 16px;
-    text-align: justify;
-    text-justify: inter-word;
+    line-height: 1.8;
+    margin: 0 0 20px;
+    text-align: left;
   }
 
   .vs-policy-body ul, .vs-policy-body ol {
-    margin: 0 0 20px 20px;
+    margin: 0 0 24px 20px;
+    padding: 0;
     color: var(--pol-body-text);
   }
 
   .vs-policy-body li {
-    margin-bottom: 8px;
-    line-height: 1.7;
+    margin-bottom: 10px;
+    line-height: 1.75;
     font-size: 0.98rem;
-    text-align: justify;
-    text-justify: inter-word;
+    text-align: left;
   }
 
   .vs-policy-highlight-box {
@@ -432,16 +448,7 @@
     <div class="vs-policy-hero-badge">
       <i class="fa-solid fa-shield-halved"></i> Vidhyut Saathi Legal &amp; Compliance Center
     </div>
-    <h1 id="vsPolicyHeroTitle">
-      {% if active_policy == 'privacy' %}Privacy Policy
-      {% elsif active_policy == 'terms' %}Terms &amp; Conditions
-      {% elsif active_policy == 'refund' %}Return &amp; Refund Policy
-      {% elsif active_policy == 'shipping' %}Shipping Policy
-      {% elsif active_policy == 'legal' %}Legal Notice
-      {% elsif active_policy == 'disclaimer' %}Disclaimer
-      {% elsif active_policy == 'contact' %}Contact Information
-      {% else %}Customer Policy &amp; Terms{% endif %}
-    </h1>
+    <h1 id="vsPolicyHeroTitle">Legal &amp; Policies Center</h1>
     <p>Official legal guidelines, terms, warranties, and privacy protection protocols for Vidhyut Saathi Energy Savers Pvt Ltd.</p>
     
     <div class="vs-policy-trust-pills">
@@ -505,6 +512,7 @@
         
         <div class="vs-policy-tab-pane {% if active_policy == 'privacy' %}active{% endif %}" id="policy-pane-privacy">
           <!-- PRIVACY POLICY -->
+          <h1 class="vs-policy-section-title"><i class="fa-solid fa-user-shield"></i> Privacy Policy</h1>
           <p>At <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong> ("Vidhyut Saathi", "we", "our", or "us"), we respect your privacy and are committed to protecting the personal information you share with us through our website, <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a> ("Website"). This Privacy Policy explains how we collect, use, store, disclose, and safeguard your information when you visit our Website, create an account, purchase products, or use our services.</p>
           <p>By accessing or using our Website, you agree to the practices described in this Privacy Policy.</p>
 
@@ -619,6 +627,7 @@
         </div>
         <div class="vs-policy-tab-pane {% if active_policy == 'terms' %}active{% endif %}" id="policy-pane-terms">
           <!-- TERMS & CONDITIONS -->
+          <h1 class="vs-policy-section-title"><i class="fa-solid fa-file-contract"></i> Terms &amp; Conditions</h1>
           <p>Welcome to <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong> ("Vidhyut Saathi", "we", "our", or "us"). These Terms &amp; Conditions govern your access to and use of our website, <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a> ("Website"), including the purchase of products and use of services offered through the Website.</p>
           <p>By accessing, browsing, registering on, or placing an order through this Website, you agree to be bound by these Terms &amp; Conditions. If you do not agree with any part of these Terms, please refrain from using our Website.</p>
 
@@ -728,6 +737,7 @@
         </div>
         <div class="vs-policy-tab-pane {% if active_policy == 'refund' %}active{% endif %}" id="policy-pane-refund">
           <!-- RETURN & REFUND POLICY -->
+          <h1 class="vs-policy-section-title"><i class="fa-solid fa-rotate-left"></i> Return &amp; Refund Policy</h1>
           <p>At <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong> ("Vidhyut Saathi", "we", "our", or "us"), we strive to ensure customer satisfaction with every purchase made through <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a> ("Website"). Please read this Return &amp; Refund Policy carefully before placing an order.</p>
           <p>By placing an order on our Website, you agree to the terms of this Policy.</p>
 
@@ -783,6 +793,7 @@
         </div>
         <div class="vs-policy-tab-pane {% if active_policy == 'shipping' %}active{% endif %}" id="policy-pane-shipping">
           <!-- SHIPPING POLICY -->
+          <h1 class="vs-policy-section-title"><i class="fa-solid fa-truck-fast"></i> Shipping Policy</h1>
           <p>Thank you for shopping with <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong>. This Shipping Policy outlines the terms and conditions relating to the shipment and delivery of products purchased through <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a>.</p>
 
           <div class="vs-policy-highlight-box">
@@ -834,6 +845,7 @@
         </div>
         <div class="vs-policy-tab-pane {% if active_policy == 'legal' %}active{% endif %}" id="policy-pane-legal">
           <!-- LEGAL NOTICE -->
+          <h1 class="vs-policy-section-title"><i class="fa-solid fa-scale-balanced"></i> Legal Notice</h1>
           <p>This Legal Notice governs the access to and use of the website <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a> ("Website"), owned and operated by <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong> ("Vidhyut Saathi", "we", "our", or "us").</p>
           <p>By accessing, browsing, registering on, or purchasing products through this Website, you acknowledge that you have read, understood, and agreed to comply with this Legal Notice, along with our Terms &amp; Conditions, Privacy Policy, Shipping Policy, Return &amp; Refund Policy, and other applicable policies published on the Website.</p>
 
@@ -882,6 +894,7 @@
         </div>
         <div class="vs-policy-tab-pane {% if active_policy == 'disclaimer' %}active{% endif %}" id="policy-pane-disclaimer">
           <!-- DISCLAIMER -->
+          <h1 class="vs-policy-section-title"><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</h1>
           <p>The information provided on <a href="https://www.vidhyutsaathi.in" target="_blank" style="color: #f17e39; text-decoration: underline;">www.vidhyutsaathi.in</a> ("Website") is for general informational purposes only. By accessing and using this Website, you acknowledge and agree to the terms of this Disclaimer.</p>
 
           <h2>1. Accuracy of Information</h2>
@@ -930,6 +943,7 @@
         </div>
         <div class="vs-policy-tab-pane {% if active_policy == 'contact' %}active{% endif %}" id="policy-pane-contact">
           <!-- CONTACT INFORMATION -->
+          <h1 class="vs-policy-section-title"><i class="fa-solid fa-address-card"></i> Contact Information</h1>
           <p>At <strong>Vidhyut Saathi Energy Savers Pvt Ltd</strong>, we are committed to providing prompt assistance and exceptional customer support. If you have any questions regarding our products, orders, shipping, returns, warranty claims, or general enquiries, our team is here to help.</p>
 
           <h2>Customer Support</h2>
