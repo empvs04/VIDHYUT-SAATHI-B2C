@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "policy_layout": {
+      "type": "vidhyut-policy-layout",
+      "settings": {
+        "default_policy": "shipping"
+      }
+    }
+  },
+  "order": [
+    "policy_layout"
+  ]
+}
